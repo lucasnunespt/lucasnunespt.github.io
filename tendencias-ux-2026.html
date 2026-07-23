@@ -55,7 +55,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-
   --header-glass-bg:rgba(255,255,255,.5);
   --header-glass-bg-scrolled:rgba(255,255,255,.8);
   --header-border:rgba(23,20,15,.1);
-  --header-glow:0 14px 34px rgba(23,20,15,.08), 0 0 26px rgba(255,255,255,.4);
+  --header-glow:0 14px 38px rgba(23,20,15,.09), 0 0 32px rgba(255,255,255,.35);
   --serif:"Newsreader", Georgia, serif;
   --sans:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --ease:cubic-bezier(0.22,1,0.36,1);
@@ -84,7 +84,7 @@ p{ color:var(--ink-soft); }
 .button{
   display:inline-flex; align-items:center; gap:.5rem;
   font-size:.95rem; font-weight:600; padding:.9rem 1.5rem; min-height:48px;
-  border-radius:10px; transition:.3s var(--ease);
+  border-radius:999px; transition:.3s var(--ease);
 }
 .button.primary{ background:var(--ink); color:var(--bg); }
 .button.primary:hover{ background:var(--accent); transform:translateY(-1px); }
@@ -107,16 +107,16 @@ p{ color:var(--ink-soft); }
    ============================================================ */
 .site-header{
   position:sticky; top:0; z-index:60; background:transparent;
-  padding:1.1rem 0 .6rem; transition:padding .42s var(--ease);
+  padding:.86rem 0 .68rem; transition:padding .42s var(--ease);
 }
-.site-header.scrolled{ padding:.65rem 0 .45rem; }
+.site-header.scrolled{ padding:.52rem 0 .38rem; }
 .header-inner{
-  min-height:62px; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  min-height:78px; display:flex; align-items:center; justify-content:space-between; gap:1rem;
   border-radius:999px; border:1px solid var(--header-border);
-  padding:.5rem .6rem .5rem 1.3rem;
+  padding:.55rem 1.05rem .55rem 1.2rem;
   background:var(--header-glass-bg);
-  backdrop-filter:blur(20px) saturate(140%) brightness(1.03);
-  -webkit-backdrop-filter:blur(20px) saturate(140%) brightness(1.03);
+  backdrop-filter:blur(22px) saturate(138%) brightness(1.04);
+  -webkit-backdrop-filter:blur(22px) saturate(138%) brightness(1.04);
   box-shadow:var(--header-glow);
   transition:background .42s var(--ease), box-shadow .42s var(--ease), padding .42s var(--ease);
 }
