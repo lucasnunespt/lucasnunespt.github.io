@@ -160,6 +160,64 @@ p{ color:var(--ink-soft); }
 .main-nav .button{ padding:.6rem 1.1rem; font-size:.86rem; min-height:auto; }
 
 /* ============================================================
+   SELETOR DE IDIOMA — cópia estrutural do botão do NeuroMedit,
+   adaptada aos tokens claros do portfólio
+   ============================================================ */
+.header-language-slot{ display:inline-flex; flex-shrink:0; align-items:center; }
+.language-wrapper{
+  position:relative; display:inline-flex; flex-direction:column;
+  width:64px; max-height:38px; border-radius:999px;
+  background:color-mix(in srgb, var(--surface) 78%, transparent);
+  border:1px solid var(--line);
+  box-shadow:0 6px 18px rgba(23,20,15,.08);
+  overflow:hidden;
+  transition:max-height .42s var(--ease), background .3s ease, border-color .3s ease, box-shadow .3s ease;
+  z-index:80;
+}
+.language-trigger{
+  appearance:none; position:relative; z-index:2; flex:0 0 38px; width:100%; height:38px;
+  border:0; border-radius:0; display:inline-flex; align-items:center; justify-content:center;
+  gap:.28rem; color:var(--ink); background:transparent; cursor:pointer;
+}
+.language-trigger svg{ width:15px; height:15px; }
+.language-current{ font-size:.7rem; letter-spacing:.08em; line-height:1; font-weight:600; }
+.language-trigger:focus-visible{ outline:none; }
+.language-options{
+  width:100%; padding:0 .32rem .5rem; display:grid; align-items:center; gap:.22rem; box-sizing:border-box;
+  opacity:0; transform:translateY(-10px);
+  transition:opacity .3s ease, transform .35s var(--ease);
+}
+.language-wrapper.is-open{
+  max-height:260px;
+  background:var(--surface);
+  border-color:var(--ink-faint);
+  box-shadow:0 14px 34px rgba(23,20,15,.14);
+}
+.language-wrapper.is-open .language-options{ opacity:1; transform:translateY(0); }
+@media (hover:hover) and (pointer:fine){
+  .language-wrapper:hover{ max-height:260px; background:var(--surface); border-color:var(--ink-faint); box-shadow:0 14px 34px rgba(23,20,15,.14); }
+  .language-wrapper:hover .language-options{ opacity:1; transform:translateY(0); }
+}
+.language-options button{
+  appearance:none; min-width:46px; height:30px; border:0; border-radius:999px;
+  color:var(--ink-soft); background:transparent; font:inherit; font-size:.72rem; letter-spacing:.08em;
+  cursor:pointer; transition:background .18s ease, color .18s ease, transform .18s ease;
+}
+.language-options button:hover, .language-options button:focus-visible{
+  color:var(--ink); background:var(--bg-alt); outline:none;
+}
+.language-options button.is-active{ color:#fff; background-color:var(--accent); outline:none; }
+.language-options button:active{ transform:scale(.96); }
+@media (prefers-reduced-motion:reduce){
+  .language-wrapper, .language-trigger, .language-options, .language-options button{ transition:none; }
+}
+@media (max-width:480px){
+  .language-wrapper{ width:58px; max-height:34px; }
+  .language-trigger{ flex:0 0 34px; height:34px; }
+  .language-wrapper.is-open{ max-height:240px; }
+}
+
+/* ============================================================
    HERO
    ============================================================ */
 .hero{ padding-top:clamp(2.5rem,7vw,4rem); padding-bottom:clamp(3rem,6vw,4rem); }
@@ -352,7 +410,7 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 </head>
 <body>
 
-<a class="skip-link" href="#main">Pular para o conteúdo</a>
+<a class="skip-link" href="#main" data-i18n="common_skip">Pular para o conteúdo</a>
 <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
 <!-- ================= HEADER ================= -->
@@ -360,9 +418,10 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
   <div class="container header-inner">
     <a class="wordmark" href="#topo">Lucas&nbsp;<span class="n-fixed">N</span><span class="swap-suffix" id="swapSuffix">unes</span></a>
     <nav class="main-nav" aria-label="Navegação principal">
-      <a href="#casos">Casos</a>
-      <a href="#sobre">Sobre</a>
-      <a class="button ghost" href="#contato">Contato</a>
+      <a href="#casos" data-i18n="common_nav_casos">Casos</a>
+      <a href="#sobre" data-i18n="common_nav_sobre">Sobre</a>
+      <div class="header-language-slot" data-language-host></div>
+      <a class="button ghost" href="#contato" data-i18n="common_nav_contato">Contato</a>
     </nav>
   </div>
 </header>
@@ -372,25 +431,25 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <section class="hero" id="topo">
   <div class="container hero-grid">
     <div class="hero-content">
-      <span class="eyebrow reveal">UX Design · NeuroMedit · Hospitalidade</span>
-      <h1 class="reveal">UX Design, meditação e <em>cuidado humano</em>.</h1>
-      <p class="hero-text reveal">Sou o Lucas Nunes — estudante de UX Design e criador do NeuroMedit. Desenho interfaces, sessões e atendimentos com o mesmo princípio: reduzir ruído para devolver presença.</p>
+      <span class="eyebrow reveal" data-i18n="idx_hero_eyebrow">UX Design · NeuroMedit · Hospitalidade</span>
+      <h1 class="reveal"><span data-i18n="idx_hero_h1_pre">UX Design, meditação e</span> <em data-i18n="idx_hero_h1_em">cuidado humano</em>.</h1>
+      <p class="hero-text reveal" data-i18n="idx_hero_text">Sou o Lucas Nunes — estudante de UX Design e criador do NeuroMedit. Desenho interfaces, sessões e atendimentos com o mesmo princípio: reduzir ruído para devolver presença.</p>
       <div class="hero-actions reveal">
-        <a class="button primary" href="#casos">Ver casos</a>
-        <a class="button ghost" href="#contato">Falar comigo</a>
+        <a class="button primary" href="#casos" data-i18n="idx_hero_cta_casos">Ver casos</a>
+        <a class="button ghost" href="#contato" data-i18n="idx_hero_cta_contato">Falar comigo</a>
       </div>
-      <span class="open-chip reveal"><span class="dot" aria-hidden="true"></span> Aberto a colaborar em UX/UI, front-end e produtos centrados em pessoas</span>
+      <span class="open-chip reveal"><span class="dot" aria-hidden="true"></span> <span data-i18n="idx_open_chip">Aberto a colaborar em UX/UI, front-end e produtos centrados em pessoas</span></span>
     </div>
     <div class="hero-photo-wrap reveal">
       <div class="hero-photo-large">
         <!-- Troque o src abaixo por uma foto sua (retrato, proporção 4:5) -->
-        <img src="lucas-foto.jpg" alt="Retrato de Lucas Nunes" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="lucas-foto.jpg" alt="Retrato de Lucas Nunes" data-i18n="idx_hero_photo_alt" data-i18n-attr="alt" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div class="placeholder" style="display:none;">
           <span class="mono">L</span>
-          <span>Sua foto aqui — salve como lucas-foto.jpg nesta mesma pasta</span>
+          <span data-i18n="idx_photo_placeholder">Sua foto aqui — salve como lucas-foto.jpg nesta mesma pasta</span>
         </div>
       </div>
-      <p class="hero-photo-cap">Lisboa, Portugal</p>
+      <p class="hero-photo-cap" data-i18n="idx_hero_photo_cap">Lisboa, Portugal</p>
     </div>
   </div>
 </section>
@@ -398,30 +457,30 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= ÍNDICE DE CASOS ================= -->
 <section class="case-index" id="casos">
   <div class="container">
-    <span class="eyebrow reveal">Casos</span>
+    <span class="eyebrow reveal" data-i18n="common_nav_casos">Casos</span>
     <div class="case-index-list">
       <a class="case-row reveal" href="#case-neuromedit">
         <span class="num">01</span>
         <span class="title">NeuroMedit</span>
-        <span class="tag">Produto próprio · 2025–2026</span>
+        <span class="tag" data-i18n="idx_case1_tag">Produto próprio · 2025–2026</span>
         <span class="arrow" aria-hidden="true">→</span>
       </a>
       <a class="case-row reveal" href="#case-hospitalidade">
         <span class="num">02</span>
-        <span class="title">Hospitalidade como pesquisa de usuário</span>
-        <span class="tag">Lisboa &amp; Brasil · 2019–2024</span>
+        <span class="title" data-i18n="idx_case2_title">Hospitalidade como pesquisa de usuário</span>
+        <span class="tag" data-i18n="idx_case2_tag">Lisboa &amp; Brasil · 2019–2024</span>
         <span class="arrow" aria-hidden="true">→</span>
       </a>
       <a class="case-row reveal" href="#case-ux">
         <span class="num">03</span>
-        <span class="title">Design com baixa carga cognitiva</span>
-        <span class="tag">Em formação · 2024–2026</span>
+        <span class="title" data-i18n="idx_case3_title">Design com baixa carga cognitiva</span>
+        <span class="tag" data-i18n="idx_case3_tag">Em formação · 2024–2026</span>
         <span class="arrow" aria-hidden="true">→</span>
       </a>
       <a class="case-row reveal" href="#case-tendencias">
         <span class="num">04</span>
-        <span class="title">Tendências de UX em 2026</span>
-        <span class="tag">Estudo próprio · 2026</span>
+        <span class="title" data-i18n="idx_case4_title">Tendências de UX em 2026</span>
+        <span class="tag" data-i18n="idx_case4_tag">Estudo próprio · 2026</span>
         <span class="arrow" aria-hidden="true">→</span>
       </a>
     </div>
@@ -432,48 +491,48 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <section class="case-block" id="case-neuromedit">
   <div class="container">
     <div class="case-header reveal">
-      <h2>Reduzir ruído para devolver presença</h2>
-      <span class="case-tag">Caso 01 · NeuroMedit</span>
+      <h2 data-i18n="idx_c1_h2">Reduzir ruído para devolver presença</h2>
+      <span class="case-tag" data-i18n="idx_c1_tag">Caso 01 · NeuroMedit</span>
     </div>
-    <p class="case-intro reveal">A maioria dos apps de meditação pede pra você relaxar — e te sobrecarrega de escolhas antes disso. Bibliotecas de conteúdo exigem decisão, sistemas visuais competem por atenção, e a primeira tarefa nunca é meditar: é escolher, filtrar, comparar. Para quem chega esgotado, isso é o oposto de alívio.</p>
+    <p class="case-intro reveal" data-i18n="idx_c1_intro">A maioria dos apps de meditação pede pra você relaxar — e te sobrecarrega de escolhas antes disso. Bibliotecas de conteúdo exigem decisão, sistemas visuais competem por atenção, e a primeira tarefa nunca é meditar: é escolher, filtrar, comparar. Para quem chega esgotado, isso é o oposto de alívio.</p>
 
     <div class="case-grid reveal">
       <div>
-        <h4>Pesquisa</h4>
-        <p>Comparei a entrada de apps como Calm e Headspace: mesmo com ótimo acabamento visual, ainda pedem navegação e decisão antes da primeira respiração guiada.</p>
+        <h4 data-i18n="common_h_pesquisa">Pesquisa</h4>
+        <p data-i18n="idx_c1_pesquisa_p">Comparei a entrada de apps como Calm e Headspace: mesmo com ótimo acabamento visual, ainda pedem navegação e decisão antes da primeira respiração guiada.</p>
       </div>
       <div>
-        <h4>Abordagem</h4>
-        <p>Tratei o momento antes da meditação como parte da meditação. A respiração virou transição de interface, não decoração — uma "eclusa" (airlock) entre o modo de navegar e o modo de praticar.</p>
+        <h4 data-i18n="common_h_abordagem">Abordagem</h4>
+        <p data-i18n="idx_c1_abordagem_p">Tratei o momento antes da meditação como parte da meditação. A respiração virou transição de interface, não decoração — uma "eclusa" (airlock) entre o modo de navegar e o modo de praticar.</p>
       </div>
       <div>
-        <h4>Meu papel</h4>
-        <p>Pesquisa, roteiro, sistema visual (o símbolo da onda respiratória) e front-end — sozinho, da primeira gravação no telemóvel ao produto no ar.</p>
+        <h4 data-i18n="common_h_papel">Meu papel</h4>
+        <p data-i18n="idx_c1_papel_p">Pesquisa, roteiro, sistema visual (o símbolo da onda respiratória) e front-end — sozinho, da primeira gravação no telemóvel ao produto no ar.</p>
       </div>
     </div>
 
-    <h4 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);font-weight:600;margin-bottom:.8rem;" class="reveal">O fluxo, em sete passos</h4>
+    <h4 style="font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);font-weight:600;margin-bottom:.8rem;" class="reveal" data-i18n="idx_c1_flow_title">O fluxo, em sete passos</h4>
     <div class="flow-strip reveal">
-      <span class="flow-step">Sobrecarregado</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Chegada</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Respiração</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step is-accent">Airlock</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Meditação</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Reflexão</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Calma</span>
+      <span class="flow-step" data-i18n="idx_flow_1">Sobrecarregado</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_2">Chegada</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_3">Respiração</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step is-accent" data-i18n="idx_flow_4">Airlock</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_5">Meditação</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_6">Reflexão</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_7">Calma</span>
     </div>
 
     <ul class="learnings reveal">
-      <li>Calma pode ser desenhada estruturalmente, não só visualmente.</li>
-      <li>Sobrecarga cognitiva aumenta resistência, mesmo quando a intenção é boa.</li>
-      <li>Simplicidade não é vazio — é clareza.</li>
+      <li data-i18n="idx_c1_learn_1">Calma pode ser desenhada estruturalmente, não só visualmente.</li>
+      <li data-i18n="idx_c1_learn_2">Sobrecarga cognitiva aumenta resistência, mesmo quando a intenção é boa.</li>
+      <li data-i18n="idx_c1_learn_3">Simplicidade não é vazio — é clareza.</li>
     </ul>
 
     <div class="case-proof reveal">
-      <p class="result">Resultado: um produto <strong>ao vivo</strong>, com sessões guiadas reais e sistema visual próprio.</p>
+      <p class="result" data-i18n="idx_c1_result" data-i18n-html>Resultado: um produto <strong>ao vivo</strong>, com sessões guiadas reais e sistema visual próprio.</p>
       <div style="display:flex; gap:1.2rem; flex-wrap:wrap;">
-        <a class="link-arrow" href="https://neuromedit.com" target="_blank" rel="noopener">Visitar o NeuroMedit ↗</a>
-        <a class="link-arrow" href="case-study-neuromedit.html">Ver o case study completo →</a>
+        <a class="link-arrow" href="https://neuromedit.com" target="_blank" rel="noopener" data-i18n="idx_c1_link_visit">Visitar o NeuroMedit ↗</a>
+        <a class="link-arrow" href="case-study-neuromedit.html" data-i18n="idx_c1_link_case">Ver o case study completo →</a>
       </div>
     </div>
 
@@ -483,11 +542,11 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
         <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>
       </button>
       <div class="meta">
-        <strong>Meditação de amostra</strong>
-        <span id="audioStatus">A respiração de entrada do NeuroMedit · 4:25</span>
+        <strong data-i18n="idx_audio_title">Meditação de amostra</strong>
+        <span id="audioStatus" data-i18n="idx_audio_status_default">A respiração de entrada do NeuroMedit · 4:25</span>
         <div class="audio-progress" aria-hidden="true"><div class="audio-progress-fill" id="audioFill"></div></div>
       </div>
-      <a class="link-arrow" href="poema.html">A origem: o poema da árvore →</a>
+      <a class="link-arrow" href="poema.html" data-i18n="idx_c1_link_poema">A origem: o poema da árvore →</a>
       <audio id="sampleAudio" preload="none" src="audio/meditacao-amostra.mp3"></audio>
     </div>
   </div>
@@ -497,25 +556,25 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <section class="case-block" id="case-hospitalidade">
   <div class="container">
     <div class="case-header reveal">
-      <h2>Hospitalidade como pesquisa de usuário</h2>
-      <span class="case-tag">Caso 02 · Hospitalidade</span>
+      <h2 data-i18n="idx_case2_title">Hospitalidade como pesquisa de usuário</h2>
+      <span class="case-tag" data-i18n="idx_c2_tag">Caso 02 · Hospitalidade</span>
     </div>
     <div class="case-grid reveal">
       <div>
-        <h4>Contexto</h4>
-        <p>Anos de balcão em Lisboa e no Brasil, ao lado de colegas de Cabo Verde, Moçambique e Angola. Clientes de passagem, poucos segundos para criar confiança.</p>
+        <h4 data-i18n="common_h_contexto">Contexto</h4>
+        <p data-i18n="idx_c2_context_p">Anos de balcão em Lisboa e no Brasil, ao lado de colegas de Cabo Verde, Moçambique e Angola. Clientes de passagem, poucos segundos para criar confiança.</p>
       </div>
       <div>
-        <h4>Abordagem</h4>
-        <p>Aprendi a ler sinais rápido: tom de voz, postura, o que a pessoa não disse. Cada atendimento virou um pequeno estudo de comportamento — o mesmo instinto que hoje aplico em pesquisa de usuário.</p>
+        <h4 data-i18n="common_h_abordagem">Abordagem</h4>
+        <p data-i18n="idx_c2_approach_p">Aprendi a ler sinais rápido: tom de voz, postura, o que a pessoa não disse. Cada atendimento virou um pequeno estudo de comportamento — o mesmo instinto que hoje aplico em pesquisa de usuário.</p>
       </div>
       <div>
-        <h4>Meu papel</h4>
-        <p>Atendimento direto ao cliente, em dois idiomas, em ambientes de alto volume e pouca margem de erro.</p>
+        <h4 data-i18n="common_h_papel">Meu papel</h4>
+        <p data-i18n="idx_c2_role_p">Atendimento direto ao cliente, em dois idiomas, em ambientes de alto volume e pouca margem de erro.</p>
       </div>
     </div>
     <div class="case-proof reveal">
-      <p class="result">Resultado: visitantes que <strong>viravam regulares</strong> — e a base do meu olhar como designer.</p>
+      <p class="result" data-i18n="idx_c2_result" data-i18n-html>Resultado: visitantes que <strong>viravam regulares</strong> — e a base do meu olhar como designer.</p>
     </div>
   </div>
 </section>
@@ -524,26 +583,26 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <section class="case-block" id="case-ux">
   <div class="container">
     <div class="case-header reveal">
-      <h2>Design com baixa carga cognitiva</h2>
-      <span class="case-tag">Caso 03 · UX Design</span>
+      <h2 data-i18n="idx_case3_title">Design com baixa carga cognitiva</h2>
+      <span class="case-tag" data-i18n="idx_c3_tag">Caso 03 · UX Design</span>
     </div>
     <div class="case-grid reveal">
       <div>
-        <h4>Contexto</h4>
-        <p>Entrei na faculdade de UX Design depois de anos de programação e atendimento. Queria unir as duas coisas: lógica de sistema e leitura humana.</p>
+        <h4 data-i18n="common_h_contexto">Contexto</h4>
+        <p data-i18n="idx_c3_context_p">Entrei na faculdade de UX Design depois de anos de programação e atendimento. Queria unir as duas coisas: lógica de sistema e leitura humana.</p>
       </div>
       <div>
-        <h4>Abordagem</h4>
-        <p>Uma decisão por tela, hierarquia clara, texto que não exige esforço. Este princípio guiou o roteiro do NeuroMedit e guia esta própria página que você está lendo agora.</p>
+        <h4 data-i18n="common_h_abordagem">Abordagem</h4>
+        <p data-i18n="idx_c3_approach_p">Uma decisão por tela, hierarquia clara, texto que não exige esforço. Este princípio guiou o roteiro do NeuroMedit e guia esta própria página que você está lendo agora.</p>
       </div>
       <div>
-        <h4>Meu papel</h4>
-        <p>Pesquisa, wireframe, prototipagem e design de interface — sozinho, do zero ao produto publicado.</p>
+        <h4 data-i18n="common_h_papel">Meu papel</h4>
+        <p data-i18n="idx_c3_role_p">Pesquisa, wireframe, prototipagem e design de interface — sozinho, do zero ao produto publicado.</p>
       </div>
     </div>
     <div class="case-proof reveal">
-      <p class="result">Resultado: um <strong>método</strong> aplicado em tudo o que construo, não só um princípio teórico.</p>
-      <a class="link-arrow" href="#topo">Ver esta página como exemplo ↑</a>
+      <p class="result" data-i18n="idx_c3_result" data-i18n-html>Resultado: um <strong>método</strong> aplicado em tudo o que construo, não só um princípio teórico.</p>
+      <a class="link-arrow" href="#topo" data-i18n="idx_c3_link">Ver esta página como exemplo ↑</a>
     </div>
   </div>
 </section>
@@ -552,29 +611,29 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <section class="case-block" id="case-tendencias">
   <div class="container">
     <div class="case-header reveal">
-      <h2>Para onde a experiência do usuário vai em 2026</h2>
-      <span class="case-tag">Caso 04 · Pesquisa própria</span>
+      <h2 data-i18n="idx_c4_h2">Para onde a experiência do usuário vai em 2026</h2>
+      <span class="case-tag" data-i18n="idx_c4_tag">Caso 04 · Pesquisa própria</span>
     </div>
-    <p class="case-intro reveal">Antes de continuar desenhando, parei para pesquisar a fundo: onde o dedo alcança melhor no mobile, para onde o olho vai primeiro no desktop, que forma de botão converte mais, e o que realmente muda para quem navega com leitor de tela. Depois apliquei cada achado nesta própria página — e auditei o NeuroMedit com a mesma régua.</p>
+    <p class="case-intro reveal" data-i18n="idx_c4_intro">Antes de continuar desenhando, parei para pesquisar a fundo: onde o dedo alcança melhor no mobile, para onde o olho vai primeiro no desktop, que forma de botão converte mais, e o que realmente muda para quem navega com leitor de tela. Depois apliquei cada achado nesta própria página — e auditei o NeuroMedit com a mesma régua.</p>
 
     <div class="case-grid reveal">
       <div>
-        <h4>Pesquisa</h4>
-        <p>Zona de alcance do polegar em mobile, padrões de leitura em F e Z no desktop, forma de botão e conversão, e as regras de acessibilidade da WCAG 2.2 / European Accessibility Act.</p>
+        <h4 data-i18n="common_h_pesquisa">Pesquisa</h4>
+        <p data-i18n="idx_c4_pesquisa_p">Zona de alcance do polegar em mobile, padrões de leitura em F e Z no desktop, forma de botão e conversão, e as regras de acessibilidade da WCAG 2.2 / European Accessibility Act.</p>
       </div>
       <div>
-        <h4>Abordagem</h4>
-        <p>Nada de opinião solta: medi o contraste real das cores do meu portfólio e do NeuroMedit pela fórmula oficial do WCAG antes de mudar qualquer coisa — e encontrei falhas reais nos dois.</p>
+        <h4 data-i18n="common_h_abordagem">Abordagem</h4>
+        <p data-i18n="idx_c4_abordagem_p">Nada de opinião solta: medi o contraste real das cores do meu portfólio e do NeuroMedit pela fórmula oficial do WCAG antes de mudar qualquer coisa — e encontrei falhas reais nos dois.</p>
       </div>
       <div>
-        <h4>Meu papel</h4>
-        <p>Pesquisa, cálculo de contraste, escrita do estudo e implementação das correções — nos dois produtos, com aprovação antes de tocar o NeuroMedit em produção.</p>
+        <h4 data-i18n="common_h_papel">Meu papel</h4>
+        <p data-i18n="idx_c4_papel_p">Pesquisa, cálculo de contraste, escrita do estudo e implementação das correções — nos dois produtos, com aprovação antes de tocar o NeuroMedit em produção.</p>
       </div>
     </div>
 
     <div class="case-proof reveal">
-      <p class="result">Resultado: <strong>12 correções de contraste</strong> aplicadas em produção, mais CTA de polegar, skip-link e alvos de toque no meu portfólio.</p>
-      <a class="link-arrow" href="tendencias-ux-2026.html">Ler o estudo completo →</a>
+      <p class="result" data-i18n="idx_c4_result" data-i18n-html>Resultado: <strong>12 correções de contraste</strong> aplicadas em produção, mais CTA de polegar, skip-link e alvos de toque no meu portfólio.</p>
+      <a class="link-arrow" href="tendencias-ux-2026.html" data-i18n="idx_c4_link">Ler o estudo completo →</a>
     </div>
   </div>
 </section>
@@ -583,19 +642,19 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <section id="sobre">
   <div class="container about-grid">
     <div class="reveal">
-      <span class="eyebrow">Sobre mim</span>
-      <h2 style="font-size:clamp(1.7rem,3.4vw,2.3rem); margin-bottom:1.1rem;">Do Rio São Francisco a Lisboa</h2>
-      <p>Nasci em Paulo Afonso, Bahia, à beira do rio. Aos 16, pagava minha própria escola de espanhol trabalhando numa biblioteca — e já meditava todas as manhãs.</p>
-      <p>Em 2022 atravessei o Brasil de ônibus e depois o Atlântico, e recomecei em Lisboa com 800€. Hoje sou estudante de UX Design, voluntário num centro de yoga, e sigo guiando meditações — agora para muito mais gente do que imaginava.</p>
+      <span class="eyebrow" data-i18n="idx_about_eyebrow">Sobre mim</span>
+      <h2 style="font-size:clamp(1.7rem,3.4vw,2.3rem); margin-bottom:1.1rem;" data-i18n="idx_about_h2">Do Rio São Francisco a Lisboa</h2>
+      <p data-i18n="idx_about_p1">Nasci em Paulo Afonso, Bahia, à beira do rio. Aos 16, pagava minha própria escola de espanhol trabalhando numa biblioteca — e já meditava todas as manhãs.</p>
+      <p data-i18n="idx_about_p2">Em 2022 atravessei o Brasil de ônibus e depois o Atlântico, e recomecei em Lisboa com 800€. Hoje sou estudante de UX Design, voluntário num centro de yoga, e sigo guiando meditações — agora para muito mais gente do que imaginava.</p>
     </div>
     <div class="timeline-strip reveal">
-      <div class="t-row"><span class="yr">2002</span><div class="desc"><strong>Paulo Afonso, Bahia</strong><span>Nasço à beira do Rio São Francisco.</span></div></div>
-      <div class="t-row"><span class="yr">2016</span><div class="desc"><strong>A biblioteca</strong><span>Pago minha escola de espanhol com o próprio salário.</span></div></div>
-      <div class="t-row"><span class="yr">2022</span><div class="desc"><strong>A travessia</strong><span>Brasil de ônibus, depois o Atlântico. Chego a Lisboa.</span></div></div>
-      <div class="t-row"><span class="yr">2023</span><div class="desc"><strong>Os balcões</strong><span>Hospitalidade em Lisboa, gente vira especialidade.</span></div></div>
-      <div class="t-row"><span class="yr">2024</span><div class="desc"><strong>Formação</strong><span>Faculdade de UX Design e trabalho, lado a lado.</span></div></div>
-      <div class="t-row"><span class="yr">2025</span><div class="desc"><strong>NeuroMedit</strong><span>O projeto nasce, num período sabático.</span></div></div>
-      <div class="t-row"><span class="yr">2026</span><div class="desc"><strong>Hoje</strong><span>UX Design, yoga e meditação, lado a lado.</span></div></div>
+      <div class="t-row"><span class="yr">2002</span><div class="desc"><strong data-i18n="idx_tl_2002_title">Paulo Afonso, Bahia</strong><span data-i18n="idx_tl_2002_desc">Nasço à beira do Rio São Francisco.</span></div></div>
+      <div class="t-row"><span class="yr">2016</span><div class="desc"><strong data-i18n="idx_tl_2016_title">A biblioteca</strong><span data-i18n="idx_tl_2016_desc">Pago minha escola de espanhol com o próprio salário.</span></div></div>
+      <div class="t-row"><span class="yr">2022</span><div class="desc"><strong data-i18n="idx_tl_2022_title">A travessia</strong><span data-i18n="idx_tl_2022_desc">Brasil de ônibus, depois o Atlântico. Chego a Lisboa.</span></div></div>
+      <div class="t-row"><span class="yr">2023</span><div class="desc"><strong data-i18n="idx_tl_2023_title">Os balcões</strong><span data-i18n="idx_tl_2023_desc">Hospitalidade em Lisboa, gente vira especialidade.</span></div></div>
+      <div class="t-row"><span class="yr">2024</span><div class="desc"><strong data-i18n="idx_tl_2024_title">Formação</strong><span data-i18n="idx_tl_2024_desc">Faculdade de UX Design e trabalho, lado a lado.</span></div></div>
+      <div class="t-row"><span class="yr">2025</span><div class="desc"><strong data-i18n="idx_tl_2025_title">NeuroMedit</strong><span data-i18n="idx_tl_2025_desc">O projeto nasce, num período sabático.</span></div></div>
+      <div class="t-row"><span class="yr">2026</span><div class="desc"><strong data-i18n="idx_tl_2026_title">Hoje</strong><span data-i18n="idx_tl_2026_desc">UX Design, yoga e meditação, lado a lado.</span></div></div>
     </div>
   </div>
 </section>
@@ -603,17 +662,17 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= CONTATO ================= -->
 <section class="contact-block" id="contato">
   <div class="container">
-    <span class="eyebrow" style="justify-content:center;">Vamos conversar</span>
-    <h2>Se o meu caminho fez sentido pra você, escreva.</h2>
-    <p>Respondo pessoalmente — sobre um projeto, uma vaga, uma meditação ou só para trocar uma ideia.</p>
-    <span class="open-chip"><span class="dot" aria-hidden="true"></span> Aberto a colaborar em UX/UI, front-end e produtos centrados em pessoas</span>
+    <span class="eyebrow" style="justify-content:center;" data-i18n="idx_contact_eyebrow">Vamos conversar</span>
+    <h2 data-i18n="idx_contact_h2">Se o meu caminho fez sentido pra você, escreva.</h2>
+    <p data-i18n="idx_contact_p">Respondo pessoalmente — sobre um projeto, uma vaga, uma meditação ou só para trocar uma ideia.</p>
+    <span class="open-chip"><span class="dot" aria-hidden="true"></span> <span data-i18n="idx_open_chip">Aberto a colaborar em UX/UI, front-end e produtos centrados em pessoas</span></span>
     <div class="contact-actions">
-      <a class="button primary" href="mailto:kaullyano@gmail.com">Escrever para mim</a>
-      <a class="button ghost" href="https://www.linkedin.com/in/lucasnunespt/" target="_blank" rel="noopener">Conectar no LinkedIn</a>
+      <a class="button primary" href="mailto:kaullyano@gmail.com" data-i18n="idx_contact_cta_email">Escrever para mim</a>
+      <a class="button ghost" href="https://www.linkedin.com/in/lucasnunespt/" target="_blank" rel="noopener" data-i18n="idx_contact_cta_linkedin">Conectar no LinkedIn</a>
     </div>
     <div class="social-row">
       <a href="https://www.linkedin.com/in/lucasnunespt/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="mailto:kaullyano@gmail.com">E-mail</a>
+      <a href="mailto:kaullyano@gmail.com" data-i18n="idx_social_email">E-mail</a>
       <a href="https://neuromedit.com" target="_blank" rel="noopener">NeuroMedit</a>
     </div>
   </div>
@@ -622,13 +681,14 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 
 <footer>
   <div class="container">
-    <p>© 2026 Lucas Nunes · Lisboa, Portugal.</p>
+    <p data-i18n="common_footer">© 2026 Lucas Nunes · Lisboa, Portugal.</p>
   </div>
 </footer>
 
 <!-- CTA flutuante — zona de alcance do polegar em mobile -->
-<a class="mobile-cta" id="mobileCta" href="#contato">Falar comigo</a>
+<a class="mobile-cta" id="mobileCta" href="#contato" data-i18n="idx_hero_cta_contato">Falar comigo</a>
 
+<script src="i18n-portfolio.js"></script>
 <script>
 (function(){
   "use strict";
@@ -691,13 +751,22 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
   var audioFill = document.getElementById("audioFill");
   var audioStatus = document.getElementById("audioStatus");
   if(sampleAudio && playBtn){
-    var defaultStatus = audioStatus ? audioStatus.textContent : "";
     var fmt = function(s){
       if(!isFinite(s)) return "0:00";
       var m = Math.floor(s / 60);
       var sec = Math.floor(s % 60);
       return m + ":" + (sec < 10 ? "0" : "") + sec;
     };
+    var playLabel = function(){
+      if(window.PortfolioI18n && window.PortfolioI18n.t){
+        return window.PortfolioI18n.t(sampleAudio.paused ? "idx_audio_play_label" : "idx_audio_pause_label");
+      }
+      return sampleAudio.paused ? "Play" : "Pause";
+    };
+    var defaultStatus = function(){
+      return (window.PortfolioI18n && window.PortfolioI18n.t) ? window.PortfolioI18n.t("idx_audio_status_default") : (audioStatus ? audioStatus.textContent : "");
+    };
+    playBtn.setAttribute("aria-label", playLabel());
     playBtn.addEventListener("click", function(){
       if(sampleAudio.paused){
         sampleAudio.play();
@@ -707,11 +776,11 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
     });
     sampleAudio.addEventListener("play", function(){
       playBtn.classList.add("is-playing");
-      playBtn.setAttribute("aria-label", "Pausar amostra de meditação");
+      playBtn.setAttribute("aria-label", playLabel());
     });
     sampleAudio.addEventListener("pause", function(){
       playBtn.classList.remove("is-playing");
-      playBtn.setAttribute("aria-label", "Reproduzir amostra de meditação");
+      playBtn.setAttribute("aria-label", playLabel());
     });
     sampleAudio.addEventListener("timeupdate", function(){
       if(sampleAudio.duration && audioFill){
@@ -723,9 +792,12 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
     });
     sampleAudio.addEventListener("ended", function(){
       playBtn.classList.remove("is-playing");
-      playBtn.setAttribute("aria-label", "Reproduzir amostra de meditação");
+      playBtn.setAttribute("aria-label", playLabel());
       if(audioFill) audioFill.style.width = "0%";
-      if(audioStatus) audioStatus.textContent = defaultStatus;
+      if(audioStatus) audioStatus.textContent = defaultStatus();
+    });
+    window.addEventListener("portfolio:languagechange", function(){
+      playBtn.setAttribute("aria-label", playLabel());
     });
   }
 

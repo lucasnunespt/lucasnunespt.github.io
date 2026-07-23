@@ -115,6 +115,63 @@ p{ color:var(--ink-soft); }
 @media (max-width:760px){ .main-nav a:not(.button){ display:none; } }
 
 /* ============================================================
+   SELETOR DE IDIOMA — mesmo componente do portfólio
+   ============================================================ */
+.header-language-slot{ display:inline-flex; flex-shrink:0; align-items:center; }
+.language-wrapper{
+  position:relative; display:inline-flex; flex-direction:column;
+  width:64px; max-height:38px; border-radius:999px;
+  background:color-mix(in srgb, var(--surface) 78%, transparent);
+  border:1px solid var(--line);
+  box-shadow:0 6px 18px rgba(23,20,15,.08);
+  overflow:hidden;
+  transition:max-height .42s var(--ease), background .3s ease, border-color .3s ease, box-shadow .3s ease;
+  z-index:80;
+}
+.language-trigger{
+  appearance:none; position:relative; z-index:2; flex:0 0 38px; width:100%; height:38px;
+  border:0; border-radius:0; display:inline-flex; align-items:center; justify-content:center;
+  gap:.28rem; color:var(--ink); background:transparent; cursor:pointer;
+}
+.language-trigger svg{ width:15px; height:15px; }
+.language-current{ font-size:.7rem; letter-spacing:.08em; line-height:1; font-weight:600; }
+.language-trigger:focus-visible{ outline:none; }
+.language-options{
+  width:100%; padding:0 .32rem .5rem; display:grid; align-items:center; gap:.22rem; box-sizing:border-box;
+  opacity:0; transform:translateY(-10px);
+  transition:opacity .3s ease, transform .35s var(--ease);
+}
+.language-wrapper.is-open{
+  max-height:260px;
+  background:var(--surface);
+  border-color:var(--ink-faint);
+  box-shadow:0 14px 34px rgba(23,20,15,.14);
+}
+.language-wrapper.is-open .language-options{ opacity:1; transform:translateY(0); }
+@media (hover:hover) and (pointer:fine){
+  .language-wrapper:hover{ max-height:260px; background:var(--surface); border-color:var(--ink-faint); box-shadow:0 14px 34px rgba(23,20,15,.14); }
+  .language-wrapper:hover .language-options{ opacity:1; transform:translateY(0); }
+}
+.language-options button{
+  appearance:none; min-width:46px; height:30px; border:0; border-radius:999px;
+  color:var(--ink-soft); background:transparent; font:inherit; font-size:.72rem; letter-spacing:.08em;
+  cursor:pointer; transition:background .18s ease, color .18s ease, transform .18s ease;
+}
+.language-options button:hover, .language-options button:focus-visible{
+  color:var(--ink); background:var(--bg-alt); outline:none;
+}
+.language-options button.is-active{ color:#fff; background-color:var(--accent); outline:none; }
+.language-options button:active{ transform:scale(.96); }
+@media (prefers-reduced-motion:reduce){
+  .language-wrapper, .language-trigger, .language-options, .language-options button{ transition:none; }
+}
+@media (max-width:480px){
+  .language-wrapper{ width:58px; max-height:34px; }
+  .language-trigger{ flex:0 0 34px; height:34px; }
+  .language-wrapper.is-open{ max-height:240px; }
+}
+
+/* ============================================================
    HERO DO ESTUDO
    ============================================================ */
 .cs-hero{ padding-top:clamp(2.5rem,7vw,4rem); padding-bottom:clamp(2.5rem,5vw,3.5rem); border-bottom:1px solid var(--line); }
@@ -313,16 +370,17 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 </head>
 <body>
 
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="#main" data-i18n="common_skip">Skip to content</a>
 
 <!-- ================= HEADER ================= -->
 <header class="site-header" id="siteHeader">
   <div class="container header-inner">
     <a class="wordmark" href="index.html">Lucas&nbsp;<span class="accent">Nunes</span></a>
     <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html#casos">Casos</a>
-      <a href="index.html#sobre">Sobre</a>
-      <a class="button ghost" href="index.html#contato">Contato</a>
+      <a href="index.html#casos" data-i18n="common_nav_casos">Casos</a>
+      <a href="index.html#sobre" data-i18n="common_nav_sobre">Sobre</a>
+      <div class="header-language-slot" data-language-host></div>
+      <a class="button ghost" href="index.html#contato" data-i18n="common_nav_contato">Contato</a>
     </nav>
   </div>
 </header>
@@ -332,20 +390,20 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= HERO ================= -->
 <section class="cs-hero">
   <div class="container">
-    <a class="cs-back reveal" href="index.html#case-neuromedit">← Voltar ao portfólio</a>
-    <span class="eyebrow reveal">UX Case Study</span>
+    <a class="cs-back reveal" href="index.html#case-neuromedit" data-i18n="cs_back">← Back to portfolio</a>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_hero">UX Case Study</span>
     <h1 class="reveal">NeuroMedit</h1>
-    <p class="subtitle reveal">Designing a low cognitive-load meditation experience.</p>
-    <p class="cs-hero-body reveal">Most meditation apps ask you to relax — and overload you with choices before you get there. This is the process behind an app that treats the moment before meditation as part of the meditation itself.</p>
+    <p class="subtitle reveal" data-i18n="cs_subtitle">Designing a low cognitive-load meditation experience.</p>
+    <p class="cs-hero-body reveal" data-i18n="cs_hero_body">Most meditation apps ask you to relax — and overload you with choices before you get there. This is the process behind an app that treats the moment before meditation as part of the meditation itself.</p>
     <div class="cs-tags reveal">
-      <span>UX Design</span>
-      <span>Emotional Design</span>
-      <span>Cognitive Load</span>
-      <span>Front-End</span>
+      <span data-i18n="cs_tag_ux">UX Design</span>
+      <span data-i18n="cs_tag_emotional">Emotional Design</span>
+      <span data-i18n="cs_tag_cognitive">Cognitive Load</span>
+      <span data-i18n="cs_tag_frontend">Front-End</span>
     </div>
     <div class="cs-hero-actions reveal">
-      <a class="button primary" href="#research">Explore the process ↓</a>
-      <a class="button ghost" href="https://neuromedit.com" target="_blank" rel="noopener">View live project ↗</a>
+      <a class="button primary" href="#research" data-i18n="cs_cta_explore">Explore the process ↓</a>
+      <a class="button ghost" href="https://neuromedit.com" target="_blank" rel="noopener" data-i18n="cs_cta_live">View live project ↗</a>
     </div>
   </div>
 </section>
@@ -353,12 +411,12 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= 01 RESEARCH / FRAMING ================= -->
 <section class="cs-section" id="research">
   <div class="container">
-    <span class="eyebrow reveal">01 · Research &amp; Framing</span>
-    <h2 class="reveal">Starting with the wrong question</h2>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_01">01 · Research &amp; Framing</span>
+    <h2 class="reveal" data-i18n="cs_h2_01">Starting with the wrong question</h2>
     <div class="cs-body reveal">
-      <p>Meditation apps are usually judged by their content library — how many sessions, how many voices, how many themes. I started there too, and it was the wrong place to start.</p>
-      <p>The real friction wasn't the content. It was everything a stressed person has to do before reaching it: open the app, read a menu, compare categories, make a decision. For someone who opened the app because they were already overwhelmed, that sequence is a second source of overwhelm.</p>
-      <p>So I reframed the problem. Instead of asking "what content should this app have," I asked "what does someone in a dysregulated state need from an interface in the first ten seconds." That question shaped everything that followed.</p>
+      <p data-i18n="cs_01_p1">Meditation apps are usually judged by their content library — how many sessions, how many voices, how many themes. I started there too, and it was the wrong place to start.</p>
+      <p data-i18n="cs_01_p2">The real friction wasn't the content. It was everything a stressed person has to do before reaching it: open the app, read a menu, compare categories, make a decision. For someone who opened the app because they were already overwhelmed, that sequence is a second source of overwhelm.</p>
+      <p data-i18n="cs_01_p3">So I reframed the problem. Instead of asking "what content should this app have," I asked "what does someone in a dysregulated state need from an interface in the first ten seconds." That question shaped everything that followed.</p>
     </div>
   </div>
 </section>
@@ -366,13 +424,13 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= 02 RESEARCH SYNTHESIS ================= -->
 <section class="cs-section" id="synthesis">
   <div class="container">
-    <span class="eyebrow reveal">02 · Research Synthesis</span>
-    <h2 class="reveal">Calm is a structural problem, not a visual one</h2>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_02">02 · Research Synthesis</span>
+    <h2 class="reveal" data-i18n="cs_h2_02">Calm is a structural problem, not a visual one</h2>
     <div class="cs-body reveal">
-      <p>Soft colors and slow animations can suggest calm, but they don't produce it if the person still has to think, choose, and navigate before their first breath. Visual calm and cognitive calm are different things, and most meditation products only design for the first one.</p>
-      <blockquote class="cs-quote">Calm isn't a color palette. It's the absence of unnecessary decisions.</blockquote>
-      <p>That insight became the design thesis for NeuroMedit: reduce the number of decisions between "I opened the app" and "I am breathing," and treat every screen in between as a transition, not a destination.</p>
-      <p>This meant looking past aesthetics and mapping the emotional and cognitive state of the person on the other side of the screen — before designing a single component.</p>
+      <p data-i18n="cs_02_p1">Soft colors and slow animations can suggest calm, but they don't produce it if the person still has to think, choose, and navigate before their first breath. Visual calm and cognitive calm are different things, and most meditation products only design for the first one.</p>
+      <blockquote class="cs-quote" data-i18n="cs_quote">Calm isn't a color palette. It's the absence of unnecessary decisions.</blockquote>
+      <p data-i18n="cs_02_p2">That insight became the design thesis for NeuroMedit: reduce the number of decisions between "I opened the app" and "I am breathing," and treat every screen in between as a transition, not a destination.</p>
+      <p data-i18n="cs_02_p3">This meant looking past aesthetics and mapping the emotional and cognitive state of the person on the other side of the screen — before designing a single component.</p>
     </div>
   </div>
 </section>
@@ -380,37 +438,37 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= USER STATES ================= -->
 <section class="cs-section">
   <div class="container">
-    <span class="eyebrow reveal">User States</span>
-    <h2 class="reveal">Who is actually opening this app</h2>
-    <p class="reveal" style="max-width:64ch;font-size:1.02rem;line-height:1.75;">Four recurring states kept surfacing in research — each with a different emotional entry point, a different cognitive pain point, and a different opportunity for the interface to help rather than add friction.</p>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_states">User States</span>
+    <h2 class="reveal" data-i18n="cs_h2_states">Who is actually opening this app</h2>
+    <p class="reveal" style="max-width:64ch;font-size:1.02rem;line-height:1.75;" data-i18n="cs_states_intro">Four recurring states kept surfacing in research — each with a different emotional entry point, a different cognitive pain point, and a different opportunity for the interface to help rather than add friction.</p>
     <div class="cs-states-grid">
       <div class="cs-state-card reveal">
         <div class="idx">01</div>
-        <h3>Overwhelmed</h3>
-        <div class="row"><h4>Emotional state</h4><p>Anxious, scattered, mentally "loud."</p></div>
-        <div class="row"><h4>Cognitive pain point</h4><p>Any menu feels like one more demand.</p></div>
-        <div class="row"><h4>UX opportunity</h4><p>Remove choice entirely at entry — offer one obvious next step.</p></div>
+        <h3 data-i18n="cs_state1_title">Overwhelmed</h3>
+        <div class="row"><h4 data-i18n="cs_label_emotional">Emotional state</h4><p data-i18n="cs_state1_emotional">Anxious, scattered, mentally "loud."</p></div>
+        <div class="row"><h4 data-i18n="cs_label_cognitive">Cognitive pain point</h4><p data-i18n="cs_state1_cognitive">Any menu feels like one more demand.</p></div>
+        <div class="row"><h4 data-i18n="cs_label_opportunity">UX opportunity</h4><p data-i18n="cs_state1_opportunity">Remove choice entirely at entry — offer one obvious next step.</p></div>
       </div>
       <div class="cs-state-card reveal">
         <div class="idx">02</div>
-        <h3>Depleted</h3>
-        <div class="row"><h4>Emotional state</h4><p>Tired, low energy, little patience.</p></div>
-        <div class="row"><h4>Cognitive pain point</h4><p>Reading and comparing options costs effort they don't have.</p></div>
-        <div class="row"><h4>UX opportunity</h4><p>Short, low-effort interactions with generous whitespace.</p></div>
+        <h3 data-i18n="cs_state2_title">Depleted</h3>
+        <div class="row"><h4 data-i18n="cs_label_emotional">Emotional state</h4><p data-i18n="cs_state2_emotional">Tired, low energy, little patience.</p></div>
+        <div class="row"><h4 data-i18n="cs_label_cognitive">Cognitive pain point</h4><p data-i18n="cs_state2_cognitive">Reading and comparing options costs effort they don't have.</p></div>
+        <div class="row"><h4 data-i18n="cs_label_opportunity">UX opportunity</h4><p data-i18n="cs_state2_opportunity">Short, low-effort interactions with generous whitespace.</p></div>
       </div>
       <div class="cs-state-card reveal">
         <div class="idx">03</div>
-        <h3>Skeptical</h3>
-        <div class="row"><h4>Emotional state</h4><p>Curious but guarded, unsure it will help.</p></div>
-        <div class="row"><h4>Cognitive pain point</h4><p>Overly clinical or overly mystical language breaks trust.</p></div>
-        <div class="row"><h4>UX opportunity</h4><p>Plain, grounded language and visible transparency about the method.</p></div>
+        <h3 data-i18n="cs_state3_title">Skeptical</h3>
+        <div class="row"><h4 data-i18n="cs_label_emotional">Emotional state</h4><p data-i18n="cs_state3_emotional">Curious but guarded, unsure it will help.</p></div>
+        <div class="row"><h4 data-i18n="cs_label_cognitive">Cognitive pain point</h4><p data-i18n="cs_state3_cognitive">Overly clinical or overly mystical language breaks trust.</p></div>
+        <div class="row"><h4 data-i18n="cs_label_opportunity">UX opportunity</h4><p data-i18n="cs_state3_opportunity">Plain, grounded language and visible transparency about the method.</p></div>
       </div>
       <div class="cs-state-card reveal">
         <div class="idx">04</div>
-        <h3>Returning</h3>
-        <div class="row"><h4>Emotional state</h4><p>Familiar with the app, seeking routine.</p></div>
-        <div class="row"><h4>Cognitive pain point</h4><p>Friction in getting back to what worked before.</p></div>
-        <div class="row"><h4>UX opportunity</h4><p>Fast re-entry to recent or favorite sessions.</p></div>
+        <h3 data-i18n="cs_state4_title">Returning</h3>
+        <div class="row"><h4 data-i18n="cs_label_emotional">Emotional state</h4><p data-i18n="cs_state4_emotional">Familiar with the app, seeking routine.</p></div>
+        <div class="row"><h4 data-i18n="cs_label_cognitive">Cognitive pain point</h4><p data-i18n="cs_state4_cognitive">Friction in getting back to what worked before.</p></div>
+        <div class="row"><h4 data-i18n="cs_label_opportunity">UX opportunity</h4><p data-i18n="cs_state4_opportunity">Fast re-entry to recent or favorite sessions.</p></div>
       </div>
     </div>
   </div>
@@ -419,33 +477,33 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= 03 BENCHMARK ================= -->
 <section class="cs-section" id="benchmark">
   <div class="container">
-    <span class="eyebrow reveal">03 · Benchmark</span>
-    <h2 class="reveal">Looking at Calm and Headspace with a critical eye</h2>
-    <p class="reveal" style="max-width:64ch;font-size:1.02rem;line-height:1.75;">Both are well-crafted products with strong visual systems. The gap I found wasn't in polish — it was in what happens before the first breath.</p>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_03">03 · Benchmark</span>
+    <h2 class="reveal" data-i18n="cs_h2_03">Looking at Calm and Headspace with a critical eye</h2>
+    <p class="reveal" style="max-width:64ch;font-size:1.02rem;line-height:1.75;" data-i18n="cs_03_intro">Both are well-crafted products with strong visual systems. The gap I found wasn't in polish — it was in what happens before the first breath.</p>
     <div class="cs-benchmark-grid">
       <div class="reveal">
         <div class="cs-bench-card">
-          <h4>Calm</h4>
-          <p>A rich, editorial home screen with multiple content rails. Beautiful, but it asks for a decision before any practice begins — the entry point is a library, not a breath.</p>
+          <h4 data-i18n="cs_bench_calm_h">Calm</h4>
+          <p data-i18n="cs_bench_calm_p">A rich, editorial home screen with multiple content rails. Beautiful, but it asks for a decision before any practice begins — the entry point is a library, not a breath.</p>
         </div>
         <div class="cs-bench-card">
-          <h4>Headspace</h4>
-          <p>Friendlier and more guided than Calm, with onboarding that nudges toward a first session. Still, the main navigation surfaces categories and courses before any calming action.</p>
+          <h4 data-i18n="cs_bench_headspace_h">Headspace</h4>
+          <p data-i18n="cs_bench_headspace_p">Friendlier and more guided than Calm, with onboarding that nudges toward a first session. Still, the main navigation surfaces categories and courses before any calming action.</p>
         </div>
         <div class="cs-bench-card insight">
-          <h4>Insight</h4>
-          <p>Neither product treats the pre-session moment as part of the emotional arc. Both optimize the library. NeuroMedit optimizes the threshold.</p>
+          <h4 data-i18n="cs_bench_insight_h">Insight</h4>
+          <p data-i18n="cs_bench_insight_p">Neither product treats the pre-session moment as part of the emotional arc. Both optimize the library. NeuroMedit optimizes the threshold.</p>
         </div>
       </div>
       <div class="reveal">
         <div class="cs-carousel" id="benchCarousel">
           <div class="cs-carousel-track" id="benchTrack">
-            <div class="cs-carousel-slide"><img src="assets/calm-entry.jpg" alt="Calm app home screen, showing multiple content rails and categories"></div>
-            <div class="cs-carousel-slide"><img src="assets/headspace-entry.jpg" alt="Headspace app home screen, showing onboarding and course categories"></div>
+            <div class="cs-carousel-slide"><img src="assets/calm-entry.jpg" alt="Calm app home screen, showing multiple content rails and categories" data-i18n="cs_carousel_alt_calm" data-i18n-attr="alt"></div>
+            <div class="cs-carousel-slide"><img src="assets/headspace-entry.jpg" alt="Headspace app home screen, showing onboarding and course categories" data-i18n="cs_carousel_alt_headspace" data-i18n-attr="alt"></div>
           </div>
-          <button class="cs-carousel-nav prev" id="benchPrev" aria-label="Previous image">‹</button>
-          <button class="cs-carousel-nav next" id="benchNext" aria-label="Next image">›</button>
-          <p class="cs-carousel-cap" id="benchCap">Calm — entry screen</p>
+          <button class="cs-carousel-nav prev" id="benchPrev" aria-label="Previous image" data-i18n="cs_carousel_prev_label" data-i18n-attr="aria-label">‹</button>
+          <button class="cs-carousel-nav next" id="benchNext" aria-label="Next image" data-i18n="cs_carousel_next_label" data-i18n-attr="aria-label">›</button>
+          <p class="cs-carousel-cap" id="benchCap" data-i18n="cs_carousel_cap_calm">Calm — entry screen</p>
           <div class="cs-carousel-dots" id="benchDots"></div>
         </div>
       </div>
@@ -456,33 +514,33 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= 04 DESIGN PRINCIPLES ================= -->
 <section class="cs-section" id="principles">
   <div class="container">
-    <span class="eyebrow reveal">04 · Design Principles</span>
-    <h2 class="reveal">Five rules that shaped every screen</h2>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_04">04 · Design Principles</span>
+    <h2 class="reveal" data-i18n="cs_h2_04">Five rules that shaped every screen</h2>
     <div class="cs-principles-grid">
       <div class="cs-principle-card reveal">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.6" fill="currentColor" stroke="none"/></svg></span>
-        <h4>One decision per screen</h4>
-        <p>Never ask for two choices when one will do.</p>
+        <h4 data-i18n="cs_p1_title">One decision per screen</h4>
+        <p data-i18n="cs_p1_desc">Never ask for two choices when one will do.</p>
       </div>
       <div class="cs-principle-card reveal">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.2 20 8.6 12 13 4 8.6 12 4.2z"/><path d="M4 12.4l8 4.4 8-4.4"/><path d="M4 16.2l8 4.4 8-4.4"/></svg></span>
-        <h4>Progressive disclosure</h4>
-        <p>Reveal complexity only when the user is ready for it.</p>
+        <h4 data-i18n="cs_p2_title">Progressive disclosure</h4>
+        <p data-i18n="cs_p2_desc">Reveal complexity only when the user is ready for it.</p>
       </div>
       <div class="cs-principle-card reveal">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 13c1.8-4.5 3.6-4.5 5.4 0s3.6 4.5 5.4 0 3.6-4.5 5.4 0 3.6-4.5 5.4 0"/></svg></span>
-        <h4>Breath as transition</h4>
-        <p>Loading and navigation moments double as regulation cues.</p>
+        <h4 data-i18n="cs_p3_title">Breath as transition</h4>
+        <p data-i18n="cs_p3_desc">Loading and navigation moments double as regulation cues.</p>
       </div>
       <div class="cs-principle-card reveal">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="4"/></svg></span>
-        <h4>Generous whitespace</h4>
-        <p>Space is a feature for a depleted nervous system, not decoration.</p>
+        <h4 data-i18n="cs_p4_title">Generous whitespace</h4>
+        <p data-i18n="cs_p4_desc">Space is a feature for a depleted nervous system, not decoration.</p>
       </div>
       <div class="cs-principle-card reveal">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 5.5h15v10h-8.2l-3.8 3.6v-3.6h-3z"/><path d="M8.2 10.2h7.6M8.2 12.9h5"/></svg></span>
-        <h4>Honest language</h4>
-        <p>No clinical jargon, no mystical overreach — just plain, grounded words.</p>
+        <h4 data-i18n="cs_p5_title">Honest language</h4>
+        <p data-i18n="cs_p5_desc">No clinical jargon, no mystical overreach — just plain, grounded words.</p>
       </div>
     </div>
   </div>
@@ -491,25 +549,25 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= 05 EXPLORATION / WIREFRAMES ================= -->
 <section class="cs-section" id="exploration">
   <div class="container">
-    <span class="eyebrow reveal">05 · Exploration</span>
-    <h2 class="reveal">From dense wireframes to a single threshold</h2>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_05">05 · Exploration</span>
+    <h2 class="reveal" data-i18n="cs_h2_05">From dense wireframes to a single threshold</h2>
     <div class="cs-wireframe-grid">
       <div class="cs-wireframe-card reveal">
-        <img src="assets/before.jpg" alt="Early wireframe with a dense grid of categories and filters">
-        <div class="meta"><h4>Before</h4><p>The first pass mirrored the category-first pattern of Calm and Headspace — familiar, but still frontloaded with decisions.</p></div>
+        <img src="assets/before.jpg" alt="Early wireframe with a dense grid of categories and filters" data-i18n="cs_wf1_alt" data-i18n-attr="alt">
+        <div class="meta"><h4 data-i18n="cs_wf1_title">Before</h4><p data-i18n="cs_wf1_desc">The first pass mirrored the category-first pattern of Calm and Headspace — familiar, but still frontloaded with decisions.</p></div>
       </div>
       <div class="cs-wireframe-card reveal">
-        <img src="assets/entry.jpg" alt="Simplified entry screen wireframe with a single primary action">
-        <div class="meta"><h4>Entry</h4><p>Stripped down to one action: begin. Categories moved a layer deeper, reachable but not mandatory.</p></div>
+        <img src="assets/entry.jpg" alt="Simplified entry screen wireframe with a single primary action" data-i18n="cs_wf2_alt" data-i18n-attr="alt">
+        <div class="meta"><h4 data-i18n="cs_wf2_title">Entry</h4><p data-i18n="cs_wf2_desc">Stripped down to one action: begin. Categories moved a layer deeper, reachable but not mandatory.</p></div>
       </div>
       <div class="cs-wireframe-card reveal">
-        <img src="assets/airlock.jpg" alt="Wireframe of the airlock breathing transition screen">
-        <div class="meta"><h4>Airlock</h4><p>A new screen type: a breathing transition between "arriving" and "practicing," instead of a menu.</p></div>
+        <img src="assets/airlock.jpg" alt="Wireframe of the airlock breathing transition screen" data-i18n="cs_wf3_alt" data-i18n-attr="alt">
+        <div class="meta"><h4 data-i18n="cs_wf3_title">Airlock</h4><p data-i18n="cs_wf3_desc">A new screen type: a breathing transition between "arriving" and "practicing," instead of a menu.</p></div>
       </div>
     </div>
     <div class="cs-decision-card reveal">
-      <h4>Decision Notes</h4>
-      <p>The biggest shift wasn't visual — it was structural. I removed an entire navigation layer and replaced it with a single guided step. Early testers consistently described the airlock screen as "the moment I actually started to relax," which confirmed the transition itself needed to be designed, not skipped.</p>
+      <h4 data-i18n="cs_decision_h">Decision Notes</h4>
+      <p data-i18n="cs_decision_p">The biggest shift wasn't visual — it was structural. I removed an entire navigation layer and replaced it with a single guided step. Early testers consistently described the airlock screen as "the moment I actually started to relax," which confirmed the transition itself needed to be designed, not skipped.</p>
     </div>
   </div>
 </section>
@@ -517,26 +575,26 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= 06 USER FLOW ================= -->
 <section class="cs-section" id="flow">
   <div class="container">
-    <span class="eyebrow reveal">06 · User Flow</span>
-    <h2 class="reveal">Seven steps, one continuous arc</h2>
-    <p class="reveal" style="max-width:64ch;font-size:1.02rem;line-height:1.75;">Every step was designed as part of the same emotional curve — from overwhelmed to calm — rather than as separate features.</p>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_06">06 · User Flow</span>
+    <h2 class="reveal" data-i18n="cs_h2_06">Seven steps, one continuous arc</h2>
+    <p class="reveal" style="max-width:64ch;font-size:1.02rem;line-height:1.75;" data-i18n="cs_06_intro">Every step was designed as part of the same emotional curve — from overwhelmed to calm — rather than as separate features.</p>
     <div class="flow-strip reveal">
-      <span class="flow-step is-heavy">Overwhelmed</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Arrival</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Breath</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Airlock</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Meditation</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step">Reflection</span><span class="flow-sep" aria-hidden="true">→</span>
-      <span class="flow-step is-calm">Calm</span>
+      <span class="flow-step is-heavy" data-i18n="idx_flow_1">Overwhelmed</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_2">Arrival</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_3">Breath</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_4">Airlock</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_5">Meditation</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step" data-i18n="idx_flow_6">Reflection</span><span class="flow-sep" aria-hidden="true">→</span>
+      <span class="flow-step is-calm" data-i18n="idx_flow_7">Calm</span>
     </div>
     <div class="cs-flow-detail reveal">
-      <div class="step"><div class="n">01</div><h5>Overwhelmed</h5><p>The state the person arrives in — before opening the app.</p></div>
-      <div class="step"><div class="n">02</div><h5>Arrival</h5><p>One clear surface, one obvious next step. No menu.</p></div>
-      <div class="step"><div class="n">03</div><h5>Breath</h5><p>A guided breath begins immediately, before any content choice.</p></div>
-      <div class="step"><div class="n">04</div><h5>Airlock</h5><p>The transition screen — pacing the shift from navigating to practicing.</p></div>
-      <div class="step"><div class="n">05</div><h5>Meditation</h5><p>The guided session itself, free of interface noise.</p></div>
-      <div class="step"><div class="n">06</div><h5>Reflection</h5><p>A brief, optional moment to notice what shifted.</p></div>
-      <div class="step"><div class="n">07</div><h5>Calm</h5><p>The intended end state — and the app's only real success metric.</p></div>
+      <div class="step"><div class="n">01</div><h5 data-i18n="idx_flow_1">Overwhelmed</h5><p data-i18n="cs_flowd1_desc">The state the person arrives in — before opening the app.</p></div>
+      <div class="step"><div class="n">02</div><h5 data-i18n="idx_flow_2">Arrival</h5><p data-i18n="cs_flowd2_desc">One clear surface, one obvious next step. No menu.</p></div>
+      <div class="step"><div class="n">03</div><h5 data-i18n="idx_flow_3">Breath</h5><p data-i18n="cs_flowd3_desc">A guided breath begins immediately, before any content choice.</p></div>
+      <div class="step"><div class="n">04</div><h5 data-i18n="idx_flow_4">Airlock</h5><p data-i18n="cs_flowd4_desc">The transition screen — pacing the shift from navigating to practicing.</p></div>
+      <div class="step"><div class="n">05</div><h5 data-i18n="idx_flow_5">Meditation</h5><p data-i18n="cs_flowd5_desc">The guided session itself, free of interface noise.</p></div>
+      <div class="step"><div class="n">06</div><h5 data-i18n="idx_flow_6">Reflection</h5><p data-i18n="cs_flowd6_desc">A brief, optional moment to notice what shifted.</p></div>
+      <div class="step"><div class="n">07</div><h5 data-i18n="idx_flow_7">Calm</h5><p data-i18n="cs_flowd7_desc">The intended end state — and the app's only real success metric.</p></div>
     </div>
   </div>
 </section>
@@ -544,45 +602,45 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= 07 AESTHETIC PROCESSING ================= -->
 <section class="cs-section" id="aesthetic">
   <div class="container">
-    <span class="eyebrow reveal">07 · Aesthetic Processing</span>
-    <h2 class="reveal">Turning a principle into a symbol</h2>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_07">07 · Aesthetic Processing</span>
+    <h2 class="reveal" data-i18n="cs_h2_07">Turning a principle into a symbol</h2>
     <div class="cs-aesthetic-grid">
       <div class="cs-concept-card reveal">
-        <span class="k">Concept</span>
-        <h3>Return to calm</h3>
+        <span class="k" data-i18n="cs_concept_k">Concept</span>
+        <h3 data-i18n="cs_concept_h3">Return to calm</h3>
       </div>
       <div class="cs-process-card reveal">
         <video src="assets/processo.mp4" class="brand-process-video" autoplay muted loop playsinline></video>
         <div class="meta">
-          <h4>Symbol exploration</h4>
-          <p>The visual identity started from the same breathing curve used in the airlock transition — a single continuous line that widens and settles, echoing an inhale and exhale.</p>
+          <h4 data-i18n="cs_process_h4">Symbol exploration</h4>
+          <p data-i18n="cs_process_p">The visual identity started from the same breathing curve used in the airlock transition — a single continuous line that widens and settles, echoing an inhale and exhale.</p>
         </div>
       </div>
     </div>
 
     <div class="cs-equation reveal">
-      <span class="term">Breath curve</span>
+      <span class="term" data-i18n="cs_eq_term1">Breath curve</span>
       <span class="op" aria-hidden="true">+</span>
-      <span class="term">Circular calm</span>
+      <span class="term" data-i18n="cs_eq_term2">Circular calm</span>
       <span class="op" aria-hidden="true">+</span>
-      <span class="term">Negative space</span>
+      <span class="term" data-i18n="cs_eq_term3">Negative space</span>
       <span class="op" aria-hidden="true">=</span>
-      <span class="result">NeuroMedit Symbol</span>
+      <span class="result" data-i18n="cs_eq_result">NeuroMedit Symbol</span>
     </div>
 
     <div class="cs-rules-grid">
-      <div class="cs-rule-card reveal"><h5>No sharp corners</h5><p>Every shape resolves into a curve — nothing in the system reads as abrupt.</p></div>
-      <div class="cs-rule-card reveal"><h5>Single accent per screen</h5><p>Color is used to guide attention, never to decorate.</p></div>
-      <div class="cs-rule-card reveal"><h5>Motion is slow by default</h5><p>Transitions run long enough to be felt, not just seen.</p></div>
-      <div class="cs-rule-card reveal"><h5>Typography breathes</h5><p>Generous line-height throughout — text is never dense.</p></div>
-      <div class="cs-rule-card reveal"><h5>Silence is allowed</h5><p>Empty space is a valid, intentional state — not a gap to fill.</p></div>
-      <div class="cs-rule-card reveal"><h5>Consistency over novelty</h5><p>Familiar patterns reduce the cognitive cost of returning.</p></div>
+      <div class="cs-rule-card reveal"><h5 data-i18n="cs_rule1_h">No sharp corners</h5><p data-i18n="cs_rule1_p">Every shape resolves into a curve — nothing in the system reads as abrupt.</p></div>
+      <div class="cs-rule-card reveal"><h5 data-i18n="cs_rule2_h">Single accent per screen</h5><p data-i18n="cs_rule2_p">Color is used to guide attention, never to decorate.</p></div>
+      <div class="cs-rule-card reveal"><h5 data-i18n="cs_rule3_h">Motion is slow by default</h5><p data-i18n="cs_rule3_p">Transitions run long enough to be felt, not just seen.</p></div>
+      <div class="cs-rule-card reveal"><h5 data-i18n="cs_rule4_h">Typography breathes</h5><p data-i18n="cs_rule4_p">Generous line-height throughout — text is never dense.</p></div>
+      <div class="cs-rule-card reveal"><h5 data-i18n="cs_rule5_h">Silence is allowed</h5><p data-i18n="cs_rule5_p">Empty space is a valid, intentional state — not a gap to fill.</p></div>
+      <div class="cs-rule-card reveal"><h5 data-i18n="cs_rule6_h">Consistency over novelty</h5><p data-i18n="cs_rule6_p">Familiar patterns reduce the cognitive cost of returning.</p></div>
     </div>
 
     <div class="cs-logo-block reveal">
-      <img src="assets/neuromedit-symbol-vector.svg" alt="NeuroMedit symbol — a continuous breathing curve">
+      <img src="assets/neuromedit-symbol-vector.svg" alt="NeuroMedit symbol — a continuous breathing curve" data-i18n="cs_logo_alt" data-i18n-attr="alt">
       <span class="word">Neuro<span class="accent">Medit</span></span>
-      <p>Final identity: a mark built from the same principle as the product — one continuous, unhurried line.</p>
+      <p data-i18n="cs_logo_p">Final identity: a mark built from the same principle as the product — one continuous, unhurried line.</p>
     </div>
   </div>
 </section>
@@ -590,12 +648,12 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= WHAT CHANGED ================= -->
 <section class="cs-section" id="shift">
   <div class="container">
-    <span class="eyebrow reveal">What Changed During the Process</span>
-    <h2 class="reveal">From feature list to emotional arc</h2>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_shift">What Changed During the Process</span>
+    <h2 class="reveal" data-i18n="cs_h2_shift">From feature list to emotional arc</h2>
     <div class="cs-body reveal">
-      <p>The project started as a fairly conventional content-app brief: build a library, add a player, ship categories. The shift happened when I stopped designing screens and started designing a sequence — treating the whole first-time experience as one continuous emotional arc rather than a set of independent features.</p>
-      <p>That reframing cut scope in places (a full content-discovery system was postponed) and added scope in others (the airlock transition didn't exist in the original plan at all). Both decisions came directly from watching where people actually needed help.</p>
-      <p>By the end, the interface had fewer screens than the first draft, not more — and testers reached their first guided breath in roughly a third of the taps.</p>
+      <p data-i18n="cs_shift_p1">The project started as a fairly conventional content-app brief: build a library, add a player, ship categories. The shift happened when I stopped designing screens and started designing a sequence — treating the whole first-time experience as one continuous emotional arc rather than a set of independent features.</p>
+      <p data-i18n="cs_shift_p2">That reframing cut scope in places (a full content-discovery system was postponed) and added scope in others (the airlock transition didn't exist in the original plan at all). Both decisions came directly from watching where people actually needed help.</p>
+      <p data-i18n="cs_shift_p3">By the end, the interface had fewer screens than the first draft, not more — and testers reached their first guided breath in roughly a third of the taps.</p>
     </div>
   </div>
 </section>
@@ -603,14 +661,14 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= KEY LEARNINGS ================= -->
 <section class="cs-section" id="learnings">
   <div class="container">
-    <span class="eyebrow reveal">Key Learnings</span>
-    <h2 class="reveal">What this project taught me</h2>
+    <span class="eyebrow reveal" data-i18n="cs_eyebrow_learnings">Key Learnings</span>
+    <h2 class="reveal" data-i18n="cs_h2_learnings">What this project taught me</h2>
     <ul class="learnings reveal">
-      <li>Calm can be designed structurally, not just visually — the sequence of steps matters as much as any color.</li>
-      <li>Cognitive overload increases resistance even when the underlying intention is good.</li>
-      <li>Simplicity isn't emptiness — it's clarity achieved by removing what doesn't serve the moment.</li>
-      <li>A transition screen can do more emotional work than a feature screen, if it's designed with the same care.</li>
-      <li>Testing with people in an actual stressed state reveals friction that usability testing in a neutral mood never will.</li>
+      <li data-i18n="cs_learn1">Calm can be designed structurally, not just visually — the sequence of steps matters as much as any color.</li>
+      <li data-i18n="cs_learn2">Cognitive overload increases resistance even when the underlying intention is good.</li>
+      <li data-i18n="cs_learn3">Simplicity isn't emptiness — it's clarity achieved by removing what doesn't serve the moment.</li>
+      <li data-i18n="cs_learn4">A transition screen can do more emotional work than a feature screen, if it's designed with the same care.</li>
+      <li data-i18n="cs_learn5">Testing with people in an actual stressed state reveals friction that usability testing in a neutral mood never will.</li>
     </ul>
   </div>
 </section>
@@ -618,18 +676,18 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 <!-- ================= THANK YOU ================= -->
 <section class="cs-final">
   <div class="container narrow">
-    <span class="eyebrow reveal" style="justify-content:center;">Thank You</span>
-    <h2 class="reveal">For reading this far</h2>
-    <p class="reveal">This case study is as much about a design process as it is about a personal one — learning to treat restraint as a design decision, not a limitation.</p>
-    <p class="reveal">NeuroMedit is live today, built and shipped solo: research, visual system, and front-end. It's still growing, and every session it guides is a small test of whether the original thesis holds.</p>
+    <span class="eyebrow reveal" style="justify-content:center;" data-i18n="cs_eyebrow_thanks">Thank You</span>
+    <h2 class="reveal" data-i18n="cs_h2_thanks">For reading this far</h2>
+    <p class="reveal" data-i18n="cs_thanks_p1">This case study is as much about a design process as it is about a personal one — learning to treat restraint as a design decision, not a limitation.</p>
+    <p class="reveal" data-i18n="cs_thanks_p2">NeuroMedit is live today, built and shipped solo: research, visual system, and front-end. It's still growing, and every session it guides is a small test of whether the original thesis holds.</p>
     <div class="cs-opportunity reveal">
-      <p>If you're building a product where the first few seconds matter — onboarding, wellness, or anything where someone arrives overwhelmed — I'd like to hear about it.</p>
+      <p data-i18n="cs_opportunity_p">If you're building a product where the first few seconds matter — onboarding, wellness, or anything where someone arrives overwhelmed — I'd like to hear about it.</p>
     </div>
     <div class="cs-final-actions reveal">
-      <a class="button primary" href="https://calendly.com/kaullyano/30min?back=1&month=2026-07" target="_blank" rel="noopener">Let's talk</a>
-      <a class="button ghost" href="index.html#contato">Contact via portfolio</a>
+      <a class="button primary" href="https://calendly.com/kaullyano/30min?back=1&month=2026-07" target="_blank" rel="noopener" data-i18n="cs_cta_talk">Let's talk</a>
+      <a class="button ghost" href="index.html#contato" data-i18n="cs_cta_contact">Contact via portfolio</a>
     </div>
-    <p class="cs-sign reveal">With gratitude,<br>Lucas Nunes</p>
+    <p class="cs-sign reveal" data-i18n="cs_sign" data-i18n-html>With gratitude,<br>Lucas Nunes</p>
   </div>
 </section>
 
@@ -637,10 +695,11 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
 
 <footer>
   <div class="container">
-    <p>© 2026 Lucas Nunes · UX case study, adapted from the original NeuroMedit design documentation.</p>
+    <p data-i18n="cs_footer">© 2026 Lucas Nunes · UX case study, adapted from the original NeuroMedit design documentation.</p>
   </div>
 </footer>
 
+<script src="i18n-portfolio.js"></script>
 <script>
 (function(){
   "use strict";
@@ -687,7 +746,7 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
   var cap = document.getElementById("benchCap");
   if(track){
     var slides = track.querySelectorAll(".cs-carousel-slide");
-    var captions = ["Calm — entry screen", "Headspace — entry screen"];
+    var captionKeys = ["cs_carousel_cap_calm", "cs_carousel_cap_headspace"];
     var index = 0;
 
     slides.forEach(function(_, i){
@@ -703,7 +762,7 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
     function render(){
       track.style.transform = "translateX(-" + (index * 100) + "%)";
       dots.forEach(function(d, i){ d.setAttribute("aria-current", i === index ? "true" : "false"); });
-      cap.textContent = captions[index];
+      cap.textContent = (window.PortfolioI18n && window.PortfolioI18n.t) ? window.PortfolioI18n.t(captionKeys[index]) : cap.textContent;
     }
     function goTo(i){
       index = (i + slides.length) % slides.length;
@@ -711,6 +770,7 @@ footer p{ font-size:.85rem; color:var(--ink-faint); }
     }
     prevBtn.addEventListener("click", function(){ goTo(index - 1); });
     nextBtn.addEventListener("click", function(){ goTo(index + 1); });
+    window.addEventListener("portfolio:languagechange", render);
 
     /* pointer-based swipe */
     var startX = 0, deltaX = 0, dragging = false;
