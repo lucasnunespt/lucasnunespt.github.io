@@ -117,7 +117,14 @@ p{ color:var(--ink-soft); }
 /* ============================================================
    SELETOR DE IDIOMA — mesmo componente do portfólio
    ============================================================ */
-.header-language-slot{ display:inline-flex; flex-shrink:0; align-items:center; margin-left:-1rem; }
+.header-language-slot{
+  display:inline-flex; flex-shrink:0; align-items:center; margin-left:-1rem;
+  position:relative; width:64px; height:38px;
+}
+/* Dentro do header, o pill sai do fluxo — expande por cima sem esticar o header */
+.header-language-slot .language-wrapper{
+  position:absolute; top:0; right:0;
+}
 .language-wrapper{
   position:relative; display:inline-flex; flex-direction:column;
   width:64px; max-height:38px; border-radius:999px;
@@ -166,6 +173,7 @@ p{ color:var(--ink-soft); }
   .language-wrapper, .language-trigger, .language-options, .language-options button{ transition:none; }
 }
 @media (max-width:480px){
+  .header-language-slot{ width:58px; height:34px; }
   .language-wrapper{ width:58px; max-height:34px; }
   .language-trigger{ flex:0 0 34px; height:34px; }
   .language-wrapper.is-open{ max-height:240px; }
