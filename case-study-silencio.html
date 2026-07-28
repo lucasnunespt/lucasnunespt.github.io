@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="cs2_title">O Utilizador e o Silêncio — Estudo Conceptual · Lucas Nunes</title>
+<meta name="description" content="Estudo conceptual, orientado por hipótese (sem pesquisa com utilizadores reais), sobre como diferentes pessoas vivem e se adaptam ao silêncio nas meditações do NeuroMedit.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="O Utilizador e o Silêncio — Estudo Conceptual · Lucas Nunes">
+<meta property="og:description" content="Hipótese fundamentada em neurociência e design. Não é pesquisa com utilizadores reais.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%238A4726'/%3E%3Ctext x='50' y='69' font-size='58' font-family='Georgia,serif' fill='%23F7F5F1' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital@1&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET
+   ============================================================ */
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{ overflow-x:hidden; }
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; background:none; border:none; cursor:pointer; }
+a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+.skip-link{
+  position:absolute; left:1rem; top:-4rem; z-index:999;
+  background:var(--ink); color:var(--bg); font-weight:600; font-size:.92rem;
+  padding:.85rem 1.3rem; border-radius:8px; transition:top .3s var(--ease);
+}
+.skip-link:focus{ top:1rem; }
+
+@media (prefers-contrast:more){
+  .header-inner{ background:var(--bg); backdrop-filter:none; -webkit-backdrop-filter:none; }
+}
+
+/* ============================================================
+   TOKENS — mesma identidade do portfólio
+   ============================================================ */
+:root{
+  --bg:#F7F5F1;
+  --bg-alt:#EFEAE1;
+  --surface:#FFFFFF;
+  --ink:#17140F;
+  --ink-soft:#5B5648;
+  --ink-faint:#726A56;
+  --line:rgba(23,20,15,.12);
+  --accent:#8A4726;
+  --accent-soft:#EEDFCF;
+  --ok:#5C7A52;
+  --header-glass-bg:rgba(255,255,255,.5);
+  --header-glass-bg-scrolled:rgba(255,255,255,.8);
+  --header-border:rgba(23,20,15,.1);
+  --header-glow:0 14px 38px rgba(23,20,15,.09), 0 0 32px rgba(255,255,255,.35);
+  --serif:"Newsreader", Georgia, serif;
+  --sans:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+
+body{ font-family:var(--sans); background:var(--bg); color:var(--ink); line-height:1.5; font-weight:400; }
+::selection{ background:var(--accent-soft); }
+
+.container{ max-width:1080px; margin:0 auto; padding:0 1.5rem; }
+.container.narrow{ max-width:760px; }
+section{ padding:clamp(3.5rem,9vw,7rem) 0; }
+
+h1,h2,h3{ letter-spacing:-0.02em; color:var(--ink); font-weight:500; }
+em{ font-family:var(--serif); font-style:italic; font-weight:400; color:var(--accent); }
+p{ color:var(--ink-soft); }
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.78rem; text-transform:uppercase; letter-spacing:.12em;
+  color:var(--ink-faint); font-weight:600; margin-bottom:1.1rem;
+}
+.eyebrow::before{ content:""; width:14px; height:1px; background:var(--accent); flex:none; }
+
+.button{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.95rem; font-weight:600; padding:.9rem 1.5rem; min-height:48px;
+  border-radius:999px; transition:.3s var(--ease);
+}
+.button.primary{ background:var(--ink); color:var(--bg); }
+.button.primary:hover{ background:var(--accent); transform:translateY(-1px); }
+.button.ghost{ border:1px solid var(--line); color:var(--ink); }
+.button.ghost:hover{ border-color:var(--ink); background:var(--surface); }
+.link-arrow{ font-weight:600; font-size:.94rem; color:var(--accent); border-bottom:1px solid transparent; transition:border-color .25s; }
+.link-arrow:hover{ border-color:var(--accent); }
+
+/* ============================================================
+   HEADER — idêntico ao portfólio
+   ============================================================ */
+.site-header{ position:sticky; top:0; z-index:60; background:transparent; padding:.86rem 0 .68rem; transition:padding .42s var(--ease); }
+.site-header.scrolled{ padding:.52rem 0 .38rem; }
+.header-inner{
+  min-height:78px; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  border-radius:999px; border:1px solid var(--header-border);
+  padding:.55rem 1.05rem .55rem 1.2rem;
+  background:var(--header-glass-bg);
+  backdrop-filter:blur(22px) saturate(138%) brightness(1.04);
+  -webkit-backdrop-filter:blur(22px) saturate(138%) brightness(1.04);
+  box-shadow:var(--header-glow);
+  transition:background .42s var(--ease), box-shadow .42s var(--ease), padding .42s var(--ease);
+}
+.site-header.scrolled .header-inner{ background:var(--header-glass-bg-scrolled); }
+.wordmark{ font-size:1.05rem; font-weight:700; letter-spacing:-0.02em; white-space:nowrap; }
+.wordmark .accent{ color:var(--accent); }
+.main-nav{ display:flex; align-items:center; gap:2.2rem; }
+.main-nav a{ font-size:.92rem; color:var(--ink-soft); font-weight:500; transition:color .2s; }
+.main-nav a:hover{ color:var(--ink); }
+.main-nav .button{ padding:.6rem 1.1rem; font-size:.86rem; min-height:auto; }
+.main-nav a:not(.button){ padding:.6rem .3rem; display:inline-flex; align-items:center; min-height:44px; }
+@media (max-width:760px){ .main-nav a:not(.button){ display:none; } }
+
+/* ============================================================
+   SELETOR DE IDIOMA — mesmo componente do portfólio
+   ============================================================ */
+.header-language-slot{
+  display:inline-flex; flex-shrink:0; align-items:center; margin-left:-1rem;
+  position:relative; width:64px; height:38px;
+}
+/* Dentro do header, o pill sai do fluxo — expande por cima sem esticar o header */
+.header-language-slot .language-wrapper{
+  position:absolute; top:0; right:0;
+}
+.language-wrapper{
+  position:relative; display:inline-flex; flex-direction:column;
+  width:64px; max-height:38px; border-radius:999px;
+  background:color-mix(in srgb, var(--surface) 78%, transparent);
+  border:1px solid var(--line);
+  box-shadow:0 6px 18px rgba(23,20,15,.08);
+  overflow:hidden;
+  transition:max-height .42s var(--ease), background .3s ease, border-color .3s ease, box-shadow .3s ease;
+  z-index:80;
+}
+.language-trigger{
+  appearance:none; position:relative; z-index:2; flex:0 0 38px; width:100%; height:38px;
+  border:0; border-radius:0; display:inline-flex; align-items:center; justify-content:center;
+  gap:.28rem; color:var(--ink); background:transparent; cursor:pointer;
+}
+.language-trigger svg{ width:15px; height:15px; }
+.language-current{ font-size:.7rem; letter-spacing:.08em; line-height:1; font-weight:600; }
+.language-trigger:focus-visible{ outline:none; }
+.language-options{
+  width:100%; padding:0 .32rem .5rem; display:grid; align-items:center; gap:.22rem; box-sizing:border-box;
+  opacity:0; transform:translateY(-10px);
+  transition:opacity .3s ease, transform .35s var(--ease);
+}
+.language-wrapper.is-open{
+  max-height:260px;
+  background:var(--surface);
+  border-color:var(--ink-faint);
+  box-shadow:0 14px 34px rgba(23,20,15,.14);
+}
+.language-wrapper.is-open .language-options{ opacity:1; transform:translateY(0); }
+@media (hover:hover) and (pointer:fine){
+  .language-wrapper:hover{ max-height:260px; background:var(--surface); border-color:var(--ink-faint); box-shadow:0 14px 34px rgba(23,20,15,.14); }
+  .language-wrapper:hover .language-options{ opacity:1; transform:translateY(0); }
+}
+.language-options button{
+  appearance:none; min-width:46px; height:30px; border:0; border-radius:999px;
+  color:var(--ink-soft); background:transparent; font:inherit; font-size:.72rem; letter-spacing:.08em;
+  cursor:pointer; transition:background .18s ease, color .18s ease, transform .18s ease;
+}
+.language-options button:hover, .language-options button:focus-visible{
+  color:var(--ink); background:var(--bg-alt); outline:none;
+}
+.language-options button.is-active{ color:#fff; background-color:var(--accent); outline:none; }
+.language-options button:active{ transform:scale(.96); }
+@media (prefers-reduced-motion:reduce){
+  .language-wrapper, .language-trigger, .language-options, .language-options button{ transition:none; }
+}
+@media (max-width:480px){
+  .header-language-slot{ width:58px; height:34px; }
+  .language-wrapper{ width:58px; max-height:34px; }
+  .language-trigger{ flex:0 0 34px; height:34px; }
+  .language-wrapper.is-open{ max-height:240px; }
+}
+
+/* ============================================================
+   HERO DO ESTUDO
+   ============================================================ */
+.cs-hero{ padding-top:clamp(2.5rem,7vw,4rem); padding-bottom:clamp(2.5rem,5vw,3.5rem); border-bottom:1px solid var(--line); }
+.cs-back{ display:inline-flex; align-items:center; gap:.4rem; font-size:.86rem; color:var(--ink-faint); font-weight:500; margin-bottom:1.6rem; transition:color .2s; }
+.cs-back:hover{ color:var(--accent); }
+.cs-hero h1{ font-size:clamp(2.2rem,5.5vw,3.6rem); line-height:1.08; max-width:16ch; margin-bottom:1.1rem; }
+.cs-hero .subtitle{ font-family:var(--serif); font-style:italic; color:var(--accent); font-size:clamp(1.1rem,2.2vw,1.35rem); margin-bottom:1.2rem; max-width:32ch; }
+.cs-hero-body{ max-width:60ch; font-size:1.05rem; line-height:1.75; margin-bottom:1.8rem; }
+.cs-tags{ display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:2rem; }
+.cs-tags span{
+  font-size:.8rem; font-weight:600; color:var(--ink-soft);
+  padding:.4rem .85rem; border:1px solid var(--line); border-radius:999px; background:var(--surface);
+}
+.cs-hero-actions{ display:flex; gap:.9rem; flex-wrap:wrap; }
+
+/* ============================================================
+   BLOCOS DE TEXTO — pesquisa, síntese, mudanças, aprendizados
+   ============================================================ */
+.cs-section{ border-top:1px solid var(--line); }
+.cs-section:nth-child(even){ background:var(--bg-alt); }
+.cs-section h2{ font-size:clamp(1.6rem,3.6vw,2.4rem); max-width:22ch; margin-bottom:1.4rem; }
+.cs-section > .container > p, .cs-body p{ max-width:64ch; font-size:1.02rem; line-height:1.75; margin-bottom:1.1rem; }
+.cs-body p:last-child{ margin-bottom:0; }
+
+blockquote.cs-quote{
+  border-left:3px solid var(--accent); padding:.3rem 0 .3rem 1.5rem; margin:1.8rem 0;
+  font-family:var(--serif); font-style:italic; font-size:clamp(1.15rem,2.4vw,1.4rem); color:var(--ink); max-width:52ch;
+}
+
+/* estados do usuário */
+.cs-states-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.3rem; margin-top:2rem; }
+.cs-state-card{ background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1.5rem; }
+.cs-state-card .idx{ font-size:.78rem; color:var(--ink-faint); font-weight:600; margin-bottom:.6rem; }
+.cs-state-card h3{ font-size:1.05rem; margin-bottom:.9rem; }
+.cs-state-card .row{ margin-bottom:.7rem; }
+.cs-state-card .row:last-child{ margin-bottom:0; }
+.cs-state-card .row h4{ font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-faint); font-weight:600; margin-bottom:.2rem; }
+.cs-state-card .row p{ font-size:.9rem; line-height:1.55; margin-bottom:0; }
+@media (max-width:900px){ .cs-states-grid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:560px){ .cs-states-grid{ grid-template-columns:1fr; } }
+
+/* benchmark */
+.cs-benchmark-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:2.5rem; align-items:start; margin-top:2rem; }
+.cs-bench-card{ background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1.5rem; margin-bottom:1.2rem; }
+.cs-bench-card:last-child{ margin-bottom:0; }
+.cs-bench-card h4{ font-size:1rem; margin-bottom:.5rem; }
+.cs-bench-card p{ font-size:.92rem; line-height:1.6; margin-bottom:0; }
+.cs-bench-card.insight{ background:var(--accent-soft); border-color:transparent; }
+.cs-bench-card.insight h4{ color:var(--accent); }
+
+.cs-carousel{ position:relative; border-radius:6px; overflow:hidden; border:1px solid var(--line); background:var(--surface); user-select:none; }
+.cs-carousel-track{ display:flex; transition:transform .5s var(--ease); touch-action:pan-y; cursor:grab; }
+.cs-carousel-track.dragging{ transition:none; cursor:grabbing; }
+.cs-carousel-slide{ flex:0 0 100%; }
+.cs-carousel-slide img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; pointer-events:none; }
+.cs-carousel-cap{ padding:.9rem 1.1rem; font-size:.86rem; color:var(--ink-faint); border-top:1px solid var(--line); }
+.cs-carousel-nav{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+  width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,.85);
+  border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+  font-size:1rem; color:var(--ink); transition:background .2s, transform .2s;
+}
+.cs-carousel-nav:hover{ background:var(--surface); }
+.cs-carousel-nav.prev{ left:.8rem; }
+.cs-carousel-nav.next{ right:.8rem; }
+.cs-carousel-dots{ display:flex; gap:.5rem; justify-content:center; padding:.9rem 0; }
+.cs-carousel-dots button{ width:8px; height:8px; border-radius:50%; background:var(--line); transition:background .2s, transform .2s; }
+.cs-carousel-dots button[aria-current="true"]{ background:var(--accent); transform:scale(1.2); }
+@media (max-width:900px){ .cs-benchmark-grid{ grid-template-columns:1fr; } }
+
+/* princípios */
+.cs-principles-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:1.1rem; margin-top:2rem;
+}
+.cs-principle-card{
+  display:flex; flex-direction:column; align-items:flex-start;
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:1.5rem 1.3rem;
+}
+.cs-principle-card .icon{
+  width:30px; height:30px; color:var(--accent); margin-bottom:1rem; flex:none;
+}
+.cs-principle-card .icon svg{ width:100%; height:100%; }
+.cs-principle-card h4{
+  font-size:1rem; font-weight:600; letter-spacing:-0.01em; line-height:1.3;
+  color:var(--ink); margin-bottom:.55rem; flex:none;
+}
+.cs-principle-card p{ font-size:.88rem; line-height:1.6; margin-bottom:0; }
+@media (max-width:560px){
+  .cs-principles-grid{ grid-template-columns:1fr 1fr; gap:.9rem; }
+  .cs-principle-card{ padding:1.25rem 1.1rem; }
+}
+@media (max-width:380px){ .cs-principles-grid{ grid-template-columns:1fr; } }
+
+/* wireframes / exploração */
+.cs-wireframe-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:2rem; }
+.cs-wireframe-card{ background:var(--surface); border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+.cs-wireframe-card img{ width:100%; aspect-ratio:3/4; object-fit:cover; }
+.cs-wireframe-card .meta{ padding:1.1rem 1.2rem; }
+.cs-wireframe-card h4{ font-size:.94rem; margin-bottom:.4rem; }
+.cs-wireframe-card p{ font-size:.85rem; line-height:1.55; margin-bottom:0; }
+.cs-decision-card{ margin-top:1.4rem; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1.6rem 1.8rem; }
+.cs-decision-card h4{ font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); font-weight:600; margin-bottom:.8rem; }
+@media (max-width:820px){ .cs-wireframe-grid{ grid-template-columns:1fr; } }
+
+/* fluxo do usuário — reaproveita padrão flow-step do portfólio */
+.flow-strip{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin:2rem 0 0; }
+.flow-step{
+  font-size:.82rem; font-weight:600; color:var(--ink); background:var(--surface);
+  border:1px solid var(--line); border-radius:999px; padding:.45rem .9rem; white-space:nowrap;
+}
+.flow-step.is-heavy{ background:var(--ink); color:var(--bg); border-color:var(--ink); }
+.flow-step.is-calm{ background:var(--accent); color:var(--bg); border-color:var(--accent); }
+.flow-sep{ color:var(--ink-faint); font-size:.85rem; }
+.cs-flow-detail{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.1rem; margin-top:1.6rem; }
+.cs-flow-detail .step{ background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1.1rem 1.2rem; }
+.cs-flow-detail .step .n{ font-size:.75rem; color:var(--accent); font-weight:700; margin-bottom:.4rem; }
+.cs-flow-detail .step h5{ font-size:.92rem; font-weight:600; margin-bottom:.3rem; color:var(--ink); }
+.cs-flow-detail .step p{ font-size:.84rem; line-height:1.5; margin-bottom:0; }
+
+/* processamento estético / sistema */
+.cs-aesthetic-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; margin-top:2rem; align-items:start; }
+.cs-concept-card{ background:var(--ink); color:var(--bg); border-radius:6px; padding:2rem; display:flex; flex-direction:column; justify-content:center; min-height:260px; }
+.cs-concept-card .k{ font-size:.78rem; text-transform:uppercase; letter-spacing:.12em; color:rgba(247,245,241,.6); font-weight:600; margin-bottom:.9rem; }
+.cs-concept-card h3{ font-family:var(--serif); font-style:italic; color:var(--bg); font-size:clamp(1.5rem,3vw,2rem); font-weight:400; }
+.cs-process-card{ background:var(--surface); border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+.cs-process-card video{ width:100%; display:block; background:#000; }
+.cs-process-card .meta{ padding:1.3rem 1.4rem; }
+.cs-process-card h4{ font-size:.95rem; margin-bottom:.5rem; }
+.cs-process-card p{ font-size:.88rem; line-height:1.6; margin-bottom:0; }
+@media (max-width:820px){ .cs-aesthetic-grid{ grid-template-columns:1fr; } }
+
+.cs-equation{
+  margin-top:2rem; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:1rem;
+  padding:2rem 1.5rem; background:var(--surface); border:1px solid var(--line); border-radius:6px; text-align:center;
+}
+.cs-equation .term{ font-size:.92rem; font-weight:600; color:var(--ink); padding:.7rem 1.1rem; border:1px solid var(--line); border-radius:8px; background:var(--bg); }
+.cs-equation .op{ font-size:1.2rem; color:var(--ink-faint); }
+.cs-equation .result{ font-size:.92rem; font-weight:700; color:var(--bg); background:var(--accent); padding:.7rem 1.2rem; border-radius:8px; }
+
+.cs-rules-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-top:1.6rem; }
+.cs-rule-card{ padding:1.2rem 1.3rem; background:var(--bg-alt); border-radius:6px; }
+.cs-rule-card h5{ font-size:.9rem; margin-bottom:.35rem; color:var(--ink); }
+.cs-rule-card p{ font-size:.84rem; line-height:1.5; margin-bottom:0; }
+@media (max-width:820px){ .cs-rules-grid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:520px){ .cs-rules-grid{ grid-template-columns:1fr; } }
+
+.cs-logo-block{
+  margin-top:2rem; display:flex; flex-direction:column; align-items:center; text-align:center; gap:1rem;
+  padding:3rem 1.5rem; background:var(--surface); border:1px solid var(--line); border-radius:6px;
+}
+.cs-logo-block img{ width:64px; height:64px; }
+.cs-logo-block .word{ font-size:1.3rem; font-weight:700; letter-spacing:-0.02em; }
+.cs-logo-block .word .accent{ color:var(--accent); }
+.cs-logo-block p{ max-width:44ch; font-size:.92rem; margin-bottom:0; }
+
+/* aprendizados */
+.learnings{ list-style:none; margin-top:1.6rem; display:grid; gap:.7rem; max-width:64ch; }
+.learnings li{ font-size:.98rem; line-height:1.6; padding-left:1.4rem; position:relative; color:var(--ink-soft); }
+.learnings li::before{ content:"—"; position:absolute; left:0; color:var(--accent); }
+
+/* encerramento */
+.cs-final{ text-align:center; }
+.cs-final .container.narrow{ margin:0 auto; }
+.cs-final h2{ font-size:clamp(1.7rem,4vw,2.6rem); margin-bottom:1.3rem; }
+.cs-final p{ font-size:1.02rem; line-height:1.75; margin-bottom:1.1rem; }
+.cs-opportunity{
+  margin:1.8rem auto; max-width:52ch; text-align:left; padding:1.5rem 1.7rem;
+  background:var(--accent-soft); border-radius:6px;
+}
+.cs-opportunity p{ font-size:.95rem; color:var(--ink); margin-bottom:0; }
+.cs-final-actions{ display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin:1.6rem 0 2rem; }
+.cs-sign{ font-family:var(--serif); font-style:italic; color:var(--accent); font-size:1.15rem; }
+
+footer{ border-top:1px solid var(--line); padding:2rem 0; text-align:center; }
+footer p{ font-size:.85rem; color:var(--ink-faint); }
+
+/* reveal */
+.reveal{ opacity:0; transform:translateY(16px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.visible{ opacity:1; transform:none; }
+
+@media (max-width:480px){
+  .container{ padding:0 1.15rem; }
+  .cs-hero-actions .button, .cs-final-actions .button{ width:100%; justify-content:center; }
+  .cs-hero-actions, .cs-final-actions{ flex-direction:column; }
+  .header-inner{ min-height:56px; padding:.4rem .4rem .4rem 1rem; }
+  .wordmark{ font-size:.98rem; }
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  html{ scroll-behavior:auto; }
+  .cs-carousel-track{ transition:none; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="common_skip">Pular para o conteúdo</a>
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a class="wordmark" href="index.html">Lucas&nbsp;<span class="accent">Nunes</span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html#casos" data-i18n="common_nav_casos">Casos</a>
+      <a href="index.html#sobre" data-i18n="common_nav_sobre">Sobre</a>
+      <a class="button ghost" href="index.html#contato" data-i18n="common_nav_contato">Contato</a>
+      <div class="header-language-slot" data-language-host></div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="cs-hero">
+    <div class="container">
+      <a class="cs-back reveal" href="index.html#casos" data-i18n="cs2_back">← Voltar ao início</a>
+      <h1 class="reveal" data-i18n="cs2_hero_h1">O utilizador e o silêncio</h1>
+      <p class="subtitle reveal" data-i18n="cs2_hero_sub">Por que a mesma pausa acalma umas pessoas e ativa outras.</p>
+      <div class="cs-tags reveal">
+        <span data-i18n="cs2_tag_conceptual">Estudo conceptual</span>
+        <span data-i18n="cs2_tag_hipotese">Orientado por hipótese</span>
+        <span data-i18n="cs2_tag_neuro">Neurociência aplicada</span>
+        <span data-i18n="cs2_tag_nm">NeuroMedit</span>
+      </div>
+      <div class="cs-opportunity reveal" style="max-width:64ch">
+        <p data-i18n="cs2_method_note" data-i18n-html><strong>Nota de método — leia primeiro.</strong> Este é um estudo <strong>conceptual</strong>. As personas e a curva de adaptação são <strong>hipóteses fundamentadas</strong> na literatura de neurociência e nos princípios de design do NeuroMedit. <strong>Não resultam de entrevistas nem de testes com utilizadores reais.</strong> Nada aqui deve ser lido como dado empírico validado. O objetivo é orientar decisões de design e servir de base para uma investigação futura — o plano dessa validação está no fim da página.</p>
+      </div>
+      <div class="cs-hero-body reveal">
+        <p data-i18n="cs2_hero_body">O NeuroMedit usa pausas longas de silêncio como ferramenta central para acalmar. Mas o silêncio não é neutro: para umas pessoas é descanso, para outras é ameaça. Este estudo mapeia essa diferença e traduz-a em decisões concretas para o roteiro das meditações.</p>
+      </div>
+      <div class="cs-hero-actions reveal">
+        <a class="button primary" href="#personas" data-i18n="cs2_hero_cta1">Ver os perfis</a>
+        <a class="button ghost" href="case-study-neuromedit.html" data-i18n="cs2_hero_cta2">Case study NeuroMedit</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="metodo" class="cs-section">
+    <div class="container">
+      <h2 class="reveal" data-i18n="cs2_metodo_h2">Método e honestidade</h2>
+      <div class="cs-body reveal">
+        <p data-i18n="cs2_metodo_p1" data-i18n-html>Antes de qualquer conclusão, o essencial: este documento é um artefacto de <em>design thinking</em>, não um relatório de pesquisa. Foi construído a partir de duas fontes — a literatura de neurociência reunida no projeto e os manifestos de Design e de Voz do NeuroMedit — e não a partir de dados recolhidos com utilizadores.</p>
+        <p data-i18n="cs2_metodo_p2" data-i18n-html>Por que publicá-lo mesmo assim? Porque explicitar uma hipótese bem fundamentada torna-a testável. As personas abaixo não são pessoas que entrevistámos; são modelos que propomos e que queremos <strong>confirmar ou derrubar</strong> com pessoas reais. Tratá-las como verdade sem esse teste seria construir sobre a nossa própria suposição — exatamente o erro que a boa pesquisa de utilizador existe para evitar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tese" class="cs-section">
+    <div class="container">
+      <h2 class="reveal" data-i18n="cs2_tese_h2">A tese neurocientífica</h2>
+      <div class="cs-body reveal">
+        <p data-i18n="cs2_tese_p1">Quando o estímulo externo cai — a voz para, o som some —, o cérebro não fica vazio. Vira-se para dentro, e o fluxo automático de pensamentos assume o comando.</p>
+        <p data-i18n="cs2_tese_p2" data-i18n-html>O que muda de pessoa para pessoa é como o sistema nervoso <em>interpreta</em> esse silêncio. Um cérebro em segurança lê a pausa como descanso, e o pensamento próprio surge como reflexão. Um cérebro em alerta lê a pausa como falta de sinal, mantém a vigilância, e o pensamento próprio surge como ruminação.</p>
+      </div>
+      <blockquote class="cs-quote reveal" data-i18n="cs2_tese_quote">Criar segurança antes de criar silêncio. Um cérebro em alerta não relaxa.</blockquote>
+      <div class="cs-body reveal">
+        <p data-i18n="cs2_tese_p3" data-i18n-html>Daí duas consequências de design: o silêncio precisa de uma <strong>rampa</strong> — tempo para o sistema nervoso descer — e a simples ausência de som não é a mesma coisa que sensação de segurança.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tipologia" class="cs-section">
+    <div class="container">
+      <h2 class="reveal" data-i18n="cs2_tipo_h2">Três tipos de silêncio</h2>
+      <div class="cs-body reveal"><p data-i18n="cs2_tipo_intro">Não são três pessoas diferentes. A mesma pessoa pode passar pelos três estados dentro de uma única meditação. A tipologia descreve estados; as personas, mais à frente, descrevem tendências dominantes.</p></div>
+      <div class="cs-principles-grid" style="margin-top:2rem">
+        <div class="cs-state-card reveal"><div class="idx" data-i18n="cs2_t1_idx">Tipo 01</div><h3 data-i18n="cs2_t1_h">Silêncio contemplativo</h3><div class="row"><h4 data-i18n="cs2_rl_what">O que é</h4><p data-i18n="cs2_t1_p1">A pausa é habitada como descanso. O utilizador quer mais silêncio, não menos.</p></div><div class="row"><h4 data-i18n="cs2_rl_brain">O que o cérebro faz</h4><p data-i18n="cs2_t1_p2">Baixa ativação, atenção aberta, observação sem esforço.</p></div><div class="row"><h4 data-i18n="cs2_rl_risk">Risco se ignorado</h4><p data-i18n="cs2_t1_p3">Falar demais ou encurtar as pausas — sensação de "não me deixam respirar".</p></div></div><div class="cs-state-card reveal"><div class="idx" data-i18n="cs2_t2_idx">Tipo 02</div><h3 data-i18n="cs2_t2_h">Silêncio = pensamentos próprios</h3><div class="row"><h4 data-i18n="cs2_rl_what">O que é</h4><p data-i18n="cs2_t2_p1">O silêncio faz emergir a voz interna. Pode virar insight — ou ruminação.</p></div><div class="row"><h4 data-i18n="cs2_rl_brain">O que o cérebro faz</h4><p data-i18n="cs2_t2_p2">A rede interna assume; conteúdo emocional e autobiográfico sobe à superfície.</p></div><div class="row"><h4 data-i18n="cs2_rl_risk">Risco se ignorado</h4><p data-i18n="cs2_t2_p3">Sem reancoragem, o utilizador some no pensamento e conclui que "falhou".</p></div></div><div class="cs-state-card reveal"><div class="idx" data-i18n="cs2_t3_idx">Tipo 03</div><h3 data-i18n="cs2_t3_h">Silêncio ansioso / ruído de fundo</h3><div class="row"><h4 data-i18n="cs2_rl_what">O que é</h4><p data-i18n="cs2_t3_p1">Silêncio total é lido como ameaça. Precisa de âncora sonora para tolerar a pausa.</p></div><div class="row"><h4 data-i18n="cs2_rl_brain">O que o cérebro faz</h4><p data-i18n="cs2_t3_p2">Vigilância mantida; busca por estímulo para confirmar que "está tudo bem".</p></div><div class="row"><h4 data-i18n="cs2_rl_risk">Risco se ignorado</h4><p data-i18n="cs2_t3_p3">Silêncio abrupto → desconforto → abandono da sessão.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="adaptacao" class="cs-section">
+    <div class="container">
+      <h2 class="reveal" data-i18n="cs2_adapt_h2">A curva de adaptação</h2>
+      <div class="cs-body reveal">
+        <p data-i18n="cs2_adapt_p1" data-i18n-html>Quando a voz para, há quase sempre um <strong>vale do desconforto</strong> nos primeiros segundos — o intervalo em que a pausa ainda parece "longa demais". O que muda entre perfis é a profundidade e a duração desse vale.</p>
+      </div>
+      <svg class="reveal" viewBox="0 0 720 300" role="img" aria-labelledby="curveTitle curveDesc" style="width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface);margin-top:1.6rem">
+  <title id="curveTitle" data-i18n="cs2_curve_title">Curva de adaptação ao silêncio</title>
+  <desc id="curveDesc" data-i18n="cs2_curve_desc">Três curvas ao longo do tempo em silêncio. Todas descem num vale do desconforto nos primeiros segundos. O perfil contemplativo tem um vale raso e recupera em segundos; a mente ocupada tem um vale médio e recupera com reancoragem; o perfil ansioso tem um vale fundo e prolongado, só recuperando com âncora sonora.</desc>
+  <line x1="70" y1="40" x2="70" y2="250" stroke="var(--line)" stroke-width="1"/>
+  <line x1="70" y1="250" x2="690" y2="250" stroke="var(--line)" stroke-width="1"/>
+  <text x="70" y="28" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="var(--ink-faint)" text-anchor="start" data-i18n="cs2_axis_comfort">Conforto</text>
+  <text x="690" y="272" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="var(--ink-faint)" text-anchor="end" data-i18n="cs2_axis_time">tempo em silêncio →</text>
+  <text x="120" y="272" font-family="Inter,sans-serif" font-size="11" fill="var(--ink-faint)">0s</text>
+  <text x="270" y="272" font-family="Inter,sans-serif" font-size="11" fill="var(--ink-faint)">30s</text>
+  <text x="430" y="272" font-family="Inter,sans-serif" font-size="11" fill="var(--ink-faint)">60s</text>
+  <text x="600" y="272" font-family="Inter,sans-serif" font-size="11" fill="var(--ink-faint)">90s+</text>
+  <path d="M90,90 C150,95 180,120 220,118 C300,114 480,92 680,86" fill="none" stroke="var(--ok)" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="686" y="82" font-family="Newsreader,serif" font-style="italic" font-size="13" fill="var(--ok)" text-anchor="end" data-i18n="cs2_curve_contempl">Contemplativo</text>
+  <path d="M90,120 C150,130 190,175 240,175 C320,175 470,140 680,132" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="686" y="128" font-family="Newsreader,serif" font-style="italic" font-size="13" fill="var(--accent)" text-anchor="end" data-i18n="cs2_curve_busy">Mente ocupada</text>
+  <path d="M90,150 C160,180 220,225 300,225 C400,225 520,205 680,180" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="1 7"/>
+  <text x="686" y="176" font-family="Newsreader,serif" font-style="italic" font-size="13" fill="var(--ink)" text-anchor="end" data-i18n="cs2_curve_anx">Ansioso</text>
+  <rect x="90" y="40" width="150" height="210" fill="var(--accent)" opacity="0.05"/>
+  <text x="165" y="55" font-family="Inter,sans-serif" font-size="10.5" font-weight="600" fill="var(--ink-faint)" text-anchor="middle" opacity="0.85" data-i18n="cs2_curve_valley">vale do desconforto</text>
+</svg>
+      <div class="cs-body reveal" style="margin-top:1.6rem">
+        <p data-i18n="cs2_adapt_p2" data-i18n-html>Nos primeiros dez segundos ninguém está confortável — por isso não se abre com silêncio longo. É entre os dez e os sessenta segundos que os perfis divergem. E só passados sessenta segundos o silêncio profundo é seguro para todos — desde que tenha havido rampa e âncora antes. A tradução prática é o <strong>silêncio progressivo</strong>: pausas curtas no início, alongando à medida que a sessão avança.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="personas" class="cs-section">
+    <div class="container">
+      <h2 class="reveal" data-i18n="cs2_pers_h2">Cinco perfis</h2>
+      <div class="cs-body reveal"><p data-i18n="cs2_pers_intro">Hipóteses de tendência dominante — a validar com pessoas reais.</p></div>
+      <div class="cs-states-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <div class="cs-state-card reveal"><div class="idx" data-i18n="cs2_p1_idx">Perfil 01</div><h3 data-i18n="cs2_p1_h">Marta — a contemplativa experiente</h3><div class="row"><h4 data-i18n="cs2_pr_rel">Relação com o silêncio</h4><p data-i18n="cs2_p1_rel">É o produto. Quer menos voz e mais pausa.</p></div><div class="row"><h4 data-i18n="cs2_pr_adapt">Adaptação</h4><p data-i18n="cs2_p1_adapt">Rápida — assenta em segundos.</p></div><div class="row"><h4 data-i18n="cs2_pr_need">Precisa do produto</h4><p data-i18n="cs2_p1_need">Pausas generosas, voz mínima, opção de retirar qualquer camada sonora.</p></div></div><div class="cs-state-card reveal"><div class="idx" data-i18n="cs2_p2_idx">Perfil 02</div><h3 data-i18n="cs2_p2_h">Rui — o ansioso de ruído</h3><div class="row"><h4 data-i18n="cs2_pr_rel">Relação com o silêncio</h4><p data-i18n="cs2_p2_rel">Silêncio total = alerta. O corpo procura um som para se sentir seguro.</p></div><div class="row"><h4 data-i18n="cs2_pr_adapt">Adaptação</h4><p data-i18n="cs2_p2_adapt">Lenta — vários minutos por sessão; várias sessões para tolerar pausas longas.</p></div><div class="row"><h4 data-i18n="cs2_pr_need">Precisa do produto</h4><p data-i18n="cs2_p2_need">Camada sonora suave opcional, respiração audível como âncora, pausas que crescem devagar.</p></div></div><div class="cs-state-card reveal"><div class="idx" data-i18n="cs2_p3_idx">Perfil 03</div><h3 data-i18n="cs2_p3_h">Inês — a mente ocupada</h3><div class="row"><h4 data-i18n="cs2_pr_rel">Relação com o silêncio</h4><p data-i18n="cs2_p3_rel">Os pensamentos invadem; interpreta isso como "estar a falhar".</p></div><div class="row"><h4 data-i18n="cs2_pr_adapt">Adaptação</h4><p data-i18n="cs2_p3_adapt">Média — precisa de permissão explícita para relaxar.</p></div><div class="row"><h4 data-i18n="cs2_pr_need">Precisa do produto</h4><p data-i18n="cs2_p3_need">Permissão repetida, reancoragem no corpo, ausência total de punição ou streak.</p></div></div><div class="cs-state-card reveal"><div class="idx" data-i18n="cs2_p4_idx">Perfil 04</div><h3 data-i18n="cs2_p4_h">André — o reflexivo introspectivo</h3><div class="row"><h4 data-i18n="cs2_pr_rel">Relação com o silêncio</h4><p data-i18n="cs2_p4_rel">Usa-o para processar e ter insights — mas pode escorregar para a ruminação.</p></div><div class="row"><h4 data-i18n="cs2_pr_adapt">Adaptação</h4><p data-i18n="cs2_p4_adapt">Rápida a média.</p></div><div class="row"><h4 data-i18n="cs2_pr_need">Precisa do produto</h4><p data-i18n="cs2_p4_need">Silêncio guiado, não vazio: âncoras suaves que impedem a queda sem cortar a reflexão.</p></div></div><div class="cs-state-card reveal"><div class="idx" data-i18n="cs2_p5_idx">Perfil 05</div><h3 data-i18n="cs2_p5_h">Sofia — a pragmática cansada</h3><div class="row"><h4 data-i18n="cs2_pr_rel">Relação com o silêncio</h4><p data-i18n="cs2_p5_rel">Quer um resultado. Silêncio longo sem estrutura gera dúvida sobre o método.</p></div><div class="row"><h4 data-i18n="cs2_pr_adapt">Adaptação</h4><p data-i18n="cs2_p5_adapt">Variável, depende do dia.</p></div><div class="row"><h4 data-i18n="cs2_pr_need">Precisa do produto</h4><p data-i18n="cs2_p5_need">Sinais subtis de que o silêncio é intencional, reancoragem ocasional, previsibilidade.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="implicacoes" class="cs-section">
+    <div class="container">
+      <h2 class="reveal" data-i18n="cs2_impl_h2">Implicações de design</h2>
+      <div class="cs-principles-grid">
+        <div class="cs-principle-card reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20 L21 4"/><path d="M3 20 h18"/></svg></div><h4 data-i18n="cs2_i1_h">Silêncio progressivo</h4><p data-i18n="cs2_i1_p">Nunca abrir com pausa longa. Pausas curtas no início, alongando à medida que o sistema nervoso desce.</p></div><div class="cs-principle-card reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9a4 4 0 010 6"/></svg></div><h4 data-i18n="cs2_i2_h">Ruído de segurança opcional</h4><p data-i18n="cs2_i2_p">Som ambiente muito baixo e não-rítmico, desligável. Para o perfil ansioso, é o que permite o silêncio.</p></div><div class="cs-principle-card reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="5" r="2"/><path d="M12 7v13"/><path d="M5 13a7 7 0 0014 0"/></svg></div><h4 data-i18n="cs2_i3_h">Reancoragem nas pausas</h4><p data-i18n="cs2_i3_p">Um convite breve ao corpo antes e depois do silêncio, para que ninguém se sinta abandonado.</p></div><div class="cs-principle-card reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg></div><h4 data-i18n="cs2_i4_h">Permissão explícita</h4><p data-i18n="cs2_i4_p">Frases que desativam o julgamento e retiram a noção de desempenho. Nunca palavras de esforço ou luta.</p></div><div class="cs-principle-card reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0116 0"/></svg></div><h4 data-i18n="cs2_i5_h">Personalização por perfil</h4><p data-i18n="cs2_i5_p">Ajustar dois parâmetros — duração das pausas e presença do som. Um preset único não serve a todos.</p></div><div class="cs-principle-card reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12c3-4 6-4 9 0s6 4 9 0"/></svg></div><h4 data-i18n="cs2_i6_h">Sem punição, sem urgência</h4><p data-i18n="cs2_i6_p">Nada de streaks agressivos nem sinais de "erro". A distração faz parte; o silêncio é intencional.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="validacao" class="cs-section">
+    <div class="container">
+      <h2 class="reveal" data-i18n="cs2_val_h2">Como isto seria validado</h2>
+      <div class="cs-body reveal">
+        <p data-i18n="cs2_val_intro">Estas personas são hipóteses. Antes de as tratar como verdade, o passo seguinte é testá-las em campo — com amostra pequena e qualitativa, perguntando pelo comportamento real e não pela nossa ideia.</p>
+      </div>
+      <ul class="learnings reveal">
+        <li data-i18n="cs2_val_li1" data-i18n-html>Perguntar pelo comportamento real, não pela ideia: <em>"Conte a última vez que meditou — o que aconteceu quando ficou em silêncio?"</em></li><li data-i18n="cs2_val_li2" data-i18n-html>Procurar o momento de fricção: <em>"Em que ponto sentiu vontade de parar ou de mexer no telemóvel?"</em></li><li data-i18n="cs2_val_li3" data-i18n-html>Testar a camada sonora: <em>"Já usou som de fundo? Ajudou ou atrapalhou? Porquê?"</em></li><li data-i18n="cs2_val_li4">Evitar perguntas que induzem a resposta ("Não é ótimo ter pausas longas?"). Perguntar pelo passado concreto.</li><li data-i18n="cs2_val_li5" data-i18n-html>Medir no produto: taxa de abandono <strong>durante</strong> os blocos de silêncio, por duração de pausa — o vale do desconforto deve aparecer nos dados.</li><li data-i18n="cs2_val_li6">Confirmar ou derrubar a curva de adaptação e calibrar os dois parâmetros (duração da pausa × som) por perfil.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cs-final">
+    <div class="container narrow">
+      <h2 class="reveal" data-i18n="cs2_final_h2">Menos ruído. Mais respiração.</h2>
+      <div class="cs-opportunity reveal">
+        <p data-i18n="cs2_final_p">Reforço final e honesto: este estudo é uma hipótese de trabalho, não uma conclusão de pesquisa. O silêncio é a ferramenta — mas só acalma quando o cérebro se sente seguro para o habitar. O próximo passo é ouvir utilizadores reais e deixar que confirmem, ou corrijam, tudo o que está aqui.</p>
+      </div>
+      <div class="cs-final-actions reveal">
+        <a class="button primary" href="index.html#casos" data-i18n="cs2_final_cta1">← Voltar aos casos</a>
+        <a class="button ghost" href="case-study-neuromedit.html" data-i18n="cs2_final_cta2">Ver o NeuroMedit</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p data-i18n="cs2_footer">© 2026 Lucas Nunes · Estudo conceptual, orientado por hipótese. Não constitui pesquisa com utilizadores reais.</p>
+  </div>
+</footer>
+
+
+<script src="i18n-portfolio.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* header scrolled state */
+  var header = document.getElementById("siteHeader");
+  function onScroll(){
+    if(window.scrollY > 40) header.classList.add("scrolled");
+    else header.classList.remove("scrolled");
+  }
+  document.addEventListener("scroll", onScroll, { passive:true });
+  onScroll();
+
+  /* reveal on scroll */
+  var revealEls = document.querySelectorAll(".reveal");
+  if(reduceMotion || !("IntersectionObserver" in window)){
+    revealEls.forEach(function(el){ el.classList.add("visible"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add("visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:.12, rootMargin:"0px 0px -40px 0px" });
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* pause background video under reduced motion */
+  if(reduceMotion){
+    document.querySelectorAll(".brand-process-video").forEach(function(v){
+      v.removeAttribute("autoplay");
+      v.pause();
+    });
+  }
+
+  /* benchmark carousel */
+  var track = document.getElementById("benchTrack");
+  var dotsWrap = document.getElementById("benchDots");
+  var prevBtn = document.getElementById("benchPrev");
+  var nextBtn = document.getElementById("benchNext");
+  var cap = document.getElementById("benchCap");
+  if(track){
+    var slides = track.querySelectorAll(".cs-carousel-slide");
+    var captionKeys = ["cs_carousel_cap_calm", "cs_carousel_cap_headspace"];
+    var index = 0;
+
+    slides.forEach(function(_, i){
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.setAttribute("aria-label", "Go to image " + (i + 1));
+      dot.setAttribute("aria-current", i === 0 ? "true" : "false");
+      dot.addEventListener("click", function(){ goTo(i); });
+      dotsWrap.appendChild(dot);
+    });
+    var dots = dotsWrap.querySelectorAll("button");
+
+    function render(){
+      track.style.transform = "translateX(-" + (index * 100) + "%)";
+      dots.forEach(function(d, i){ d.setAttribute("aria-current", i === index ? "true" : "false"); });
+      cap.textContent = (window.PortfolioI18n && window.PortfolioI18n.t) ? window.PortfolioI18n.t(captionKeys[index]) : cap.textContent;
+    }
+    function goTo(i){
+      index = (i + slides.length) % slides.length;
+      render();
+    }
+    prevBtn.addEventListener("click", function(){ goTo(index - 1); });
+    nextBtn.addEventListener("click", function(){ goTo(index + 1); });
+    window.addEventListener("portfolio:languagechange", render);
+
+    /* pointer-based swipe */
+    var startX = 0, deltaX = 0, dragging = false;
+    track.addEventListener("pointerdown", function(e){
+      dragging = true; startX = e.clientX; deltaX = 0;
+      track.classList.add("dragging");
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener("pointermove", function(e){
+      if(!dragging) return;
+      deltaX = e.clientX - startX;
+      track.style.transform = "translateX(calc(-" + (index * 100) + "% + " + deltaX + "px))";
+    });
+    function endDrag(){
+      if(!dragging) return;
+      dragging = false;
+      track.classList.remove("dragging");
+      if(Math.abs(deltaX) > 40){
+        goTo(index + (deltaX < 0 ? 1 : -1));
+      } else {
+        render();
+      }
+      deltaX = 0;
+    }
+    track.addEventListener("pointerup", endDrag);
+    track.addEventListener("pointercancel", endDrag);
+    track.addEventListener("pointerleave", function(){ if(dragging) endDrag(); });
+
+    render();
+  }
+})();
+</script>
+</body>
+</html>
