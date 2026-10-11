@@ -95,13 +95,13 @@
 
     idx_about_eyebrow: "Sobre mim",
     idx_about_h2: "Do Rio São Francisco a Lisboa",
-    idx_about_p1: "Nasci em Paulo Afonso, Bahia, à beira do rio. Aos 16, pagava minha própria escola de espanhol trabalhando numa biblioteca — e já meditava todas as manhãs.",
+    idx_about_p1: "Nasci em Paulo Afonso, Bahia, à beira do rio. Trabalhei numa biblioteca e paguei, com a ajuda da minha avó, meu curso de espanhol — e já meditava todas as manhãs.",
     idx_about_p2: "Em 2022 atravessei o Brasil de ônibus e depois o Atlântico, e recomecei em Lisboa com 800€. Hoje sou estudante de UX Design, voluntário num centro de yoga, e sigo guiando meditações — agora para muito mais gente do que imaginava.",
 
     idx_tl_2002_title: "Paulo Afonso, Bahia",
     idx_tl_2002_desc: "Nasço à beira do Rio São Francisco.",
     idx_tl_2016_title: "A biblioteca",
-    idx_tl_2016_desc: "Pago minha escola de espanhol com o próprio salário.",
+    idx_tl_2016_desc: "Trabalho numa biblioteca e pago o curso de espanhol junto com minha avó.",
     idx_tl_2022_title: "A travessia",
     idx_tl_2022_desc: "Brasil de ônibus, depois o Atlântico. Chego a Lisboa.",
     idx_tl_2023_title: "Os balcões",
@@ -558,13 +558,13 @@
 
     idx_about_eyebrow: "About me",
     idx_about_h2: "From the São Francisco River to Lisbon",
-    idx_about_p1: "I was born in Paulo Afonso, Bahia, on the river's edge. At 16, I paid for my own Spanish classes working at a library — and I already meditated every morning.",
+    idx_about_p1: "I was born in Paulo Afonso, Bahia, on the river's edge. I worked at a library and paid for my Spanish course together with my grandmother — and I already meditated every morning.",
     idx_about_p2: "In 2022 I crossed Brazil by bus, then the Atlantic, and started over in Lisbon with €800. Today I'm a UX design student, I volunteer at a yoga center, and I still guide meditations — now for far more people than I imagined.",
 
     idx_tl_2002_title: "Paulo Afonso, Bahia",
     idx_tl_2002_desc: "Born on the banks of the São Francisco River.",
     idx_tl_2016_title: "The library",
-    idx_tl_2016_desc: "Paying for Spanish school with my own wages.",
+    idx_tl_2016_desc: "Working at a library and paying for the Spanish course together with my grandmother.",
     idx_tl_2022_title: "The crossing",
     idx_tl_2022_desc: "Brazil by bus, then the Atlantic. I arrive in Lisbon.",
     idx_tl_2023_title: "Behind the counter",
@@ -1021,13 +1021,13 @@
 
     idx_about_eyebrow: "Sobre mí",
     idx_about_h2: "Del Río São Francisco a Lisboa",
-    idx_about_p1: "Nací en Paulo Afonso, Bahía, a orillas del río. A los 16 años, pagaba mi propia escuela de español trabajando en una biblioteca — y ya meditaba todas las mañanas.",
+    idx_about_p1: "Nací en Paulo Afonso, Bahía, a orillas del río. Trabajé en una biblioteca y pagué mi curso de español junto con mi abuela — y ya meditaba todas las mañanas.",
     idx_about_p2: "En 2022 crucé Brasil en autobús y después el Atlántico, y volví a empezar en Lisboa con 800€. Hoy soy estudiante de UX Design, voluntario en un centro de yoga, y sigo guiando meditaciones — ahora para mucha más gente de la que imaginaba.",
 
     idx_tl_2002_title: "Paulo Afonso, Bahía",
     idx_tl_2002_desc: "Nazco a orillas del Río São Francisco.",
     idx_tl_2016_title: "La biblioteca",
-    idx_tl_2016_desc: "Pago mi escuela de español con mi propio sueldo.",
+    idx_tl_2016_desc: "Trabajo en una biblioteca y pago el curso de español junto con mi abuela.",
     idx_tl_2022_title: "La travesía",
     idx_tl_2022_desc: "Brasil en autobús, después el Atlántico. Llego a Lisboa.",
     idx_tl_2023_title: "Detrás de la barra",
@@ -1484,13 +1484,13 @@
 
     idx_about_eyebrow: "Chi sono",
     idx_about_h2: "Dal Rio São Francisco a Lisbona",
-    idx_about_p1: "Sono nato a Paulo Afonso, Bahia, sulle rive del fiume. A 16 anni pagavo da solo la scuola di spagnolo lavorando in una biblioteca — e meditavo già ogni mattina.",
+    idx_about_p1: "Sono nato a Paulo Afonso, Bahia, sulle rive del fiume. Ho lavorato in una biblioteca e ho pagato il corso di spagnolo insieme a mia nonna — e meditavo già ogni mattina.",
     idx_about_p2: "Nel 2022 ho attraversato il Brasile in autobus e poi l'Atlantico, ricominciando a Lisbona con 800€. Oggi sono studente di UX Design, volontario in un centro yoga, e continuo a guidare meditazioni — ora per molte più persone di quante immaginassi.",
 
     idx_tl_2002_title: "Paulo Afonso, Bahia",
     idx_tl_2002_desc: "Nasco sulle rive del Rio São Francisco.",
     idx_tl_2016_title: "La biblioteca",
-    idx_tl_2016_desc: "Pago la scuola di spagnolo con il mio stipendio.",
+    idx_tl_2016_desc: "Lavoro in una biblioteca e pago il corso di spagnolo insieme a mia nonna.",
     idx_tl_2022_title: "La traversata",
     idx_tl_2022_desc: "Brasile in autobus, poi l'Atlantico. Arrivo a Lisbona.",
     idx_tl_2023_title: "Al bancone",
