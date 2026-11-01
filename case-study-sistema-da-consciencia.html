@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema da Consciência — Estudo de caso · Lucas Nunes</title>
+<meta name="description" content="Estudo de caso de um e-book interativo de neurociência em forma de sistema solar: oito capítulos, três formas de leitura, decisões de UX e ciência da aprendizagem aplicada ao produto.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://lucasnunespt.github.io/assets/sistema-da-consciencia/mapa.jpg">
+<meta property="og:title" content="Sistema da Consciência — Estudo de caso · Lucas Nunes">
+<meta property="og:description" content="Um e-book de neurociência em que cada leitor escolhe como quer entender. Protótipo funcional.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%238A4726'/%3E%3Ctext x='50' y='69' font-size='58' font-family='Georgia,serif' fill='%23F7F5F1' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="neuromedit-ds.css">
+<style>
+/* ============================================================
+   RESET
+   ============================================================ */
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{ overflow-x:hidden; }
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; background:none; border:none; cursor:pointer; }
+a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+.skip-link{
+  position:absolute; left:1rem; top:-4rem; z-index:999;
+  background:var(--accent); color:var(--button-text); font-weight:600; font-size:.92rem;
+  padding:.85rem 1.3rem; border-radius:var(--radius-sm);
+}
+.skip-link:focus{ top:1rem; }
+
+@media (prefers-contrast:more){
+  .header-inner{ background:var(--bg); backdrop-filter:none; -webkit-backdrop-filter:none; }
+}
+
+/* ============================================================
+   TOKENS — mesma identidade do portfólio
+   ============================================================ */
+
+body{ font-family:var(--font-sans); background:linear-gradient(to bottom, var(--bg) 0%, var(--bg-soft) 100%); color:var(--text); line-height:1.5; font-weight:400; }
+::selection{ background:var(--surface); }
+
+.container{ max-width:var(--container); margin:0 auto; padding:0 var(--gutter); }
+.container.narrow{ max-width:760px; }
+section{ padding:clamp(3.5rem,9vw,7rem) 0; }
+
+h1,h2,h3{ letter-spacing:-0.02em; color:var(--text); font-weight:500; }
+em{ font-family:var(--font-serif); font-style:italic; font-weight:400; color:var(--accent-dark); }
+p{ color:var(--text-soft); }
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.78rem; text-transform:uppercase; letter-spacing:.12em;
+  color:var(--text-soft); font-weight:600; margin-bottom:1.1rem;
+}
+.eyebrow::before{ content:""; width:14px; height:1px; background:var(--accent); flex:none; }
+
+.button{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.95rem; font-weight:600; padding:.9rem 1.5rem; min-height:48px;
+  border-radius:999px;
+}
+.button.primary{ background:var(--accent); color:var(--button-text); }
+.button.primary:hover{ box-shadow:var(--shadow-card); }
+.button.ghost{ border:1px solid var(--line); color:var(--text); }
+.button.ghost:hover{ border-color:var(--text); background:var(--surface); }
+.link-arrow{ font-weight:600; font-size:.94rem; color:var(--accent-dark); border-bottom:1px solid transparent; }
+.link-arrow:hover{ border-color:var(--accent); }
+
+/* ============================================================
+   HEADER — idêntico ao portfólio
+   ============================================================ */
+.site-header{ position:sticky; top:0; z-index:60; background:transparent; padding:.86rem 0 .68rem; }
+.site-header.scrolled{ padding:.52rem 0 .38rem; }
+.header-inner{
+  min-height:78px; display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  border-radius:999px; border:1px solid var(--line);
+  padding:.55rem 1.05rem .55rem 1.2rem;
+  background:var(--surface-strong);
+  box-shadow:var(--shadow-card), var(--glass-highlight);
+ 
+}
+.site-header.scrolled .header-inner{ background:var(--surface-strong); }
+.wordmark{ font-size:1.05rem; font-weight:700; letter-spacing:-0.02em; white-space:nowrap; }
+.wordmark .accent{ color:var(--accent-dark); }
+.main-nav{ display:flex; align-items:center; gap:2.2rem; }
+.main-nav a{ font-size:.92rem; color:var(--text-soft); font-weight:500; }
+.main-nav a:hover{ color:var(--text); }
+.main-nav .button{ padding:.6rem 1.1rem; font-size:.86rem; min-height:auto; }
+.main-nav a:not(.button){ padding:.6rem .3rem; display:inline-flex; align-items:center; min-height:44px; }
+@media (max-width:760px){ .main-nav a:not(.button){ display:none; } }
+
+/* ============================================================
+   SELETOR DE IDIOMA — mesmo componente do portfólio
+   ============================================================ */
+.header-language-slot{
+  display:inline-flex; flex-shrink:0; align-items:center; margin-left:-1rem;
+  position:relative; width:64px; height:38px;
+}
+/* Dentro do header, o pill sai do fluxo — expande por cima sem esticar o header */
+.header-language-slot .language-wrapper{
+  position:absolute; top:0; right:0;
+}
+.language-wrapper{
+  position:relative; display:inline-flex; flex-direction:column;
+  width:64px; max-height:38px; border-radius:999px;
+  background:color-mix(in srgb, var(--surface) 78%, transparent);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow-soft);
+  overflow:hidden;
+ 
+  z-index:80;
+}
+.language-trigger{
+  appearance:none; position:relative; z-index:2; flex:0 0 38px; width:100%; height:38px;
+  border:0; border-radius:0; display:inline-flex; align-items:center; justify-content:center;
+  gap:.28rem; color:var(--text); background:transparent; cursor:pointer;
+}
+.language-trigger svg{ width:15px; height:15px; }
+.language-current{ font-size:.7rem; letter-spacing:.08em; line-height:1; font-weight:600; }
+.language-trigger:focus-visible{ outline:none; }
+.language-options{
+  width:100%; padding:0 .32rem .5rem; display:grid; align-items:center; gap:.22rem; box-sizing:border-box;
+  opacity:0; transform:translateY(-10px);
+ 
+}
+.language-wrapper.is-open{
+  max-height:260px;
+  background:var(--surface);
+  border-color:var(--text-soft);
+  box-shadow:var(--shadow-card);
+}
+.language-wrapper.is-open .language-options{ opacity:1; transform:translateY(0); }
+@media (hover:hover) and (pointer:fine){
+  .language-wrapper:hover{ max-height:260px; background:var(--surface); border-color:var(--text-soft); box-shadow:var(--shadow-card); }
+  .language-wrapper:hover .language-options{ opacity:1; transform:translateY(0); }
+}
+.language-options button{
+  appearance:none; min-width:46px; height:30px; border:0; border-radius:999px;
+  color:var(--text-soft); background:transparent; font:inherit; font-size:.72rem; letter-spacing:.08em;
+  cursor:pointer;
+}
+.language-options button:hover, .language-options button:focus-visible{
+  color:var(--text); background:var(--bg-soft); outline:none;
+}
+.language-options button.is-active{ color:var(--button-text); background-color:var(--accent); outline:none; }
+.language-options button:active{ transform:scale(.96); }
+@media (prefers-reduced-motion:reduce){
+  .language-wrapper, .language-trigger, .language-options, .language-options button{ }
+}
+@media (max-width:480px){
+  .header-language-slot{ width:58px; height:34px; }
+  .language-wrapper{ width:58px; max-height:34px; }
+  .language-trigger{ flex:0 0 34px; height:34px; }
+  .language-wrapper.is-open{ max-height:240px; }
+}
+
+/* ============================================================
+   HERO DO ESTUDO
+   ============================================================ */
+.cs-hero{ padding-top:clamp(2.5rem,7vw,4rem); padding-bottom:clamp(2.5rem,5vw,3.5rem); border-bottom:1px solid var(--line); }
+.cs-back{ display:inline-flex; align-items:center; gap:.4rem; font-size:.86rem; color:var(--text-soft); font-weight:500; margin-bottom:1.6rem; }
+.cs-back:hover{ color:var(--accent-dark); }
+.cs-hero h1{ font-size:clamp(2.2rem,5.5vw,3.6rem); line-height:1.08; max-width:16ch; margin-bottom:1.1rem; }
+.cs-hero .subtitle{ font-family:var(--font-serif); font-style:italic; color:var(--accent-dark); font-size:clamp(1.1rem,2.2vw,1.35rem); margin-bottom:1.2rem; max-width:32ch; }
+.cs-hero-body{ max-width:60ch; font-size:1.05rem; line-height:1.75; margin-bottom:1.8rem; }
+.cs-tags{ display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:2rem; }
+.cs-tags span{
+  font-size:.8rem; font-weight:600; color:var(--text-soft);
+  padding:.4rem .85rem; border:1px solid var(--line); border-radius:999px; background:var(--surface);
+}
+.cs-hero-actions{ display:flex; gap:.9rem; flex-wrap:wrap; }
+
+/* ============================================================
+   BLOCOS DE TEXTO — pesquisa, síntese, mudanças, aprendizados
+   ============================================================ */
+.cs-section{ border-top:1px solid var(--line); }
+.cs-section:nth-child(even){ background:var(--bg-soft); }
+.cs-section h2{ font-size:clamp(1.6rem,3.6vw,2.4rem); max-width:22ch; margin-bottom:1.4rem; }
+.cs-section > .container > p, .cs-body p{ max-width:64ch; font-size:1.02rem; line-height:1.75; margin-bottom:1.1rem; }
+.cs-body p:last-child{ margin-bottom:0; }
+
+blockquote.cs-quote{
+  border-left:3px solid var(--accent); padding:.3rem 0 .3rem 1.5rem; margin:1.8rem 0;
+  font-family:var(--font-serif); font-style:italic; font-size:clamp(1.15rem,2.4vw,1.4rem); color:var(--text); max-width:52ch;
+}
+
+/* estados do usuário */
+.cs-states-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1.3rem; margin-top:2rem; }
+.cs-state-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:1.5rem; }
+.cs-state-card .idx{ font-size:.78rem; color:var(--text-soft); font-weight:600; margin-bottom:.6rem; }
+.cs-state-card h3{ font-size:1.05rem; margin-bottom:.9rem; }
+.cs-state-card .row{ margin-bottom:.7rem; }
+.cs-state-card .row:last-child{ margin-bottom:0; }
+.cs-state-card .row h4{ font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; color:var(--text-soft); font-weight:600; margin-bottom:.2rem; }
+.cs-state-card .row p{ font-size:.9rem; line-height:1.55; margin-bottom:0; }
+@media (max-width:900px){ .cs-states-grid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:560px){ .cs-states-grid{ grid-template-columns:1fr; } }
+
+/* benchmark */
+.cs-benchmark-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:2.5rem; align-items:start; margin-top:2rem; }
+.cs-bench-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:1.5rem; margin-bottom:1.2rem; }
+.cs-bench-card:last-child{ margin-bottom:0; }
+.cs-bench-card h4{ font-size:1rem; margin-bottom:.5rem; }
+.cs-bench-card p{ font-size:.92rem; line-height:1.6; margin-bottom:0; }
+.cs-bench-card.insight{ background:var(--surface); border-color:transparent; }
+.cs-bench-card.insight h4{ color:var(--accent-dark); }
+
+.cs-carousel{ position:relative; border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--line); background:var(--surface); user-select:none; }
+.cs-carousel-track{ display:flex; touch-action:pan-y; cursor:grab; }
+.cs-carousel-track.dragging{ cursor:grabbing; }
+.cs-carousel-slide{ flex:0 0 100%; }
+.cs-carousel-slide img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; pointer-events:none; }
+.cs-carousel-cap{ padding:.9rem 1.1rem; font-size:.86rem; color:var(--text-soft); border-top:1px solid var(--line); }
+.cs-carousel-nav{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+  width:38px; height:38px; border-radius:50%; background:var(--surface-strong);
+  border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+  font-size:1rem; color:var(--text);
+}
+.cs-carousel-nav:hover{ background:var(--surface); }
+.cs-carousel-nav.prev{ left:.8rem; }
+.cs-carousel-nav.next{ right:.8rem; }
+.cs-carousel-dots{ display:flex; gap:.5rem; justify-content:center; padding:.9rem 0; }
+.cs-carousel-dots button{ width:8px; height:8px; border-radius:50%; background:var(--line); }
+.cs-carousel-dots button[aria-current="true"]{ background:var(--accent); transform:scale(1.2); }
+@media (max-width:900px){ .cs-benchmark-grid{ grid-template-columns:1fr; } }
+
+/* princípios */
+.cs-principles-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:1.1rem; margin-top:2rem;
+}
+.cs-principle-card{
+  display:flex; flex-direction:column; align-items:flex-start;
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm);
+  padding:1.5rem 1.3rem;
+}
+.cs-principle-card .icon{
+  width:30px; height:30px; color:var(--accent-dark); margin-bottom:1rem; flex:none;
+}
+.cs-principle-card .icon svg{ width:100%; height:100%; }
+.cs-principle-card h4{
+  font-size:1rem; font-weight:600; letter-spacing:-0.01em; line-height:1.3;
+  color:var(--text); margin-bottom:.55rem; flex:none;
+}
+.cs-principle-card p{ font-size:.88rem; line-height:1.6; margin-bottom:0; }
+@media (max-width:560px){
+  .cs-principles-grid{ grid-template-columns:1fr 1fr; gap:.9rem; }
+  .cs-principle-card{ padding:1.25rem 1.1rem; }
+}
+@media (max-width:380px){ .cs-principles-grid{ grid-template-columns:1fr; } }
+
+/* wireframes / exploração */
+.cs-wireframe-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; margin-top:2rem; }
+.cs-wireframe-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; }
+.cs-wireframe-card img{ width:100%; aspect-ratio:3/4; object-fit:cover; }
+.cs-wireframe-card .meta{ padding:1.1rem 1.2rem; }
+.cs-wireframe-card h4{ font-size:.94rem; margin-bottom:.4rem; }
+.cs-wireframe-card p{ font-size:.85rem; line-height:1.55; margin-bottom:0; }
+.cs-decision-card{ margin-top:1.4rem; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:1.6rem 1.8rem; }
+.cs-decision-card h4{ font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text-soft); font-weight:600; margin-bottom:.8rem; }
+@media (max-width:820px){ .cs-wireframe-grid{ grid-template-columns:1fr; } }
+
+/* fluxo do usuário — reaproveita padrão flow-step do portfólio */
+.flow-strip{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin:2rem 0 0; }
+.flow-step{
+  font-size:.82rem; font-weight:600; color:var(--text); background:var(--surface);
+  border:1px solid var(--line); border-radius:999px; padding:.45rem .9rem; white-space:nowrap;
+}
+.flow-step.is-heavy{ background:var(--accent); color:var(--button-text); border-color:var(--text); }
+.flow-step.is-calm{ background:var(--accent); color:var(--button-text); border-color:var(--accent); }
+.flow-sep{ color:var(--text-soft); font-size:.85rem; }
+.cs-flow-detail{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.1rem; margin-top:1.6rem; }
+.cs-flow-detail .step{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:1.1rem 1.2rem; }
+.cs-flow-detail .step .n{ font-size:.75rem; color:var(--accent-dark); font-weight:700; margin-bottom:.4rem; }
+.cs-flow-detail .step h5{ font-size:.92rem; font-weight:600; margin-bottom:.3rem; color:var(--text); }
+.cs-flow-detail .step p{ font-size:.84rem; line-height:1.5; margin-bottom:0; }
+
+/* processamento estético / sistema */
+.cs-aesthetic-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; margin-top:2rem; align-items:start; }
+.cs-concept-card{ background:var(--accent); color:var(--button-text); border-radius:var(--radius-sm); padding:2rem; display:flex; flex-direction:column; justify-content:center; min-height:260px; }
+.cs-concept-card .k{ font-size:.78rem; text-transform:uppercase; letter-spacing:.12em; color:var(--button-text); font-weight:600; margin-bottom:.9rem; }
+.cs-concept-card h3{ font-family:var(--font-serif); font-style:italic; color:var(--button-text); font-size:clamp(1.5rem,3vw,2rem); font-weight:400; }
+.cs-process-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; }
+.cs-process-card video{ width:100%; display:block; }
+.cs-process-card .meta{ padding:1.3rem 1.4rem; }
+.cs-process-card h4{ font-size:.95rem; margin-bottom:.5rem; }
+.cs-process-card p{ font-size:.88rem; line-height:1.6; margin-bottom:0; }
+@media (max-width:820px){ .cs-aesthetic-grid{ grid-template-columns:1fr; } }
+
+.cs-equation{
+  margin-top:2rem; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:1rem;
+  padding:2rem 1.5rem; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); text-align:center;
+}
+.cs-equation .term{ font-size:.92rem; font-weight:600; color:var(--text); padding:.7rem 1.1rem; border:1px solid var(--line); border-radius:var(--radius-sm); background:var(--bg); }
+.cs-equation .op{ font-size:1.2rem; color:var(--text-soft); }
+.cs-equation .result{ font-size:.92rem; font-weight:700; color:var(--button-text); background:var(--accent); padding:.7rem 1.2rem; border-radius:var(--radius-sm); }
+
+.cs-rules-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-top:1.6rem; }
+.cs-rule-card{ padding:1.2rem 1.3rem; background:var(--bg-soft); border-radius:var(--radius-sm); }
+.cs-rule-card h5{ font-size:.9rem; margin-bottom:.35rem; color:var(--text); }
+.cs-rule-card p{ font-size:.84rem; line-height:1.5; margin-bottom:0; }
+@media (max-width:820px){ .cs-rules-grid{ grid-template-columns:1fr 1fr; } }
+@media (max-width:520px){ .cs-rules-grid{ grid-template-columns:1fr; } }
+
+.cs-logo-block{
+  margin-top:2rem; display:flex; flex-direction:column; align-items:center; text-align:center; gap:1rem;
+  padding:3rem 1.5rem; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm);
+}
+.cs-logo-block img{ width:64px; height:64px; }
+.cs-logo-block .word{ font-size:1.3rem; font-weight:700; letter-spacing:-0.02em; }
+.cs-logo-block .word .accent{ color:var(--accent-dark); }
+.cs-logo-block p{ max-width:44ch; font-size:.92rem; margin-bottom:0; }
+
+/* aprendizados */
+.learnings{ list-style:none; margin-top:1.6rem; display:grid; gap:.7rem; max-width:64ch; }
+.learnings li{ font-size:.98rem; line-height:1.6; padding-left:1.4rem; position:relative; color:var(--text-soft); }
+.learnings li::before{ content:"—"; position:absolute; left:0; color:var(--accent-dark); }
+
+/* encerramento */
+.cs-final{ text-align:center; }
+.cs-final .container.narrow{ margin:0 auto; }
+.cs-final h2{ font-size:clamp(1.7rem,4vw,2.6rem); margin-bottom:1.3rem; }
+.cs-final p{ font-size:1.02rem; line-height:1.75; margin-bottom:1.1rem; }
+.cs-opportunity{
+  margin:1.8rem auto; max-width:52ch; text-align:left; padding:1.5rem 1.7rem;
+  background:var(--surface); border-radius:var(--radius-sm);
+}
+.cs-opportunity p{ font-size:.95rem; color:var(--text); margin-bottom:0; }
+.cs-final-actions{ display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin:1.6rem 0 2rem; }
+.cs-sign{ font-family:var(--font-serif); font-style:italic; color:var(--accent-dark); font-size:1.15rem; }
+
+footer{ border-top:1px solid var(--line); padding:2rem 0; text-align:center; }
+footer p{ font-size:.85rem; color:var(--text-soft); }
+
+/* reveal */
+
+@media (max-width:480px){
+  .container{ padding:0 1.15rem; }
+  .cs-hero-actions .button, .cs-final-actions .button{ width:100%; justify-content:center; }
+  .cs-hero-actions, .cs-final-actions{ flex-direction:column; }
+  .header-inner{ min-height:56px; padding:.4rem .4rem .4rem 1rem; }
+  .wordmark{ font-size:.98rem; }
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal{ opacity:1; transform:none; }
+  html{ scroll-behavior:auto; }
+  .cs-carousel-track{ }
+}
+
+/* ============================================================
+   SISTEMA DA CONSCIÊNCIA — capturas do protótipo
+   ============================================================ */
+.cs-shot{ margin-top:2rem; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); overflow:hidden; box-shadow:var(--shadow-card), var(--glass-highlight); }
+.cs-shot img{ width:100%; height:auto; }
+.cs-shot figcaption{ padding:.9rem 1.2rem; font-size:.86rem; line-height:1.55; color:var(--text-soft); border-top:1px solid var(--line); }
+.cs-shots-phone{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem; margin-top:2rem; }
+.cs-shots-phone .cs-shot{ margin-top:0; border-radius:var(--radius-lg); }
+@media (max-width:760px){ .cs-shots-phone{ grid-template-columns:1fr 1fr; } .cs-shots-phone .cs-shot:last-child{ grid-column:1 / -1; max-width:60%; justify-self:center; } }
+@media (max-width:480px){ .cs-shots-phone{ grid-template-columns:1fr; } .cs-shots-phone .cs-shot:last-child{ max-width:none; } }
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main" data-i18n="common_skip">Pular para o conteúdo</a>
+<header class="site-header" id="siteHeader">
+  <div class="container header-inner">
+    <a class="wordmark" href="index.html">Lucas&nbsp;<span class="accent">Nunes</span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html#casos" data-i18n="common_nav_casos">Casos</a>
+      <a href="index.html#sobre" data-i18n="common_nav_sobre">Sobre</a>
+      <a class="button ghost" href="index.html#contato" data-i18n="common_nav_contato">Contato</a>
+      <div class="header-language-slot" data-language-host></div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="cs-hero">
+    <div class="container">
+      <a class="cs-back reveal" href="index.html#casos" data-i18n="cs2_back">← Voltar ao início</a>
+      <h1 class="reveal">Sistema da Consciência</h1>
+      <p class="subtitle reveal">Um e-book de neurociência em que cada leitor escolhe como quer entender.</p>
+      <div class="cs-tags reveal">
+        <span>Produto digital</span>
+        <span>UX de leitura</span>
+        <span>Neurociência aplicada</span>
+        <span>Protótipo funcional</span>
+      </div>
+      <div class="cs-opportunity reveal" style="max-width:64ch">
+        <p><strong>Nota de método.</strong> Este é um protótipo funcional, ainda <strong>não testado com leitores</strong>. As decisões abaixo vêm de princípios de design e da pesquisa sobre aprendizagem, não de dados de uso. O texto e o código foram produzidos com apoio de IA (Claude), sob a minha direção, revisão e decisões de design.</p>
+      </div>
+      <div class="cs-hero-body reveal">
+        <p>O Sistema da Consciência transforma um livro sobre neurociência e metacognição num sistema solar navegável. Cada um dos oito planetas é um capítulo, e cada capítulo pode ser lido de três formas, as luas: pelo design, pelo corpo ou pelo dia a dia.</p>
+      </div>
+      <div class="cs-hero-actions reveal">
+        <a class="button primary" href="sistema-da-consciencia/">Abrir o e-book</a>
+        <a class="button ghost" href="#decisoes">Ver as decisões</a>
+      </div>
+      <figure class="cs-shot reveal">
+        <img src="assets/sistema-da-consciencia/mapa.jpg" width="1692" height="1083" alt="Mapa do e-book: o Sol no centro, oito planetas em órbita com três luas cada, uma nave em viagem e a linha do tempo dos capítulos por baixo.">
+        <figcaption>O índice é uma paisagem: os planetas giram, a nave leva o leitor de um capítulo a outro e a linha do tempo mostra a ordem e o progresso.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="problema" class="cs-section">
+    <div class="container">
+      <h2 class="reveal">O problema</h2>
+      <div class="cs-body reveal">
+        <p>Os livros de divulgação sobre o cérebro tendem a dois extremos: densos demais para quem está a começar, ou simplificados a ponto de prometer o que a ciência não sustenta.</p>
+        <p>E cada pessoa entende de um jeito. Umas precisam de ver o sistema, outras de sentir no corpo, outras de um exemplo do dia a dia. Um texto único obriga todas a entrar pela mesma porta.</p>
+      </div>
+      <blockquote class="cs-quote reveal">O mesmo conteúdo, três portas de entrada.</blockquote>
+    </div>
+  </section>
+
+  <section id="ideia" class="cs-section">
+    <div class="container">
+      <h2 class="reveal">A ideia central</h2>
+      <div class="cs-body reveal">
+        <p>O Sol é a introdução. À volta dele giram os oito planetas, na ordem real do sistema solar, e cada um tem um motivo para ser aquele capítulo: Mercúrio, o mensageiro, abre com a percepção; Vênus fala do cérebro social; a Terra, do corpo; Marte, da motivação; Júpiter, com as suas dezenas de luas, das redes do cérebro; Saturno, deus do tempo, da memória; Urano, que gira deitado, da metacognição; e Netuno, o mais distante, do sono.</p>
+        <p>Cada planeta tem três luas com o mesmo conteúdo em três linguagens. A Lua do Design explica com sistemas e interfaces, a do Corpo com sensações e fisiologia, a do Dia a Dia com frases curtas e exemplos da vida comum, como um médico explicaria a um paciente.</p>
+      </div>
+      <div class="flow-strip reveal" aria-label="Percurso do leitor">
+        <span class="flow-step">Boas-vindas</span><span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step">Sol</span><span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step">Planeta</span><span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step is-calm">Lua</span><span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step">Lembrar</span><span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step">Próxima parada</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="principios" class="cs-section">
+    <div class="container">
+      <h2 class="reveal">Princípios</h2>
+      <div class="cs-principles-grid reveal">
+        <div class="cs-principle-card"><h4>Calma antes de informação</h4><p>O leitor chega para entender a própria mente. O produto não pode competir com ela.</p></div>
+        <div class="cs-principle-card"><h4>Cada elemento tem um porquê</h4><p>Se não dá para dizer quem usa uma peça e em que momento, ela não entra.</p></div>
+        <div class="cs-principle-card"><h4>Ciência honesta</h4><p>Estudos citados com autor e ano, limites declarados, nenhuma promessa de milagre.</p></div>
+        <div class="cs-principle-card"><h4>O leitor escolhe o caminho</h4><p>Três luas, nenhuma melhor que a outra. O produto sugere, nunca impõe.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="decisoes" class="cs-section">
+    <div class="container">
+      <h2 class="reveal">Decisões de design</h2>
+      <div class="cs-body reveal">
+        <p>Cada versão do protótipo revelou um problema concreto. Estas são as decisões que mais mudaram a experiência.</p>
+      </div>
+      <div class="cs-flow-detail reveal">
+        <div class="step"><p class="n">01</p><h5>Nomes que não se sobrepõem</h5><p>Com os planetas em órbita, os nomes colidiam. Os rótulos ganharam uma camada própria que, a cada quadro, testa posições abaixo e acima de cada planeta e esconde o que não cabe, com prioridade para onde o leitor está.</p></div>
+        <div class="step"><p class="n">02</p><h5>De painel técnico a livro</h5><p>A primeira versão usava fonte monoespaçada e parecia um painel de controle. Passou a usar uma serifa clássica nos títulos, uma fonte de leitura longa no texto e uma sem serifa discreta nos rótulos.</p></div>
+        <div class="step"><p class="n">03</p><h5>A barra flutuante tem um porquê</h5><p>Ao ler, o mapa sai da tela e o leitor perde três coisas: onde está, quanto falta e como sai. A barra aparece só nesse momento e responde às três.</p></div>
+        <div class="step"><p class="n">04</p><h5>Toques sem querer</h5><p>No celular, as luas ao lado dos planetas eram tocadas por engano. Passaram a mostrar só o progresso, e o planeta inteiro virou o alvo, que leva sempre à introdução do capítulo.</p></div>
+        <div class="step"><p class="n">05</p><h5>Uma viagem com ordem</h5><p>Cada planeta abre quando o leitor lê uma lua do anterior, porque cada capítulo usa ideias do anterior. Quem revisa ou ensina pode liberar todos nas preferências.</p></div>
+        <div class="step"><p class="n">06</p><h5>Preferências com justificativa</h5><p>Tamanho do texto, tema, movimento calmo e modo foco, cada um com uma linha que diz para quem serve: vista cansada, luz forte, sensibilidade a animações.</p></div>
+      </div>
+      <figure class="cs-shot reveal">
+        <img src="assets/sistema-da-consciencia/leitura.jpg" width="1560" height="930" alt="Página de leitura com títulos em serifa, termos técnicos sublinhados que abrem uma definição e um índice lateral que acompanha a leitura.">
+        <figcaption>Leitura no computador: os termos técnicos abrem a definição no próprio parágrafo, e o índice lateral mostra em que parte do texto o leitor está.</figcaption>
+      </figure>
+      <div class="cs-shots-phone reveal">
+        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-mapa.jpg" width="780" height="1328" alt="No celular, o mapa do sistema solar com os controles de zoom no canto inferior."><figcaption>Mapa no celular, com controles na zona do polegar.</figcaption></figure>
+        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-leitura.jpg" width="780" height="1328" alt="No celular, um texto em leitura com a barra flutuante em baixo, mostrando o planeta, as três luas, o glossário e as preferências."><figcaption>A barra flutuante aparece quando o mapa sai da tela.</figcaption></figure>
+        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-preferencias.jpg" width="780" height="1328" alt="No celular, o painel de preferências aberto de baixo para cima, com opções de texto, tema e movimento."><figcaption>Preferências num painel que fecha ao arrastar para baixo.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="ciencia" class="cs-section">
+    <div class="container">
+      <h2 class="reveal">O produto pratica o que ensina</h2>
+      <div class="cs-body reveal">
+        <p>O capítulo de Saturno explica que lembrar sem consultar fixa mais do que reler, e que espaçar as revisões ajuda a memória a durar. O próprio e-book usa essas duas ideias.</p>
+        <p>No fim de cada lua, um cartão pede ao leitor que tente lembrar as ideias principais antes de as ver. Depois, ele diz quanto lembrou, e o produto marca a lua para revisão daqui a um, três ou sete dias. Na volta, a linha do tempo e a página inicial mostram o que está na hora de rever.</p>
+      </div>
+      <figure class="cs-shot reveal">
+        <img src="assets/sistema-da-consciencia/fim-de-lua.jpg" width="2160" height="1440" alt="Cartão no fim de uma lua com a pergunta O que ficou com você, a lista de tópicos para comparar e três botões para avaliar a lembrança.">
+        <figcaption>O cartão de lembrança no fim de cada lua.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="proximos" class="cs-section">
+    <div class="container">
+      <h2 class="reveal">O que falta</h2>
+      <div class="cs-body reveal">
+        <p>O protótipo está completo, mas ainda não foi validado. Os próximos passos, por ordem:</p>
+      </div>
+      <ul class="learnings reveal">
+        <li>Observar cinco leitores a usar o e-book, sem ajudar, e corrigir o que travar.</li>
+        <li>Pedir uma revisão científica a alguém da área e uma revisão de texto externa.</li>
+        <li>Verificar acessibilidade: contraste, navegação por teclado e leitor de tela.</li>
+        <li>Criar conta por e-mail, para guardar o progresso entre aparelhos, e definir como vender.</li>
+        <li>Traduzir para espanhol, inglês e italiano.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cs-final">
+    <div class="container narrow">
+      <h2 class="reveal">Uma viagem para observar a própria mente.</h2>
+      <div class="cs-final-actions reveal">
+        <a class="button primary" href="sistema-da-consciencia/">Abrir o e-book</a>
+        <a class="button ghost" href="index.html#casos" data-i18n="cs2_final_cta1">← Voltar aos casos</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Lucas Nunes · Protótipo funcional, ainda não testado com leitores.</p>
+  </div>
+</footer>
+
+
+<script src="i18n-portfolio.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* header scrolled state */
+  var header = document.getElementById("siteHeader");
+  function onScroll(){
+    if(window.scrollY > 40) header.classList.add("scrolled");
+    else header.classList.remove("scrolled");
+  }
+  document.addEventListener("scroll", onScroll, { passive:true });
+  onScroll();
+
+  /* reveal on scroll */
+  var revealEls = document.querySelectorAll(".reveal");
+  if(reduceMotion || !("IntersectionObserver" in window)){
+    revealEls.forEach(function(el){ el.classList.add("visible"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add("visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:.12, rootMargin:"0px 0px -40px 0px" });
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* pause background video under reduced motion */
+  if(reduceMotion){
+    document.querySelectorAll(".brand-process-video").forEach(function(v){
+      v.removeAttribute("autoplay");
+      v.pause();
+    });
+  }
+
+  /* benchmark carousel */
+  var track = document.getElementById("benchTrack");
+  var dotsWrap = document.getElementById("benchDots");
+  var prevBtn = document.getElementById("benchPrev");
+  var nextBtn = document.getElementById("benchNext");
+  var cap = document.getElementById("benchCap");
+  if(track){
+    var slides = track.querySelectorAll(".cs-carousel-slide");
+    var captionKeys = ["cs_carousel_cap_calm", "cs_carousel_cap_headspace"];
+    var index = 0;
+
+    slides.forEach(function(_, i){
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.setAttribute("aria-label", "Go to image " + (i + 1));
+      dot.setAttribute("aria-current", i === 0 ? "true" : "false");
+      dot.addEventListener("click", function(){ goTo(i); });
+      dotsWrap.appendChild(dot);
+    });
+    var dots = dotsWrap.querySelectorAll("button");
+
+    function render(){
+      track.style.transform = "translateX(-" + (index * 100) + "%)";
+      dots.forEach(function(d, i){ d.setAttribute("aria-current", i === index ? "true" : "false"); });
+      cap.textContent = (window.PortfolioI18n && window.PortfolioI18n.t) ? window.PortfolioI18n.t(captionKeys[index]) : cap.textContent;
+    }
+    function goTo(i){
+      index = (i + slides.length) % slides.length;
+      render();
+    }
+    prevBtn.addEventListener("click", function(){ goTo(index - 1); });
+    nextBtn.addEventListener("click", function(){ goTo(index + 1); });
+    window.addEventListener("portfolio:languagechange", render);
+
+    /* pointer-based swipe */
+    var startX = 0, deltaX = 0, dragging = false;
+    track.addEventListener("pointerdown", function(e){
+      dragging = true; startX = e.clientX; deltaX = 0;
+      track.classList.add("dragging");
+      track.setPointerCapture(e.pointerId);
+    });
+    track.addEventListener("pointermove", function(e){
+      if(!dragging) return;
+      deltaX = e.clientX - startX;
+      track.style.transform = "translateX(calc(-" + (index * 100) + "% + " + deltaX + "px))";
+    });
+    function endDrag(){
+      if(!dragging) return;
+      dragging = false;
+      track.classList.remove("dragging");
+      if(Math.abs(deltaX) > 40){
+        goTo(index + (deltaX < 0 ? 1 : -1));
+      } else {
+        render();
+      }
+      deltaX = 0;
+    }
+    track.addEventListener("pointerup", endDrag);
+    track.addEventListener("pointercancel", endDrag);
+    track.addEventListener("pointerleave", function(){ if(dragging) endDrag(); });
+
+    render();
+  }
+})();
+</script>
+</body>
+</html>
