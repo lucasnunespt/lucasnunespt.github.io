@@ -474,6 +474,25 @@ html[data-tema="dia"] .sh-grab{background:rgba(28,33,51,.2)}
 .sh-head{touch-action:none}
 .planet.locked .moonN{opacity:.18!important}
 .moonN circle.m{stroke-width:1.4}
+/* áudio */
+.tts-start{display:inline-flex;align-items:center;gap:9px;margin:-10px 0 26px;font:500 .72rem var(--font-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(233,201,135,.06);border:1px solid rgba(233,201,135,.4);border-radius:999px;padding:10px 16px;min-height:42px;cursor:pointer}
+.tts-start:hover{background:rgba(233,201,135,.12)}
+.tts-start svg{width:16px;height:16px}
+.tts-on{background:rgba(233,201,135,.13);border-radius:4px;box-shadow:0 0 0 8px rgba(233,201,135,.13),-11px 0 0 0 var(--gold);transition:background .3s,box-shadow .3s}
+html[data-tema="dia"] .tts-on{background:rgba(156,110,20,.12);box-shadow:0 0 0 8px rgba(156,110,20,.12),-11px 0 0 0 var(--gold)}
+.tts-reading .view [data-tts]{cursor:pointer}
+#ttsBar{position:fixed;left:50%;bottom:calc(72px + env(safe-area-inset-bottom,0px));transform:translate(-50%,0);z-index:26;display:flex;align-items:center;gap:4px;padding:6px 8px;border-radius:999px;background:rgba(12,16,30,.92);border:1px solid rgba(233,201,135,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 14px 40px rgba(0,0,0,.45);max-width:calc(100vw - 24px)}
+#ttsBar[hidden]{display:none}
+@media (min-width:900px){#ttsBar{bottom:calc(20px + env(safe-area-inset-bottom,0px))}}
+#ttsBar button{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:none;border:0;color:var(--fg);cursor:pointer}
+#ttsBar button:hover{color:var(--gold);background:rgba(233,201,135,.09)}
+#ttsBar button svg{width:18px;height:18px}
+#ttsBar .tts-main{background:var(--gold);color:#1A1406}
+#ttsBar .tts-main:hover{background:var(--gold);color:#1A1406}
+#ttsBar .tts-rate{width:auto;min-width:44px;padding:0 10px;border-radius:999px;font:500 .74rem var(--font-ui);letter-spacing:.04em}
+#ttsBar .tts-pos{font:500 .66rem var(--font-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 8px;white-space:nowrap}
+@media (max-width:380px){#ttsBar .tts-pos{display:none}}
+html[data-tema="dia"] #ttsBar{background:rgba(255,255,255,.95);box-shadow:0 14px 40px rgba(20,24,40,.16)}
 /* idioma */
 html.lang-out body,html.lang-in body{opacity:0}
 html.lang-out body{transition:opacity .35s ease}
@@ -571,6 +590,7 @@ body{margin:0}img{max-width:100%}[hidden]{display:none!important}
 <nav id="dock" aria-label="Navegação da leitura">
   <button type="button" class="d-here" id="dHere" title="Voltar ao mapa"><i class="d-planet" id="dPlanet"></i><span class="d-text"><b id="dName">Sol</b><small id="dSub">introdução</small></span></button>
   <span class="d-moons" id="dMoons"></span>
+  <button type="button" class="d-btn" id="dListen" aria-label="Ouvir" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3.5" y="13.5" width="4" height="6.5" rx="1.6"/><rect x="16.5" y="13.5" width="4" height="6.5" rx="1.6"/></svg></button>
   <button type="button" class="d-btn" id="dGloss" aria-label="Glossário" aria-controls="sheet" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h9.5a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9.5"/></svg></button>
   <button type="button" class="d-btn" id="dSet" aria-label="Preferências de leitura" aria-controls="sheet" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button>
   <i class="d-prog" id="dProg" aria-hidden="true"></i>
@@ -2300,6 +2320,7 @@ function makeCine(cfg){
       if(h1){var rt=document.createElement('span');rt.className='readtime';rt.textContent=_(734,'leitura de ')+min+_(735,' min · toque nos termos sublinhados para ver o significado');h1.insertAdjacentElement('afterend',rt)}
     }
     glossify(v);
+    ttsAttach(v,id);
     // índice lateral
     heads=[].slice.call(v.querySelectorAll('h2')).filter(function(h){return !h.closest('.why')});
     var old=view.querySelector('.rail');if(old)old.remove();railLinks=[];
@@ -2679,6 +2700,92 @@ function makeCine(cfg){
     setTimeout(function(){if(h1.isConnected&&h1.classList.contains('typing')){h1.textContent=txt;h1.removeAttribute('aria-label');h1.classList.remove('typing')}},i*24+950);
   }
 
+  /* ---------- áudio: ouvir o texto ---------- */
+  /*i18n-off*/
+  var TTS_T={pt:{listen:'Ouvir',start:'Ouvir este texto',pause:'Pausar',play:'Continuar',prev:'Trecho anterior',next:'Próximo trecho',close:'Fechar o áudio',speed:'Velocidade',pos:['',' de '],done:'Fim da leitura',novoice:'Este aparelho não tem voz para português. O áudio pode soar com outro sotaque.'},
+    en:{listen:'Listen',start:'Listen to this text',pause:'Pause',play:'Resume',prev:'Previous passage',next:'Next passage',close:'Close audio',speed:'Speed',pos:['',' of '],done:'End of reading',novoice:'This device has no English voice. The audio may sound different.'},
+    es:{listen:'Escuchar',start:'Escuchar este texto',pause:'Pausar',play:'Continuar',prev:'Fragmento anterior',next:'Siguiente fragmento',close:'Cerrar el audio',speed:'Velocidad',pos:['',' de '],done:'Fin de la lectura',novoice:'Este dispositivo no tiene voz en español. El audio puede sonar distinto.'},
+    it:{listen:'Ascolta',start:'Ascolta questo testo',pause:'Pausa',play:'Riprendi',prev:'Passaggio precedente',next:'Passaggio successivo',close:'Chiudi l’audio',speed:'Velocità',pos:['',' di '],done:'Fine della lettura',novoice:'Questo dispositivo non ha una voce italiana. L’audio potrebbe suonare diverso.'}}[SC_LANG];
+  var SY=('speechSynthesis' in window&&'SpeechSynthesisUtterance' in window)?window.speechSynthesis:null;
+  var TTS_LOC={pt:'pt-BR',en:'en-GB',es:'es-ES',it:'it-IT'}[SC_LANG];
+  var TS={blocks:[],i:0,chunks:[],ci:0,on:false,playing:false,gen:0,rate:+(lsGet('sc-tts-rate',1))||1,voice:null};
+  var I_PLAY='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>',I_PAUSE='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>';
+  var I_PREV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>',I_NEXT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',I_X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var HPHONE=document.getElementById('dListen').innerHTML;
+  function pickVoice(){
+    if(!SY)return null;var vs=SY.getVoices()||[],best=null,bs=-1,lc=SC_LANG;
+    vs.forEach(function(v){var l=(v.lang||'').replace('_','-');if(l.slice(0,2).toLowerCase()!==lc)return;
+      var sc=0;if(l.toLowerCase()===TTS_LOC.toLowerCase())sc+=3;
+      if(/natural|neural|premium|enhanced|online|google|siri|luciana|felipe|francisca|monica|paulina|alice|federica|daniel|serena|kate/i.test(v.name))sc+=2;
+      if(v.localService)sc+=.5;if(sc>bs){bs=sc;best=v}});
+    return best;
+  }
+  if(SY){TS.voice=pickVoice();if(SY.addEventListener)SY.addEventListener('voiceschanged',function(){TS.voice=pickVoice()});else SY.onvoiceschanged=function(){TS.voice=pickVoice()}}
+  var ttsBar=document.createElement('div');ttsBar.id='ttsBar';ttsBar.hidden=true;ttsBar.setAttribute('role','group');ttsBar.setAttribute('aria-label',TTS_T.listen);
+  ttsBar.innerHTML='<button type="button" class="tts-prev" aria-label="'+TTS_T.prev+'">'+I_PREV+'</button><button type="button" class="tts-main" aria-label="'+TTS_T.pause+'">'+I_PAUSE+'</button><button type="button" class="tts-next" aria-label="'+TTS_T.next+'">'+I_NEXT+'</button><span class="tts-pos" aria-live="polite"></span><button type="button" class="tts-rate" aria-label="'+TTS_T.speed+'"></button><button type="button" class="tts-x" aria-label="'+TTS_T.close+'">'+I_X+'</button>';
+  document.body.appendChild(ttsBar);
+  var tMain=ttsBar.querySelector('.tts-main'),tPos=ttsBar.querySelector('.tts-pos'),tRate=ttsBar.querySelector('.tts-rate');
+  var dListen=document.getElementById('dListen');dListen.setAttribute('aria-label',TTS_T.listen);
+  function fmtRate(r){return (Math.round(r*100)/100).toString().replace('.',SC_LANG==='en'?'.':',')+'×'}
+  function ttsBlocks(v){
+    var sel=[].slice.call(v.querySelectorAll('h1,h2,h3,p,li,.note,.keep'));
+    return sel.filter(function(el){
+      if(el.closest('.recall,.nx,nav,.journey,.rail,.chapters,.paths,.next,.stats,.ideas,.tts-start'))return false;
+      if(el.matches('.readtime,.eyebrow,.facts,.chip,.alt'))return false;
+      if(el.parentElement&&el.parentElement.closest('.note,.keep'))return false;
+      return (el.innerText||'').trim().length>1});
+  }
+  function chunk(text){
+    text=text.replace(/\s+/g,' ').trim();var out=[],parts=text.match(/[^.!?…:;]+[.!?…:;]*["”’)]*\s*/g)||[text],cur='';
+    parts.forEach(function(p){if((cur+p).length>220&&cur){out.push(cur.trim());cur=p}else cur+=p});
+    if(cur.trim())out.push(cur.trim());return out;
+  }
+  function mark(){TS.blocks.forEach(function(b,k){b.classList.toggle('tts-on',k===TS.i&&TS.on)});
+    tPos.textContent=TTS_T.pos[0]+(TS.i+1)+TTS_T.pos[1]+TS.blocks.length;
+    tMain.innerHTML=TS.playing?I_PAUSE:I_PLAY;tMain.setAttribute('aria-label',TS.playing?TTS_T.pause:TTS_T.play);
+    dListen.setAttribute('aria-expanded',String(TS.on));tRate.textContent=fmtRate(TS.rate)}
+  function follow(){var b=TS.blocks[TS.i];if(!b)return;var r=b.getBoundingClientRect();if(r.top<innerHeight*.12||r.bottom>innerHeight*.72)b.scrollIntoView({block:'center',behavior:RM?'auto':'smooth'})}
+  function speakNow(){
+    if(!SY)return;var g=++TS.gen;SY.cancel();
+    var b=TS.blocks[TS.i];if(!b){TS.playing=false;TS.i=Math.max(0,TS.blocks.length-1);tPos.textContent=TTS_T.done;mark();tPos.textContent=TTS_T.done;return}
+    if(TS.ci===0)TS.chunks=chunk(b.innerText||'');
+    var c=TS.chunks[TS.ci];if(!c){TS.i++;TS.ci=0;mark();follow();return speakNow()}
+    var u=new SpeechSynthesisUtterance(c);u.lang=TS.voice?TS.voice.lang:TTS_LOC;if(TS.voice)u.voice=TS.voice;u.rate=TS.rate;
+    u.onend=function(){if(g!==TS.gen||!TS.playing)return;TS.ci++;speakNow()};
+    u.onerror=function(e){if(g!==TS.gen)return;if(e&&(e.error==='interrupted'||e.error==='canceled'))return;TS.ci++;speakNow()};
+    setTimeout(function(){if(g===TS.gen&&TS.playing)SY.speak(u)},SY.speaking?60:0);
+  }
+  function ttsStart(from){
+    if(!SY)return;var v=document.querySelector('#view .view');if(!v)return;
+    TS.blocks=ttsBlocks(v);if(!TS.blocks.length)return;
+    TS.i=from!=null?from:0;TS.ci=0;TS.on=true;TS.playing=true;ttsBar.hidden=false;document.documentElement.classList.add('tts-reading');
+    if(!TS.voice){TS.voice=pickVoice();if(!TS.voice&&SY.getVoices().length&&!lsGet('sc-tts-warn',0)){lsSet('sc-tts-warn',1);toast(TTS_T.novoice)}}
+    mark();follow();speakNow();
+  }
+  function ttsToggle(){if(!TS.on)return ttsStart(0);TS.playing=!TS.playing;if(TS.playing){TS.ci=0;speakNow()}else{TS.gen++;SY.cancel()}mark()}
+  function ttsStop(silent){if(!TS.on&&silent)return;TS.gen++;if(SY)SY.cancel();TS.on=false;TS.playing=false;ttsBar.hidden=true;document.documentElement.classList.remove('tts-reading');TS.blocks.forEach(function(b){b.classList.remove('tts-on')});dListen.setAttribute('aria-expanded','false')}
+  function ttsJump(d){if(!TS.on)return;TS.i=Math.max(0,Math.min(TS.blocks.length-1,TS.i+d));TS.ci=0;TS.playing=true;mark();follow();speakNow()}
+  tMain.addEventListener('click',ttsToggle);
+  ttsBar.querySelector('.tts-prev').addEventListener('click',function(){ttsJump(-1)});
+  ttsBar.querySelector('.tts-next').addEventListener('click',function(){ttsJump(1)});
+  ttsBar.querySelector('.tts-x').addEventListener('click',function(){ttsStop()});
+  tRate.addEventListener('click',function(){var R=[.85,1,1.15,1.3],k=R.indexOf(TS.rate);TS.rate=R[(k+1)%R.length];lsSet('sc-tts-rate',TS.rate);mark();if(TS.playing){TS.ci=0;speakNow()}});
+  dListen.addEventListener('click',function(){if(TS.on)ttsToggle();else ttsStart(0)});
+  document.getElementById('view').addEventListener('click',function(e){
+    if(!TS.on||e.target.closest('a,button,.gl,input'))return;
+    var k=TS.blocks.indexOf(e.target.closest('h1,h2,h3,p,li,.note,.keep'));if(k<0)return;
+    TS.i=k;TS.ci=0;TS.playing=true;mark();speakNow();
+  });
+  addEventListener('pagehide',function(){if(SY)SY.cancel()});
+  function ttsAttach(v,id){
+    if(!SY){dListen.hidden=true;return}
+    var blocks=ttsBlocks(v);dListen.hidden=blocks.length<3;if(blocks.length<3)return;
+    var b=document.createElement('button');b.type='button';b.className='tts-start';b.innerHTML=HPHONE+'<span>'+TTS_T.start+'</span>';
+    b.addEventListener('click',function(){ttsStart(0)});
+    var anchor=v.querySelector('.readtime')||v.querySelector('h1');if(anchor)anchor.insertAdjacentElement('afterend',b);
+  }
+  /*i18n-on*/
+
   /* ---------- idioma ---------- */
   /*i18n-off*/
   function switchLang(){
@@ -2786,7 +2893,7 @@ function makeCine(cfg){
     else{id='intro';html=viewIntro()}
     var locked=isLocked(id),plan=locked?null:planCine(id,render.prev,!render.ran);render.prev=id;
     if(locked){html=viewLocked(id);w=_(636,'bloqueado')}else{visited[id]=1;save()}
-    view.innerHTML=html;where.textContent=w;enhance(id);updateDock(id);markPref();closeSheet();
+    ttsStop(true);view.innerHTML=html;where.textContent=w;enhance(id);updateDock(id);markPref();closeSheet();
     paintMap(id);if(!locked)go(id,w,!render.ran);else setWhere(_(636,'bloqueado'));
     if(render.ran){view.focus({preventScroll:true});window.scrollTo({top:0,behavior:RM?'auto':'smooth'})}
     var firstRun=!render.ran;render.ran=true;runCine(plan);if(firstRun)langArrive();
