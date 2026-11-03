@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema da Consciência — Estudo de caso · Lucas Nunes</title>
-<meta name="description" content="Estudo de caso de um e-book interativo de neurociência em forma de sistema solar: oito capítulos, três formas de leitura, decisões de UX e ciência da aprendizagem aplicada ao produto.">
+<title data-i18n="cs3_title">Sistema da Consciência — Estudo de caso · Lucas Nunes</title>
+<meta name="description" content="Estudo de caso de um e-book interativo de neurociência em forma de sistema solar: oito capítulos, três formas de leitura, quatro línguas, decisões de UX e ciência da aprendizagem aplicada ao produto." data-i18n="cs3_meta" data-i18n-attr="content">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://lucasnunespt.github.io/assets/sistema-da-consciencia/mapa.jpg">
 <meta property="og:title" content="Sistema da Consciência — Estudo de caso · Lucas Nunes">
@@ -383,133 +383,139 @@ footer p{ font-size:.85rem; color:var(--text-soft); }
   <section class="cs-hero">
     <div class="container">
       <a class="cs-back reveal" href="index.html#casos" data-i18n="cs2_back">← Voltar ao início</a>
-      <h1 class="reveal">Sistema da Consciência</h1>
-      <p class="subtitle reveal">Um e-book de neurociência em que cada leitor escolhe como quer entender.</p>
+      <h1 class="reveal" data-i18n="cs3_h1">Sistema da Consciência</h1>
+      <p class="subtitle reveal" data-i18n="cs3_sub">Um e-book de neurociência em que cada leitor escolhe como quer entender.</p>
       <div class="cs-tags reveal">
-        <span>Produto digital</span>
-        <span>UX de leitura</span>
-        <span>Neurociência aplicada</span>
-        <span>Protótipo funcional</span>
+        <span data-i18n="cs3_tag1">Produto digital</span>
+        <span data-i18n="cs3_tag2">UX de leitura</span>
+        <span data-i18n="cs3_tag3">Neurociência aplicada</span>
+        <span data-i18n="cs3_tag4">Protótipo funcional</span>
       </div>
       <div class="cs-opportunity reveal" style="max-width:64ch">
-        <p><strong>Nota de método.</strong> Este é um protótipo funcional, ainda <strong>não testado com leitores</strong>. As decisões abaixo vêm de princípios de design e da pesquisa sobre aprendizagem, não de dados de uso. O texto e o código foram produzidos com apoio de IA (Claude), sob a minha direção, revisão e decisões de design.</p>
+        <p data-i18n="cs3_note" data-i18n-html><strong>Nota de método.</strong> Este é um protótipo funcional, ainda <strong>não testado com leitores</strong>. As decisões abaixo vêm de princípios de design e da pesquisa sobre aprendizagem, não de dados de uso. O texto, as traduções e o código foram produzidos com apoio de IA (Claude), sob a minha direção, revisão e decisões de design.</p>
       </div>
       <div class="cs-hero-body reveal">
-        <p>O Sistema da Consciência transforma um livro sobre neurociência e metacognição num sistema solar navegável. Cada um dos oito planetas é um capítulo, e cada capítulo pode ser lido de três formas, as luas: pelo design, pelo corpo ou pelo dia a dia.</p>
+        <p data-i18n="cs3_hero_body">O Sistema da Consciência transforma um livro sobre neurociência e metacognição num sistema solar navegável. Cada um dos oito planetas é um capítulo, e cada capítulo pode ser lido de três formas, as luas: pelo design, pelo corpo ou pelo dia a dia. O e-book está em português, inglês, espanhol e italiano.</p>
       </div>
       <div class="cs-hero-actions reveal">
-        <a class="button primary" href="sistema-da-consciencia/">Abrir o e-book</a>
-        <a class="button ghost" href="#decisoes">Ver as decisões</a>
+        <a class="button primary" href="sistema-da-consciencia/" data-i18n="cs3_open">Abrir o e-book</a>
+        <a class="button ghost" href="#decisoes" data-i18n="cs3_see">Ver as decisões</a>
       </div>
       <figure class="cs-shot reveal">
-        <img src="assets/sistema-da-consciencia/mapa.jpg" width="1692" height="1083" alt="Mapa do e-book: o Sol no centro, oito planetas em órbita com três luas cada, uma nave em viagem e a linha do tempo dos capítulos por baixo.">
-        <figcaption>O índice é uma paisagem: os planetas giram, a nave leva o leitor de um capítulo a outro e a linha do tempo mostra a ordem e o progresso.</figcaption>
+        <img src="assets/sistema-da-consciencia/mapa.jpg" width="1692" height="1083" alt="Mapa do e-book: o Sol no centro, oito planetas em órbita com três luas cada, uma nave em viagem e a linha do tempo dos capítulos embaixo." data-i18n="cs3_alt1" data-i18n-attr="alt">
+        <figcaption data-i18n="cs3_cap1">O índice é uma paisagem: os planetas giram, a nave leva o leitor de um capítulo a outro e a linha do tempo mostra a ordem e o progresso.</figcaption>
       </figure>
     </div>
   </section>
 
   <section id="problema" class="cs-section">
     <div class="container">
-      <h2 class="reveal">O problema</h2>
+      <h2 class="reveal" data-i18n="cs3_prob_h">O problema</h2>
       <div class="cs-body reveal">
-        <p>Os livros de divulgação sobre o cérebro tendem a dois extremos: densos demais para quem está a começar, ou simplificados a ponto de prometer o que a ciência não sustenta.</p>
-        <p>E cada pessoa entende de um jeito. Umas precisam de ver o sistema, outras de sentir no corpo, outras de um exemplo do dia a dia. Um texto único obriga todas a entrar pela mesma porta.</p>
+        <p data-i18n="cs3_prob_p1">Os livros de divulgação sobre o cérebro tendem a dois extremos: densos demais para quem está começando, ou simplificados a ponto de prometer o que a ciência não sustenta.</p>
+        <p data-i18n="cs3_prob_p2">E cada pessoa entende de um jeito. Umas precisam ver o sistema, outras precisam sentir no corpo, outras precisam de um exemplo do dia a dia. Um texto único obriga todas a entrar pela mesma porta.</p>
       </div>
-      <blockquote class="cs-quote reveal">O mesmo conteúdo, três portas de entrada.</blockquote>
+      <blockquote class="cs-quote reveal" data-i18n="cs3_quote">O mesmo conteúdo, três portas de entrada.</blockquote>
     </div>
   </section>
 
   <section id="ideia" class="cs-section">
     <div class="container">
-      <h2 class="reveal">A ideia central</h2>
+      <h2 class="reveal" data-i18n="cs3_idea_h">A ideia central</h2>
       <div class="cs-body reveal">
-        <p>O Sol é a introdução. À volta dele giram os oito planetas, na ordem real do sistema solar, e cada um tem um motivo para ser aquele capítulo: Mercúrio, o mensageiro, abre com a percepção; Vênus fala do cérebro social; a Terra, do corpo; Marte, da motivação; Júpiter, com as suas dezenas de luas, das redes do cérebro; Saturno, deus do tempo, da memória; Urano, que gira deitado, da metacognição; e Netuno, o mais distante, do sono.</p>
-        <p>Cada planeta tem três luas com o mesmo conteúdo em três linguagens. A Lua do Design explica com sistemas e interfaces, a do Corpo com sensações e fisiologia, a do Dia a Dia com frases curtas e exemplos da vida comum, como um médico explicaria a um paciente.</p>
+        <p data-i18n="cs3_idea_p1">O Sol é a introdução. Ao redor dele giram os oito planetas, na ordem real do sistema solar, e cada um tem um motivo para ser aquele capítulo: Mercúrio, o mensageiro, abre com a percepção; Vênus fala do cérebro social; a Terra, do corpo; Marte, da motivação; Júpiter, com as suas dezenas de luas, das redes do cérebro; Saturno, deus do tempo, da memória; Urano, que gira deitado, da metacognição; e Netuno, o mais distante, do sono.</p>
+        <p data-i18n="cs3_idea_p2">Cada planeta tem três luas com o mesmo conteúdo em três linguagens. A Lua do Design explica com sistemas e interfaces, a do Corpo com sensações e fisiologia, a do Dia a Dia com frases curtas e exemplos da vida comum, como um médico explicaria a um paciente.</p>
       </div>
-      <div class="flow-strip reveal" aria-label="Percurso do leitor">
-        <span class="flow-step">Boas-vindas</span><span class="flow-sep" aria-hidden="true">→</span>
-        <span class="flow-step">Sol</span><span class="flow-sep" aria-hidden="true">→</span>
-        <span class="flow-step">Planeta</span><span class="flow-sep" aria-hidden="true">→</span>
-        <span class="flow-step is-calm">Lua</span><span class="flow-sep" aria-hidden="true">→</span>
-        <span class="flow-step">Lembrar</span><span class="flow-sep" aria-hidden="true">→</span>
-        <span class="flow-step">Próxima parada</span>
+      <div class="flow-strip reveal" aria-label="Percurso do leitor" data-i18n="cs3_flow_aria" data-i18n-attr="aria-label">
+        <span class="flow-step" data-i18n="cs3_f1">Boas-vindas</span>
+        <span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step" data-i18n="cs3_f2">Sol</span>
+        <span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step" data-i18n="cs3_f3">Planeta</span>
+        <span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step is-calm" data-i18n="cs3_f4">Lua</span>
+        <span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step" data-i18n="cs3_f5">Lembrar</span>
+        <span class="flow-sep" aria-hidden="true">→</span>
+        <span class="flow-step" data-i18n="cs3_f6">Próxima parada</span>
       </div>
     </div>
   </section>
 
   <section id="principios" class="cs-section">
     <div class="container">
-      <h2 class="reveal">Princípios</h2>
+      <h2 class="reveal" data-i18n="cs3_pr_h">Princípios</h2>
       <div class="cs-principles-grid reveal">
-        <div class="cs-principle-card"><h4>Calma antes de informação</h4><p>O leitor chega para entender a própria mente. O produto não pode competir com ela.</p></div>
-        <div class="cs-principle-card"><h4>Cada elemento tem um porquê</h4><p>Se não dá para dizer quem usa uma peça e em que momento, ela não entra.</p></div>
-        <div class="cs-principle-card"><h4>Ciência honesta</h4><p>Estudos citados com autor e ano, limites declarados, nenhuma promessa de milagre.</p></div>
-        <div class="cs-principle-card"><h4>O leitor escolhe o caminho</h4><p>Três luas, nenhuma melhor que a outra. O produto sugere, nunca impõe.</p></div>
+        <div class="cs-principle-card"><h4 data-i18n="cs3_pr1_h">Calma antes de informação</h4><p data-i18n="cs3_pr1_p">O leitor chega para entender a própria mente. O produto não pode competir com ela.</p></div>
+        <div class="cs-principle-card"><h4 data-i18n="cs3_pr2_h">Cada elemento tem um porquê</h4><p data-i18n="cs3_pr2_p">Se não dá para dizer quem usa uma peça e em que momento, ela não entra.</p></div>
+        <div class="cs-principle-card"><h4 data-i18n="cs3_pr3_h">Ciência honesta</h4><p data-i18n="cs3_pr3_p">Estudos citados com autor e ano, limites declarados, nenhuma promessa de milagre.</p></div>
+        <div class="cs-principle-card"><h4 data-i18n="cs3_pr4_h">O leitor escolhe o caminho</h4><p data-i18n="cs3_pr4_p">Três luas, nenhuma melhor que a outra. O produto sugere, nunca impõe.</p></div>
       </div>
     </div>
   </section>
 
   <section id="decisoes" class="cs-section">
     <div class="container">
-      <h2 class="reveal">Decisões de design</h2>
+      <h2 class="reveal" data-i18n="cs3_dec_h">Decisões de design</h2>
       <div class="cs-body reveal">
-        <p>Cada versão do protótipo revelou um problema concreto. Estas são as decisões que mais mudaram a experiência.</p>
+        <p data-i18n="cs3_dec_intro">Cada versão do protótipo revelou um problema concreto. Estas são as decisões que mais mudaram a experiência.</p>
       </div>
       <div class="cs-flow-detail reveal">
-        <div class="step"><p class="n">01</p><h5>Nomes que não se sobrepõem</h5><p>Com os planetas em órbita, os nomes colidiam. Os rótulos ganharam uma camada própria que, a cada quadro, testa posições abaixo e acima de cada planeta e esconde o que não cabe, com prioridade para onde o leitor está.</p></div>
-        <div class="step"><p class="n">02</p><h5>De painel técnico a livro</h5><p>A primeira versão usava fonte monoespaçada e parecia um painel de controle. Passou a usar uma serifa clássica nos títulos, uma fonte de leitura longa no texto e uma sem serifa discreta nos rótulos.</p></div>
-        <div class="step"><p class="n">03</p><h5>A barra flutuante tem um porquê</h5><p>Ao ler, o mapa sai da tela e o leitor perde três coisas: onde está, quanto falta e como sai. A barra aparece só nesse momento e responde às três.</p></div>
-        <div class="step"><p class="n">04</p><h5>Toques sem querer</h5><p>No celular, as luas ao lado dos planetas eram tocadas por engano. Passaram a mostrar só o progresso, e o planeta inteiro virou o alvo, que leva sempre à introdução do capítulo.</p></div>
-        <div class="step"><p class="n">05</p><h5>Uma viagem com ordem</h5><p>Cada planeta abre quando o leitor lê uma lua do anterior, porque cada capítulo usa ideias do anterior. Quem revisa ou ensina pode liberar todos nas preferências.</p></div>
-        <div class="step"><p class="n">06</p><h5>Preferências com justificativa</h5><p>Tamanho do texto, tema, movimento calmo e modo foco, cada um com uma linha que diz para quem serve: vista cansada, luz forte, sensibilidade a animações.</p></div>
+        <div class="step"><p class="n">01</p><h5 data-i18n="cs3_d1_h">Nomes que não se sobrepõem</h5><p data-i18n="cs3_d1_p">Com os planetas em órbita, os nomes colidiam. Os rótulos ganharam uma camada própria que, a cada quadro, testa posições abaixo e acima de cada planeta e esconde o que não cabe, com prioridade para onde o leitor está.</p></div>
+        <div class="step"><p class="n">02</p><h5 data-i18n="cs3_d2_h">De painel técnico a livro</h5><p data-i18n="cs3_d2_p">A primeira versão usava fonte monoespaçada e parecia um painel de controle. Passou a usar uma serifa clássica nos títulos, uma fonte de leitura longa no texto e uma sem serifa discreta nos rótulos.</p></div>
+        <div class="step"><p class="n">03</p><h5 data-i18n="cs3_d3_h">A barra flutuante tem um porquê</h5><p data-i18n="cs3_d3_p">Ao ler, o mapa sai da tela e o leitor perde três coisas: onde está, quanto falta e como sai. A barra aparece só nesse momento e responde às três.</p></div>
+        <div class="step"><p class="n">04</p><h5 data-i18n="cs3_d4_h">Toques sem querer</h5><p data-i18n="cs3_d4_p">No celular, as luas ao lado dos planetas eram tocadas por engano. Passaram a mostrar só o progresso, e o planeta inteiro virou o alvo, que leva sempre à introdução do capítulo.</p></div>
+        <div class="step"><p class="n">05</p><h5 data-i18n="cs3_d5_h">Uma viagem com ordem</h5><p data-i18n="cs3_d5_p">Cada planeta abre quando o leitor lê uma lua do anterior, porque cada capítulo usa ideias do anterior. Quem revisa ou ensina pode liberar todos nas preferências.</p></div>
+        <div class="step"><p class="n">06</p><h5 data-i18n="cs3_d6_h">Preferências com justificativa</h5><p data-i18n="cs3_d6_p">Tamanho do texto, tema, movimento calmo e modo foco, cada um com uma linha que diz para quem serve: vista cansada, luz forte, sensibilidade a animações.</p></div>
+        <div class="step"><p class="n">07</p><h5 data-i18n="cs3_d7_h">Passagens como fases de jogo</h5><p data-i18n="cs3_d7_p">Mudar de planeta é mudar de fase. Uma cinemática curta leva a nave ao planeta seguinte, cada capítulo termina numa tela de resultado com as luas lidas e a ideia para guardar, e a viagem fecha com as oito fases acesas. Tudo pode ser pulado, e no modo calmo vira um corte suave.</p></div>
+        <div class="step"><p class="n">08</p><h5 data-i18n="cs3_d8_h">Quatro línguas, sem procurar o botão</h5><p data-i18n="cs3_d8_p">O e-book abre na língua do aparelho (português, inglês, espanhol ou italiano) e usa o inglês quando a língua não está disponível. Um aviso discreto diz em que língua a pessoa está lendo, e a troca nas preferências mantém o leitor no mesmo trecho.</p></div>
       </div>
       <figure class="cs-shot reveal">
-        <img src="assets/sistema-da-consciencia/leitura.jpg" width="1560" height="930" alt="Página de leitura com títulos em serifa, termos técnicos sublinhados que abrem uma definição e um índice lateral que acompanha a leitura.">
-        <figcaption>Leitura no computador: os termos técnicos abrem a definição no próprio parágrafo, e o índice lateral mostra em que parte do texto o leitor está.</figcaption>
+        <img src="assets/sistema-da-consciencia/leitura.jpg" width="1560" height="930" alt="Página de leitura com títulos em serifa, termos técnicos sublinhados que abrem uma definição e um índice lateral que acompanha a leitura." data-i18n="cs3_alt2" data-i18n-attr="alt">
+        <figcaption data-i18n="cs3_cap2">Leitura no computador: os termos técnicos abrem a definição no próprio parágrafo, e o índice lateral mostra em que parte do texto o leitor está.</figcaption>
       </figure>
       <div class="cs-shots-phone reveal">
-        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-mapa.jpg" width="780" height="1328" alt="No celular, o mapa do sistema solar com os controles de zoom no canto inferior."><figcaption>Mapa no celular, com controles na zona do polegar.</figcaption></figure>
-        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-leitura.jpg" width="780" height="1328" alt="No celular, um texto em leitura com a barra flutuante em baixo, mostrando o planeta, as três luas, o glossário e as preferências."><figcaption>A barra flutuante aparece quando o mapa sai da tela.</figcaption></figure>
-        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-preferencias.jpg" width="780" height="1328" alt="No celular, o painel de preferências aberto de baixo para cima, com opções de texto, tema e movimento."><figcaption>Preferências num painel que fecha ao arrastar para baixo.</figcaption></figure>
+        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-mapa.jpg" width="780" height="1328" alt="No celular, o mapa do sistema solar com os controles de zoom no canto inferior." data-i18n="cs3_alt3" data-i18n-attr="alt"><figcaption data-i18n="cs3_cap3">Mapa no celular, com controles na área do polegar.</figcaption></figure>
+        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-leitura.jpg" width="780" height="1328" alt="No celular, um texto em leitura com a barra flutuante embaixo, mostrando o planeta, as três luas, o glossário e as preferências." data-i18n="cs3_alt4" data-i18n-attr="alt"><figcaption data-i18n="cs3_cap4">A barra flutuante aparece quando o mapa sai da tela.</figcaption></figure>
+        <figure class="cs-shot"><img src="assets/sistema-da-consciencia/celular-preferencias.jpg" width="780" height="1328" alt="No celular, o painel de preferências aberto de baixo para cima, com opções de texto, tema e movimento." data-i18n="cs3_alt5" data-i18n-attr="alt"><figcaption data-i18n="cs3_cap5">Preferências num painel que fecha ao arrastar para baixo.</figcaption></figure>
       </div>
     </div>
   </section>
 
   <section id="ciencia" class="cs-section">
     <div class="container">
-      <h2 class="reveal">O produto pratica o que ensina</h2>
+      <h2 class="reveal" data-i18n="cs3_sci_h">O produto pratica o que ensina</h2>
       <div class="cs-body reveal">
-        <p>O capítulo de Saturno explica que lembrar sem consultar fixa mais do que reler, e que espaçar as revisões ajuda a memória a durar. O próprio e-book usa essas duas ideias.</p>
-        <p>No fim de cada lua, um cartão pede ao leitor que tente lembrar as ideias principais antes de as ver. Depois, ele diz quanto lembrou, e o produto marca a lua para revisão daqui a um, três ou sete dias. Na volta, a linha do tempo e a página inicial mostram o que está na hora de rever.</p>
+        <p data-i18n="cs3_sci_p1">O capítulo de Saturno explica que lembrar sem consultar fixa mais do que reler, e que espaçar as revisões ajuda a memória a durar. O próprio e-book usa essas duas ideias.</p>
+        <p data-i18n="cs3_sci_p2">No fim de cada lua, um cartão pede ao leitor que tente lembrar as ideias principais antes de vê-las. Depois, ele diz quanto lembrou, e o produto marca a lua para revisão daqui a um, três ou sete dias. Na volta, a linha do tempo e a página inicial mostram o que está na hora de rever.</p>
       </div>
       <figure class="cs-shot reveal">
-        <img src="assets/sistema-da-consciencia/fim-de-lua.jpg" width="2160" height="1440" alt="Cartão no fim de uma lua com a pergunta O que ficou com você, a lista de tópicos para comparar e três botões para avaliar a lembrança.">
-        <figcaption>O cartão de lembrança no fim de cada lua.</figcaption>
+        <img src="assets/sistema-da-consciencia/fim-de-lua.jpg" width="2160" height="1440" alt="Cartão no fim de uma lua com a pergunta O que ficou com você, a lista de tópicos para comparar e três botões para avaliar a lembrança." data-i18n="cs3_alt6" data-i18n-attr="alt">
+        <figcaption data-i18n="cs3_cap6">O cartão de lembrança no fim de cada lua.</figcaption>
       </figure>
     </div>
   </section>
 
   <section id="proximos" class="cs-section">
     <div class="container">
-      <h2 class="reveal">O que falta</h2>
+      <h2 class="reveal" data-i18n="cs3_next_h">O que falta</h2>
       <div class="cs-body reveal">
-        <p>O protótipo está completo, mas ainda não foi validado. Os próximos passos, por ordem:</p>
+        <p data-i18n="cs3_next_intro">O protótipo está completo, mas ainda não foi validado. Os próximos passos, em ordem:</p>
       </div>
       <ul class="learnings reveal">
-        <li>Observar cinco leitores a usar o e-book, sem ajudar, e corrigir o que travar.</li>
-        <li>Pedir uma revisão científica a alguém da área e uma revisão de texto externa.</li>
-        <li>Verificar acessibilidade: contraste, navegação por teclado e leitor de tela.</li>
-        <li>Criar conta por e-mail, para guardar o progresso entre aparelhos, e definir como vender.</li>
-        <li>Traduzir para espanhol, inglês e italiano.</li>
+        <li data-i18n="cs3_next1">Observar cinco leitores usando o e-book, sem ajudar, e corrigir o que travar.</li>
+        <li data-i18n="cs3_next2">Pedir uma revisão científica a alguém da área e uma revisão de texto externa, incluindo as traduções por falantes nativos.</li>
+        <li data-i18n="cs3_next3">Verificar acessibilidade: contraste, navegação por teclado e leitor de tela.</li>
+        <li data-i18n="cs3_next4">Criar conta por e-mail, para guardar o progresso entre aparelhos, e definir como vender.</li>
       </ul>
     </div>
   </section>
 
   <section class="cs-final">
     <div class="container narrow">
-      <h2 class="reveal">Uma viagem para observar a própria mente.</h2>
+      <h2 class="reveal" data-i18n="cs3_final_h">Uma viagem para observar a própria mente.</h2>
       <div class="cs-final-actions reveal">
-        <a class="button primary" href="sistema-da-consciencia/">Abrir o e-book</a>
+        <a class="button primary" href="sistema-da-consciencia/" data-i18n="cs3_open">Abrir o e-book</a>
         <a class="button ghost" href="index.html#casos" data-i18n="cs2_final_cta1">← Voltar aos casos</a>
       </div>
     </div>
@@ -519,7 +525,7 @@ footer p{ font-size:.85rem; color:var(--text-soft); }
 
 <footer>
   <div class="container">
-    <p>© 2026 Lucas Nunes · Protótipo funcional, ainda não testado com leitores.</p>
+    <p data-i18n="cs3_footer">© 2026 Lucas Nunes · Protótipo funcional, ainda não testado com leitores.</p>
   </div>
 </footer>
 
