@@ -657,6 +657,11 @@ function makeCine(cfg){
   var ROM=['','I','II','III','IV','V','VI','VII','VIII'];
   var MOONS=cfg.moons;
   var host=cfg.host,cv=cfg.canvas,ctx=cv.getContext('2d'),ov=cfg.overlay,skipBtn=cfg.skip;
+  (function(){var A=ctx.arc,E=ctx.ellipse,G=ctx.createRadialGradient;
+    ctx.arc=function(x,y,r,a,b,c){return A.call(ctx,x,y,r>0?r:0,a,b,c)};
+    if(E)ctx.ellipse=function(x,y,rx,ry,ro,a,b,c){return E.call(ctx,x,y,rx>0?rx:0,ry>0?ry:0,ro,a,b,c)};
+    ctx.createRadialGradient=function(x0,y0,r0,x1,y1,r1){return G.call(ctx,x0,y0,r0>0?r0:0,x1,y1,r1>0?r1:0)}})();
+  var ERR=[];window.__cineErr=ERR;
   var W=0,H=0,S=0,DPR=1,calm=false,speed=cfg.timeScale||.6;
   function resize(){DPR=Math.min(2,window.devicePixelRatio||1);W=host.clientWidth;H=host.clientHeight;S=Math.min(W,H);
     cv.width=Math.max(1,Math.round(W*DPR));cv.height=Math.max(1,Math.round(H*DPR));ctx.setTransform(DPR,0,0,DPR,0,0);
@@ -721,7 +726,7 @@ function makeCine(cfg){
       ctx.fillStyle='rgba(255,255,255,.45)';var cx2=x-r*1.3+((t*r*.2)%(2.6*r));ctx.beginPath();ctx.ellipse(cx2,y-r*.45,r*.4,r*.07,0,0,TAU);ctx.fill()}
     g=ctx.createRadialGradient(x-r*.45,y-r*.4,r*.2,x+r*.15,y+r*.15,r*1.35);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(.55,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(2,4,12,.88)');
     ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r);ctx.restore();
-    ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,r-.5,Math.PI*1.05,Math.PI*1.6);ctx.stroke();
+    ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,Math.max(0,r-.5),Math.PI*1.05,Math.PI*1.6);ctx.stroke();
     if(P.ring)ring(x,y,r,true);
     ctx.restore();
   }
@@ -798,10 +803,10 @@ function makeCine(cfg){
   /* ---- cenas ---- */
   var SC={};
   SC.abertura={dur:13,hold:true,
-    events:[[10,function(p){card('top',_(0,'Uma viagem em 8 fases'),_(1,'Sistema da Consciência'),_(2,'Neurociência e metacognição · 24 luas para ler'),1.3)}],
+    events:[[10,function(p){var tl=H>W*1.15;card(tl?'below':'top',_(0,'Uma viagem em 8 fases'),_(1,'Sistema da Consciência'),_(2,'Neurociência e metacognição · 24 luas para ler'),1.3);if(tl){var R0=Math.min(W*.47,H*1.25);ov.style.paddingTop=Math.round(H*.36+R0*.33+S*.16)+'px'}}],
             [12.2,function(p){actions([[_(3,'Começar a viagem'),'start']])}]],
     draw:function(t,dt,p){
-      var cx=W/2,cy=H*.56,sr=S*.055,R0=Math.min(W*.47,H*1.25),PL=p.planets;
+      var cx=W/2,cy=H>W*1.15?H*lerp(.5,.36,eio(seg(t,9.2,10.6))):H*.56,sr=S*.055,R0=Math.min(W*.47,H*1.25),PL=p.planets;
       ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
       if(t<1.8){var br=.5+.5*Math.sin(t*TAU/1.6-Math.PI/2),a1=seg(t,0,.4)*(1-seg(t,1.6,1.8));
         var g=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,S*.08*(.6+.4*br));g.addColorStop(0,'rgba(255,240,210,'+(.6*a1)+')');g.addColorStop(1,'rgba(255,240,210,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
@@ -970,9 +975,10 @@ function makeCine(cfg){
       else if(s.hold)cur.idle=(cur.idle||0)+dt*cur.ts;
       fireUpTo(cur.t);
       if(skipBtn)skipBtn.hidden=!(cur.t>1&&!cur.ended&&!calm);
-      if(!cur.broken){try{s.draw.call(s,cur.ended&&s.hold?s.dur+(cur.idle||0):cur.t,dt*cur.ts,cur.p)}
-        catch(err){try{console.error('cine',key0(),err)}catch(e){}cur.broken=true;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
-          if(!cur.ended){cur.t=s.dur;cur.ended=true;fireUpTo(s.dur+1);ov.classList.add('instant');if(!s.hold&&cur.onEnd)setTimeout(cur.onEnd,40)}}}
+      if(!cur.broken){try{s.draw.call(s,cur.ended&&s.hold?s.dur+(cur.idle||0):cur.t,dt*cur.ts,cur.p);cur.errRun=0}
+        catch(err){cur.errRun=(cur.errRun||0)+1;if(ERR.length<20)ERR.push(key0()+' t='+cur.t.toFixed(2)+' '+(err&&err.message||err));ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+          if(cur.errRun<90){}else{try{console.error('cine',key0(),err)}catch(e){}cur.broken=true;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+          if(!cur.ended){cur.t=s.dur;cur.ended=true;fireUpTo(s.dur+1);ov.classList.add('instant');if(!s.hold&&cur.onEnd)setTimeout(cur.onEnd,40)}}}}
       if(cur.broken){ctx.fillStyle='#05070F';ctx.fillRect(0,0,W,H)}
       if(cur&&cur.calmIn!==undefined){cur.calmIn+=dt;var a=1-clamp(cur.calmIn/.5,0,1);if(a>0){ctx.fillStyle='rgba(0,0,0,'+a+')';ctx.fillRect(0,0,W,H)}}
       if(cfg.onFrame&&cur)cfg.onFrame(cur.t,s.dur);
@@ -2717,6 +2723,11 @@ function makeCine(cfg){
   var cineEl=document.getElementById('cine'),cineSkip=cineEl.querySelector('.cine-skip'),cineOn=false,cineStarted=false,cineNoBadge=false;
   var CE=makeCine({host:cineEl,canvas:cineEl.querySelector('canvas'),overlay:cineEl.querySelector('.cine-ov'),skip:cineSkip,moons:CMO,timeScale:.6});
   cineSkip.addEventListener('click',function(){CE.skip()});
+  /*i18n-off*/
+  if(/[?&]diag\b/.test(location.search)){(function(){var d=document.createElement('pre');d.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:99;margin:0;padding:8px 10px;font:11px/1.4 ui-monospace,monospace;color:#cfe;background:rgba(0,0,0,.75);border-radius:8px;white-space:pre-wrap;pointer-events:none';document.body.appendChild(d);
+    var fr=0,t0=performance.now(),fps=0;(function tick(n){fr++;if(n-t0>1000){fps=fr;fr=0;t0=n}requestAnimationFrame(tick)})(t0);
+    setInterval(function(){var st=CE.state(),z=CE.size();d.textContent='diag · '+innerWidth+'×'+innerHeight+' dpr '+(window.devicePixelRatio||1)+' · fps '+fps+'\ncena '+(st?st.key+' t='+st.t.toFixed(2)+(st.ended?' fim':''):'—')+' · palco '+Math.round(z.W)+'×'+Math.round(z.H)+'\nerros: '+((window.__cineErr||[]).join(' | ')||'nenhum')+'\n'+navigator.userAgent.slice(0,160)},400)})()}
+  /*i18n-on*/
   function cineShow(){cineStarted=true;if(cineOn)return;cineOn=true;cineEl.classList.add('on');cineEl.setAttribute('aria-hidden','false');document.documentElement.classList.add('cine-lock')}
   function cineHide(){if(!cineOn)return;cineOn=false;cineEl.classList.remove('on');cineEl.setAttribute('aria-hidden','true');document.documentElement.classList.remove('cine-lock');
     setTimeout(function(){if(!cineOn)CE.stop()},750);try{view.focus({preventScroll:true})}catch(e){}}
