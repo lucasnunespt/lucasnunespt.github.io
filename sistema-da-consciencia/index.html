@@ -310,6 +310,7 @@ li::marker{color:var(--gold)}
 .seg button{font:500 .7rem var(--font-ui);letter-spacing:.08em;color:var(--fg);background:transparent;border:1px solid var(--hair);border-radius:999px;padding:9px 14px;cursor:pointer;min-height:38px}
 .seg button[aria-checked="true"]{border-color:var(--gold);color:var(--gold);background:rgba(233,201,135,.08)}
 .seg button:hover{border-color:rgba(233,201,135,.45)}
+#openBtn{color:var(--fg);border-color:var(--hair);margin-top:8px}
 .reset{font:500 .7rem var(--font-ui);letter-spacing:.08em;color:#F2A38C;background:transparent;border:1px solid rgba(242,163,140,.35);border-radius:999px;padding:9px 14px;cursor:pointer;min-height:38px}
 .gsearch{width:100%;font:400 1rem var(--font-body);color:var(--fg);background:rgba(236,232,223,.04);border:1px solid var(--hair);border-radius:12px;padding:12px 14px;margin:0 0 14px}
 .gsearch:focus{outline:none;border-color:rgba(233,201,135,.55)}
@@ -904,12 +905,16 @@ function makeCine(cfg){
       else if(s.hold)cur.idle=(cur.idle||0)+dt*cur.ts;
       fireUpTo(cur.t);
       if(skipBtn)skipBtn.hidden=!(cur.t>1&&!cur.ended&&!calm);
-      s.draw.call(s,cur.ended&&s.hold?s.dur+(cur.idle||0):cur.t,dt*cur.ts,cur.p);
+      if(!cur.broken){try{s.draw.call(s,cur.ended&&s.hold?s.dur+(cur.idle||0):cur.t,dt*cur.ts,cur.p)}
+        catch(err){try{console.error('cine',key0(),err)}catch(e){}cur.broken=true;ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+          if(!cur.ended){cur.t=s.dur;cur.ended=true;fireUpTo(s.dur+1);ov.classList.add('instant');if(!s.hold&&cur.onEnd)setTimeout(cur.onEnd,40)}}}
+      if(cur.broken){ctx.fillStyle='#05070F';ctx.fillRect(0,0,W,H)}
       if(cur&&cur.calmIn!==undefined){cur.calmIn+=dt;var a=1-clamp(cur.calmIn/.5,0,1);if(a>0){ctx.fillStyle='rgba(0,0,0,'+a+')';ctx.fillRect(0,0,W,H)}}
       if(cfg.onFrame&&cur)cfg.onFrame(cur.t,s.dur);
     }else if(cfg.idle){cfg.idle(dt,ctx,W,H)}
     if(cur||cfg.always)raf=requestAnimationFrame(frame);else raf=0;
   }
+  function key0(){return cur?cur.key:''}
   function ensureLoop(){if(!raf){last=null;raf=requestAnimationFrame(frame)}}
   return {play:play,skip:skip,seek:seek,stop:stop,ensureLoop:ensureLoop,state:function(){return cur},scenes:SC,
     setCalm:function(v){calm=!!v},setSpeed:function(v){speed=v;if(cur)cur.ts=v},getSpeed:function(){return speed},
@@ -2318,7 +2323,7 @@ function makeCine(cfg){
       st.o.forEach(function(o){h+='<button type="button" role="radio" data-k="'+st.k+'" data-v="'+o[0]+'" aria-checked="'+(prefs[st.k]===o[0])+'">'+o[1]+'</button>'});
       h+='</div><p class="set-why">'+st.why+'</p></div>';
     });
-    h+='<div class="set"><p class="set-k">Progresso</p><button type="button" class="reset" id="resetBtn">Recomeçar a viagem</button><p class="set-why">Apaga os planetas visitados, as luas lidas e as suas avaliações de lembrança. Os ajustes ficam.</p></div>';
+    h+='<div class="set"><p class="set-k">Progresso</p><button type="button" class="reset" id="resetBtn">Recomeçar a viagem</button> <button type="button" class="reset" id="openBtn">Ver a abertura de novo</button><p class="set-why">Apaga os planetas visitados, as luas lidas e as suas avaliações de lembrança. Os ajustes ficam.</p></div>';
     return h;
   }
   function glossHTML(){
@@ -2360,6 +2365,7 @@ function makeCine(cfg){
       if(b.getAttribute('data-k')==='unlock'){var cur=(location.hash||'#intro').slice(1);if(view.querySelector('.locked-view')||b.getAttribute('data-v')==='off'){render();openSheet('set')}else paintMap(cur)}
       return;
     }
+    if(e.target.id==='openBtn'){closeSheet();cine('abertura',{planets:CPL},{ts:.85});return}
     if(e.target.id==='resetBtn'){
       var r=e.target;
       if(r.getAttribute('data-armed')!=='1'){r.setAttribute('data-armed','1');r.textContent='Confirmar: apagar o progresso';return}
@@ -2609,7 +2615,7 @@ function makeCine(cfg){
     CE.play(key,p,{timeScale:o.ts,startAt:o.startAt,onEnd:function(){if(o.then)o.then();else cineHide()},
       onAction:function(a){if(o.act)o.act(a);else cineHide()}});
     setTimeout(function(){var b=cineEl.querySelector('.go');(b||cineSkip).focus({preventScroll:true})},60)}
-  addEventListener('keydown',function(e){if(!cineOn||e.key!=='Escape')return;var st=CE.state();if(st&&!st.ended)CE.skip();else cineHide()});
+  addEventListener('keydown',function(e){if(!cineOn||e.key!=='Escape')return;var st=CE.state();if(st&&!st.ended)CE.skip();else{if(st&&st.key==='abertura')cineMark('open');cineHide()}});
   function pnum(id){var m=/^c(\d)/.exec(id||'');return m?+m[1]:0}
   function planCine(id,prev,first){
     var cs=lsGet('sc-cine',{})||{};
@@ -2623,7 +2629,7 @@ function makeCine(cfg){
   function cineMark(k){var cs=lsGet('sc-cine',{})||{};cs[k]=Date.now();lsSet('sc-cine',cs)}
   function runCine(pl){
     if(!pl)return false;var still=RM||calm;
-    if(pl.k==='abertura'){cineMark('open');cine('abertura',{planets:CPL});return true}
+    if(pl.k==='abertura'){cine('abertura',{planets:CPL},{ts:.85,act:function(){cineMark('open');cineHide()}});return true}
     if(pl.k==='final'){cineMark('fin');cine('final',{planets:CPL,sub:'24 luas, 8 fases e uma constelação feita por você.'});return true}
     if(still)return false;
     if(pl.k==='lua'){cine('lua',{planet:CPL[pl.n-1],moon:pl.moon});return true}
