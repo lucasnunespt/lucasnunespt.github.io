@@ -20,7 +20,7 @@ A cópia pode ficar para trás. Antes de mexer na interface, confirma a versão 
 > **Nenhuma cor, fonte, raio, sombra ou duração nova fora dos tokens.**
 
 - Usa `var(--token)` com o nome exato (`--bg`, `--text-soft`, `--accent`, `--radius-pill`, `--shadow-card`…). Não escrevas o valor literal no CSS, nem como valor de reserva em `var(--x, …)`.
-- O design system ainda **não tem tokens de movimento**. Por isso este portfólio não tem animações nem transições. Qualquer duração precisa de ser proposta primeiro ao design system.
+- **Movimento** (desde nov 2026): só com `--duration-quick` (hover, foco), `--duration-calm` (aparecer ao rolar, uma vez), `--easing-calm` e `--rise-distance`. Só opacidade, cor, sombra, borda e uma subida curta. Com `prefers-reduced-motion` tudo vale 0. Qualquer outra duração é proposta primeiro ao design system.
 - Precisas de um valor que não existe? Propõe-o **primeiro** ao design system (nome, valor em cada tema, nota de uso). Só depois de entrar nos tokens é que vai para o código.
 - O que o design system marca como "Decidido, ainda por implementar" ou "PROPOSTA" é direção, não código atual.
 
@@ -30,10 +30,10 @@ A cópia pode ficar para trás. Antes de mexer na interface, confirma a versão 
 
 | Tema | Quando entra |
 |---|---|
-| `calm` (claro) | padrão |
+| `dawn` (claro, Amanhecer) | padrão desde nov 2026; antes era `calm` |
 | `night` (escuro) | quando o aparelho pede tema escuro (`prefers-color-scheme: dark`) |
 
-Os outros temas do design system (`dawn`, `day`, `evening`, `late-night`, `luz`) não estão no portfólio. Só entram se o design system os pedir aqui.
+Uma secção pode usar o tema `night` inteiro com `data-theme="night"` (faixa escura de destaque, uma por página). Os outros temas do design system (`calm`, `day`, `evening`, `late-night`, `luz`) não estão no portfólio. Só entram se o design system os pedir aqui.
 
 Variáveis disponíveis: `--bg`, `--bg-soft`, `--surface`, `--surface-strong`, `--text`, `--text-soft`, `--text-muted`, `--text-subtle`, `--button-text`, `--link-text`, `--line`, `--accent`, `--accent-dark`, `--shadow-soft`, `--shadow-card`, `--glass-highlight`, `--radius-lg|md|sm|chip|pill`, `--control-height`, `--button-pad-x`, `--container`, `--gutter`, `--font-sans`, `--font-serif`.
 
