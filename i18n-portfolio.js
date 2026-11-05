@@ -2064,7 +2064,10 @@
     h2_build_d6: "os estudos menores em cartões, para não competir.",
     h2_build_d7: "a história em duas frases; a linha do tempo saiu.",
     h2_build_d8: "o contato sempre à mão, e aqui no fim.",
-    h2_build_ai: "IA"
+    h2_build_ai: "IA",
+    h2_build_dnav: "o contato sempre visível no topo e, no celular, em baixo, na zona do polegar.",
+    h2_build_dlead: "quem sou em três frases: o que junto e o que já fiz.",
+    h2_build_dact: "uma ação principal por tela; ver a construção é opcional."
   });
   window.PortfolioTranslations.en = Object.assign({}, window.PortfolioTranslations.en, {
     idx_title: "Lucas Nunes — UX Designer in Lisbon",
@@ -2264,7 +2267,10 @@
     h2_build_d6: "the smaller studies in cards, so they don’t compete.",
     h2_build_d7: "my story in two sentences; the timeline went.",
     h2_build_d8: "contact always at hand, and here at the end.",
-    h2_build_ai: "AI"
+    h2_build_ai: "AI",
+    h2_build_dnav: "contact always visible at the top and, on phones, at the bottom, within thumb reach.",
+    h2_build_dlead: "who I am in three sentences: what I combine and what I have built.",
+    h2_build_dact: "one main action per screen; watching the build is optional."
   });
   window.PortfolioTranslations.es = Object.assign({}, window.PortfolioTranslations.es, {
     idx_title: "Lucas Nunes — Diseñador UX en Lisboa",
@@ -2464,7 +2470,10 @@
     h2_build_d6: "los estudios menores en tarjetas, para no competir.",
     h2_build_d7: "la historia en dos frases; la línea de tiempo salió.",
     h2_build_d8: "el contacto siempre a mano, y aquí al final.",
-    h2_build_ai: "IA"
+    h2_build_ai: "IA",
+    h2_build_dnav: "el contacto siempre visible arriba y, en el móvil, abajo, al alcance del pulgar.",
+    h2_build_dlead: "quién soy en tres frases: lo que uno y lo que ya hice.",
+    h2_build_dact: "una acción principal por pantalla; ver la construcción es opcional."
   });
   window.PortfolioTranslations.it = Object.assign({}, window.PortfolioTranslations.it, {
     idx_title: "Lucas Nunes — UX Designer a Lisbona",
@@ -2664,7 +2673,10 @@
     h2_build_d6: "gli studi minori in schede, perché non competano.",
     h2_build_d7: "la storia in due frasi; la linea del tempo è uscita.",
     h2_build_d8: "il contatto sempre a portata di mano, e qui alla fine.",
-    h2_build_ai: "IA"
+    h2_build_ai: "IA",
+    h2_build_dnav: "il contatto sempre visibile in alto e, sul telefono, in basso, a portata di pollice.",
+    h2_build_dlead: "chi sono in tre frasi: cosa unisco e cosa ho già fatto.",
+    h2_build_dact: "un’azione principale per schermata; guardare la costruzione è facoltativo."
   });
 
   /* ---------- motor de idioma ---------- */
