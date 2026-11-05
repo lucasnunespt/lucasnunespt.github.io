@@ -2067,7 +2067,9 @@
     h2_build_ai: "IA",
     h2_build_dnav: "o contato sempre visível no topo e, no celular, em baixo, na zona do polegar.",
     h2_build_dlead: "quem sou em três frases: o que junto e o que já fiz.",
-    h2_build_dact: "uma ação principal por tela; ver a construção é opcional."
+    h2_build_dact: "uma ação principal por tela; ver a construção é opcional.",
+    h2_cv: "Baixar currículo (PDF)",
+    h2_cv_href: "assets/cv/Lucas-Nunes-CV-UX-UI-Designer.pdf"
   });
   window.PortfolioTranslations.en = Object.assign({}, window.PortfolioTranslations.en, {
     idx_title: "Lucas Nunes — UX Designer in Lisbon",
@@ -2270,7 +2272,9 @@
     h2_build_ai: "AI",
     h2_build_dnav: "contact always visible at the top and, on phones, at the bottom, within thumb reach.",
     h2_build_dlead: "who I am in three sentences: what I combine and what I have built.",
-    h2_build_dact: "one main action per screen; watching the build is optional."
+    h2_build_dact: "one main action per screen; watching the build is optional.",
+    h2_cv: "Download CV (PDF)",
+    h2_cv_href: "assets/cv/Lucas-Nunes-CV-UX-UI-Designer-EN.pdf"
   });
   window.PortfolioTranslations.es = Object.assign({}, window.PortfolioTranslations.es, {
     idx_title: "Lucas Nunes — Diseñador UX en Lisboa",
@@ -2473,7 +2477,9 @@
     h2_build_ai: "IA",
     h2_build_dnav: "el contacto siempre visible arriba y, en el móvil, abajo, al alcance del pulgar.",
     h2_build_dlead: "quién soy en tres frases: lo que uno y lo que ya hice.",
-    h2_build_dact: "una acción principal por pantalla; ver la construcción es opcional."
+    h2_build_dact: "una acción principal por pantalla; ver la construcción es opcional.",
+    h2_cv: "Descargar CV (PDF)",
+    h2_cv_href: "assets/cv/Lucas-Nunes-CV-UX-UI-Designer-EN.pdf"
   });
   window.PortfolioTranslations.it = Object.assign({}, window.PortfolioTranslations.it, {
     idx_title: "Lucas Nunes — UX Designer a Lisbona",
@@ -2676,7 +2682,9 @@
     h2_build_ai: "IA",
     h2_build_dnav: "il contatto sempre visibile in alto e, sul telefono, in basso, a portata di pollice.",
     h2_build_dlead: "chi sono in tre frasi: cosa unisco e cosa ho già fatto.",
-    h2_build_dact: "un’azione principale per schermata; guardare la costruzione è facoltativo."
+    h2_build_dact: "un’azione principale per schermata; guardare la costruzione è facoltativo.",
+    h2_cv: "Scarica il CV (PDF)",
+    h2_cv_href: "assets/cv/Lucas-Nunes-CV-UX-UI-Designer-EN.pdf"
   });
 
   /* ---------- motor de idioma ---------- */
