@@ -113,20 +113,21 @@ html[data-theme="noite"] .brand-mark img{ content:url(assets/marca/sigilo-noite.
   transition:left var(--duration-calm) var(--easing-calm), top var(--duration-calm) var(--easing-calm), width var(--duration-calm) var(--easing-calm), height var(--duration-calm) var(--easing-calm), opacity var(--duration-quick) var(--easing-calm); }
 .build-frame.on{ opacity:1; }
 .build-size{ position:absolute; right:-1px; bottom:-30px; font-size:.75rem; font-weight:700; padding:.2rem .5rem; border-radius:var(--radius-chip); background:var(--accent-dark); color:var(--bg); font-variant-numeric:tabular-nums; }
-.build-tag{ position:absolute; max-width:22rem; font-size:.88rem; line-height:1.45; padding:.65rem .85rem; border-radius:var(--radius-sm); background:var(--surface-strong); color:var(--text); border:1px solid var(--line); box-shadow:var(--shadow-card); opacity:0;
-  transition:opacity var(--duration-calm) var(--easing-calm), left var(--duration-calm) var(--easing-calm), top var(--duration-calm) var(--easing-calm); }
+.build-text{ flex:1; min-width:0; display:flex; flex-direction:column; gap:.15rem; }
+.build-tag{ font-size:.92rem; line-height:1.4; color:var(--text); }
 .build-tag b{ color:var(--accent); font-weight:700; }
-.build-tag.on{ opacity:1; }
+.build-text .build-count{ font-size:.8rem; color:var(--text-soft); }
 .build-cursor{ position:absolute; display:flex; align-items:flex-start; gap:.2rem;
   transition:left var(--duration-calm) var(--easing-calm), top var(--duration-calm) var(--easing-calm); }
 .build-cursor svg{ fill:var(--accent); stroke:var(--text); stroke-width:1.5; stroke-linejoin:round; }
 .build-cursor span{ margin-top:1.1rem; font-size:.72rem; font-weight:700; padding:.15rem .45rem; border-radius:var(--radius-chip); background:var(--accent); color:var(--button-text); }
-.build-bar{ position:fixed; z-index:75; left:50%; transform:translateX(-50%); bottom:max(1rem, env(safe-area-inset-bottom)); width:min(calc(100% - 2rem), 34rem);
+.build-bar{ position:fixed; z-index:75; left:50%; transform:translateX(-50%); bottom:max(1rem, env(safe-area-inset-bottom)); width:min(calc(100% - 2rem), 40rem);
   display:flex; align-items:center; gap:.8rem; padding:.45rem .45rem .45rem .9rem; border-radius:var(--radius-pill);
   background:var(--surface-strong); border:1px solid var(--line); box-shadow:var(--shadow-card), var(--glass-highlight); }
-.build-count{ flex:1; font-size:.9rem; color:var(--text); font-variant-numeric:tabular-nums; }
+.build-count{ font-variant-numeric:tabular-nums; }
 .build-skip{ min-height:42px; padding:0 1.1rem; }
 .build-bar[hidden], .build-ui[hidden], .build-grid[hidden], .build-neon[hidden], .build-bar [hidden]{ display:none; }
+.build-bar{ border-radius:var(--radius-lg); }
 
 /* barra inferior no celular: contato sempre na zona do polegar */
 .bottom-bar{ display:none; }
@@ -486,12 +487,11 @@ footer p{ font-size:.86rem; }
 <svg class="build-neon" id="buildNeon" aria-hidden="true" hidden></svg>
 <div class="build-ui" id="buildUi" hidden>
   <div class="build-frame" id="buildFrame"><span class="build-size" id="buildSize"></span></div>
-  <div class="build-tag" id="buildTag"><b data-i18n="h2_build_decided">Lucas decidiu:</b> <span id="buildTagText"></span></div>
   <div class="build-cursor" id="buildCursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 3l15 7-6.5 2L10 19z"/></svg><span data-i18n="h2_build_ai">IA</span></div>
 </div>
 <div class="build-bar" id="buildBar" role="status" hidden>
   <img src="assets/marca/sigilo.svg" alt="" width="28" height="28">
-  <span class="build-count" id="buildCount"></span>
+  <span class="build-text"><span class="build-tag" id="buildTag" hidden><b data-i18n="h2_build_decided">Lucas decidiu:</b> <span id="buildTagText"></span></span><span class="build-count" id="buildCount"></span></span>
   <a class="link" id="buildLog" href="case-study-sistema-da-consciencia.html#direcao" hidden data-i18n="h2_build_log">Ver o diário de direção →</a>
   <button type="button" class="button secondary build-skip" id="buildSkip" data-i18n="h2_build_skip">Pular</button>
 </div>
@@ -594,19 +594,19 @@ footer p{ font-size:.86rem; }
       frame.style.left = (r.x - 8) + 'px'; frame.style.top = (r.y - 8) + 'px'; frame.style.width = (r.w + 16) + 'px'; frame.style.height = (r.h + 16) + 'px';
       size.textContent = Math.round(r.w) + ' × ' + Math.round(r.h);
       cur.style.left = (r.x + r.w - 10) + 'px'; cur.style.top = (r.y + r.h - 6) + 'px';
-      tag.style.left = Math.max(12, Math.min(r.x + 12, scrollX + innerWidth - 372)) + 'px'; tag.style.top = (r.y + Math.min(r.h * 0.35, 150)) + 'px';
+      /* a decisão aparece na barra de baixo, nunca por cima do texto */
       scrollTo({ top: Math.max(0, r.y - innerHeight * 0.24), behavior: reduce ? 'auto' : 'smooth' });
     }
     function step(){
       if(gi >= groups.length) return finish();
       var g = groups[gi];
-      place(g); frame.classList.add('on'); tag.classList.remove('on');
+      place(g); frame.classList.add('on');
       later(function(){
         g.els.forEach(function(el){ el.classList.add('wire'); if(!reduce) type(el, 550); });
         river(g);
         later(function(){
           g.els.forEach(function(el){ el.classList.add('built'); });
-          if(g.decision){ decisions++; setCount(); tagText.textContent = t('h2_build_' + g.decision, ''); tag.classList.add('on'); }
+          if(g.decision){ decisions++; setCount(); tagText.textContent = t('h2_build_' + g.decision, ''); tag.hidden = false; }
           gi++; later(step, reduce ? 1500 : 800);
         }, reduce ? 0 : 600);
       }, reduce ? 0 : 500);
@@ -622,7 +622,7 @@ footer p{ font-size:.86rem; }
       timers.forEach(clearTimeout); timers = [];
       all.forEach(function(el){ el.classList.add('wire', 'built'); });
       running = false; decisions = groups.filter(function(g){ return g.decision; }).length;
-      frame.classList.remove('on'); tag.classList.remove('on'); ui.hidden = true;
+      frame.classList.remove('on'); tag.hidden = true; ui.hidden = true;
       setCount(); count.textContent = t('h2_build_done', 'Página construída.') + ' ' + count.textContent;
       log.hidden = false; skip.textContent = t('h2_build_close', 'Fechar');
       closeGrid();
@@ -637,7 +637,7 @@ footer p{ font-size:.86rem; }
       all.forEach(function(el){ el.classList.remove('wire', 'built'); el.classList.add('in'); });
       neon.innerHTML = ''; neon.classList.remove('fade'); neon.removeAttribute('hidden');
       neon.setAttribute('width', document.documentElement.scrollWidth); neon.setAttribute('height', document.documentElement.scrollHeight);
-      ui.hidden = false; bar.hidden = false; log.hidden = true; skip.textContent = t('h2_build_skip', 'Pular'); setCount();
+      ui.hidden = false; bar.hidden = false; log.hidden = true; tag.hidden = true; skip.textContent = t('h2_build_skip', 'Pular'); setCount();
       var b = btn.getBoundingClientRect(); cur.style.left = (b.left + scrollX) + 'px'; cur.style.top = (b.top + scrollY) + 'px';
       openGrid();
       later(step, reduce ? 0 : 1100);
