@@ -6,11 +6,11 @@ Instruções para o Claude (e qualquer agente) que trabalhe neste repositório.
 
 Qualquer alteração de interface (CSS, HTML com estilos, páginas novas, estados) começa por ler o design system oficial:
 
-https://claude.ai/artifact/JHzwjfKnJ11kwCCJkcxvrQ
+https://claude.ai/artifact/N9uyZ7ELgMcMLN2qC2nWa5 (design system "Lucas Nunes"; o NeuroMedit tem o seu próprio, em https://claude.ai/artifact/JHzwjfKnJ11kwCCJkcxvrQ)
 
 1. Lê `project/README.md` e `project/tokens.json` do artifact (ação `read`). Há uma cópia em `design-system/`, que pode estar desatualizada.
 2. Usa **só os tokens dele**: nenhuma cor, fonte, raio, sombra ou duração nova fora dos tokens. No CSS, `var(--nome-do-token)`, nunca o valor literal, nem como valor de reserva de `var()`.
-3. Não há tokens de movimento: sem animações nem transições.
+3. Movimento só com os tokens de duração e curva (`duration-quick`, `duration-calm`, `easing-calm`, `rise-distance`). O único loop permitido é a respiração da luz à noite (`duration-breath`). Com `prefers-reduced-motion`, tudo parado.
 4. Se faltar um valor ou componente, **não o inventes no código**: propõe-o primeiro como adição ao design system e espera que entre lá.
 5. O que o design system marca como "Decidido, ainda por implementar" ou "PROPOSTA" é direção, não código atual.
 

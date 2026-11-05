@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="t"><title id="t">Lucas Nunes — sigilo LN</title>
+<circle cx="100" cy="100" r="90" fill="none" stroke="#1F3B2E" stroke-width="2" opacity=".45"/>
+<path d="M100 196 L18 54 L182 54 Z" fill="none" stroke="#1F3B2E" stroke-width="1.6" opacity=".45"/>
+<polyline points="52,40 52,150 98,150 98,62 148,150 148,40" fill="none" stroke="#1F3B2E" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+<g fill="#D9A24E"><circle cx="52" cy="40" r="7.5"/><circle cx="52" cy="150" r="7.5"/><circle cx="98" cy="150" r="7.5"/><circle cx="98" cy="62" r="7.5"/><circle cx="148" cy="150" r="7.5"/><circle cx="148" cy="40" r="10"/></g>
+</svg>

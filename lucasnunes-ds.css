@@ -1,0 +1,114 @@
+/* lucasnunes-ds.css — tokens do design system "Lucas Nunes" para o portfólio.
+   Fonte: https://claude.ai/artifact/N9uyZ7ELgMcMLN2qC2nWa5 (project/tokens.json).
+   Tema claro = dia (padrão). Tema escuro = noite, por prefers-color-scheme
+   ou numa secção com data-theme="noite" (faixa noturna, uma por página).
+   Não acrescentar valores aqui sem os propor primeiro ao design system. */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Manrope:wght@400;500;600;700&display=swap");
+
+:root {
+  --bg: #F4EEE2;
+  --bg-soft: #FBF8F1;
+  --surface: rgba(255, 252, 245, 0.78);
+  --surface-strong: rgba(255, 252, 245, 0.94);
+  --text: #1E2A24;
+  --text-soft: #45524A;
+  --text-muted: #5B675F;
+  --text-subtle: rgba(30, 42, 36, 0.45);
+  --button-text: #1E2A24;
+  --link-text: #1F3B2E;
+  --line: rgba(31, 59, 46, 0.12);
+  --accent: #D9A24E;
+  --accent-dark: #2F6F6A;
+  --ceu: #DCE9EE;
+  --agua: #9CC4BC;
+  --folha: #6E8F5A;
+  --mata: #1F3B2E;
+  --sinal: #FFD27A;
+  --luz: #CDEFE6;
+  --shadow-soft: 0 10px 24px rgba(31, 59, 46, 0.08);
+  --shadow-card: 0 14px 34px rgba(31, 59, 46, 0.08);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --glow-rio: none;
+
+  --container: 1120px;
+  --gutter: 1.5rem;
+  --control-height: 50px;
+  --button-pad-x: 1.6rem;
+  --radius-lg: 28px;
+  --radius-md: 22px;
+  --radius-sm: 16px;
+  --radius-chip: 14px;
+  --radius-pill: 999px;
+  --duration-quick: 160ms;
+  --duration-calm: 700ms;
+  --duration-breath: 11s;
+  --easing-calm: cubic-bezier(0.22, 1, 0.36, 1);
+  --rise-distance: 12px;
+
+  --font-sans: Manrope, system-ui, sans-serif;
+  --font-serif: Fraunces, Georgia, serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  --bg: #0B1614;
+  --bg-soft: #12221F;
+  --surface: rgba(18, 34, 31, 0.78);
+  --surface-strong: rgba(24, 44, 40, 0.92);
+  --text: #EAF2EE;
+  --text-soft: #B9CBC4;
+  --text-muted: #9DB2AA;
+  --text-subtle: rgba(234, 242, 238, 0.5);
+  --button-text: #1E2A24;
+  --link-text: #CDEFE6;
+  --line: rgba(127, 209, 192, 0.18);
+  --accent: #D9A24E;
+  --accent-dark: #7FD1C0;
+  --ceu: #1A2E33;
+  --agua: #7FD1C0;
+  --folha: #8FB27A;
+  --mata: #0E1D19;
+  --sinal: #FFD27A;
+  --luz: #CDEFE6;
+  --shadow-soft: 0 14px 34px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 18px 44px rgba(0, 0, 0, 0.4), 0 0 28px rgba(127, 209, 192, 0.08);
+  --glass-highlight: inset 0 1px 0 rgba(205, 239, 230, 0.06);
+  --glow-rio: 0 0 18px rgba(127, 209, 192, 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-quick: 0ms; --duration-calm: 0ms; --duration-breath: 0s; --rise-distance: 0px; }
+}
+
+[data-theme="noite"], [data-theme="night"] {
+  --bg: #0B1614;
+  --bg-soft: #12221F;
+  --surface: rgba(18, 34, 31, 0.78);
+  --surface-strong: rgba(24, 44, 40, 0.92);
+  --text: #EAF2EE;
+  --text-soft: #B9CBC4;
+  --text-muted: #9DB2AA;
+  --text-subtle: rgba(234, 242, 238, 0.5);
+  --button-text: #1E2A24;
+  --link-text: #CDEFE6;
+  --line: rgba(127, 209, 192, 0.18);
+  --accent: #D9A24E;
+  --accent-dark: #7FD1C0;
+  --ceu: #1A2E33;
+  --agua: #7FD1C0;
+  --folha: #8FB27A;
+  --mata: #0E1D19;
+  --sinal: #FFD27A;
+  --luz: #CDEFE6;
+  --shadow-soft: 0 14px 34px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 18px 44px rgba(0, 0, 0, 0.4), 0 0 28px rgba(127, 209, 192, 0.08);
+  --glass-highlight: inset 0 1px 0 rgba(205, 239, 230, 0.06);
+  --glow-rio: 0 0 18px rgba(127, 209, 192, 0.35);
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* títulos na voz da marca */
+h1, h2 { font-family: var(--font-serif); font-weight: 400; }

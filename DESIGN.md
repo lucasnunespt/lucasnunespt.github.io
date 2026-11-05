@@ -2,52 +2,43 @@
 
 ## Fonte única de verdade
 
-O design deste portfólio segue o design system do NeuroMedit:
+O design deste portfólio segue o design system **Lucas Nunes**:
 
-**https://claude.ai/artifact/JHzwjfKnJ11kwCCJkcxvrQ**
+**https://claude.ai/artifact/N9uyZ7ELgMcMLN2qC2nWa5**
 
-Cores, tipografia, espaçamento, raios, sombras e voz vêm dele. Se o CSS deste repositório e o design system discordarem, o design system ganha e o código é corrigido.
+Ideia central: **tudo está ligado**. Estratégia completa no doc *Plataforma de marca — Lucas Nunes*. Até novembro de 2026 o portfólio seguia o design system do NeuroMedit; o NeuroMedit continua com o seu.
 
-Neste repositório há uma cópia dos ficheiros que contam, em [`design-system/`](design-system/):
-
-- [`design-system/README.md`](design-system/README.md): o livro da marca, com os princípios.
-- [`design-system/tokens.json`](design-system/tokens.json): os valores (cores por tema, famílias e estilos de texto, espaçamento, raios, sombras).
-
-A cópia pode ficar para trás. Antes de mexer na interface, confirma a versão no link acima.
+Cópia dos ficheiros em [`design-system/`](design-system/) (`README.md`, `tokens.json`). A cópia pode ficar para trás: antes de mexer na interface, confirma no link acima.
 
 ## A regra
 
 > **Nenhuma cor, fonte, raio, sombra ou duração nova fora dos tokens.**
 
-- Usa `var(--token)` com o nome exato (`--bg`, `--text-soft`, `--accent`, `--radius-pill`, `--shadow-card`…). Não escrevas o valor literal no CSS, nem como valor de reserva em `var(--x, …)`.
-- **Movimento** (desde nov 2026): só com `--duration-quick` (hover, foco), `--duration-calm` (aparecer ao rolar, uma vez), `--easing-calm` e `--rise-distance`. Só opacidade, cor, sombra, borda e uma subida curta. Com `prefers-reduced-motion` tudo vale 0. Qualquer outra duração é proposta primeiro ao design system.
-- Precisas de um valor que não existe? Propõe-o **primeiro** ao design system (nome, valor em cada tema, nota de uso). Só depois de entrar nos tokens é que vai para o código.
-- O que o design system marca como "Decidido, ainda por implementar" ou "PROPOSTA" é direção, não código atual.
+- Usa `var(--token)` com o nome exato. Não escrevas o valor literal no CSS, nem como valor de reserva em `var(--x, …)`.
+- Precisas de um valor que não existe? Propõe-o primeiro ao design system; só depois entra no código.
+- **Movimento:** `--duration-quick` (hover, foco), `--duration-calm` (aparecer ao rolar, uma vez), `--easing-calm`, `--rise-distance`. O único loop é a respiração da luz à noite (`--duration-breath`, 11 s). Com `prefers-reduced-motion`, tudo vale 0.
 
 ## Como os tokens chegam às páginas
 
-[`neuromedit-ds.css`](neuromedit-ds.css) define as variáveis, e cada página carrega-o antes do seu próprio `<style>`.
+[`lucasnunes-ds.css`](lucasnunes-ds.css) define as variáveis e carrega as fontes (Fraunces e Manrope, Google Fonts). Cada página carrega-o antes do seu próprio `<style>`.
 
 | Tema | Quando entra |
 |---|---|
-| `dawn` (claro, Amanhecer) | padrão desde nov 2026; antes era `calm` |
-| `night` (escuro) | quando o aparelho pede tema escuro (`prefers-color-scheme: dark`) |
+| `dia` | padrão |
+| `noite` | quando o aparelho pede tema escuro, ou numa secção com `data-theme="noite"` (uma faixa noturna por página) |
 
-Uma secção pode usar o tema `night` inteiro com `data-theme="night"` (faixa escura de destaque, uma por página). Os outros temas do design system (`calm`, `day`, `evening`, `late-night`, `luz`) não estão no portfólio. Só entram se o design system os pedir aqui.
-
-Variáveis disponíveis: `--bg`, `--bg-soft`, `--surface`, `--surface-strong`, `--text`, `--text-soft`, `--text-muted`, `--text-subtle`, `--button-text`, `--link-text`, `--line`, `--accent`, `--accent-dark`, `--shadow-soft`, `--shadow-card`, `--glass-highlight`, `--radius-lg|md|sm|chip|pill`, `--control-height`, `--button-pad-x`, `--container`, `--gutter`, `--font-sans`, `--font-serif`.
+Variáveis: `--bg`, `--bg-soft`, `--surface`, `--surface-strong`, `--text`, `--text-soft`, `--text-muted`, `--text-subtle`, `--button-text`, `--link-text`, `--line`, `--accent` (sol), `--accent-dark` (rio fundo), `--ceu`, `--agua`, `--folha`, `--mata`, `--sinal`, `--luz`, `--shadow-soft`, `--shadow-card`, `--glass-highlight`, `--glow-rio`, `--radius-lg|md|sm|chip|pill`, `--control-height`, `--button-pad-x`, `--container`, `--gutter`, `--font-sans`, `--font-serif`, `--duration-quick|calm|breath`, `--easing-calm`, `--rise-distance`.
 
 ## Regras de uso que mais contam
 
-- **Uma só ação óbvia por ecrã.** Um botão principal em `accent` com `button-text`; o resto é secundário (borda `line`, fundo transparente) ou link.
-- **Texto:** `text` para títulos, `text-soft` para parágrafos. `text-muted` e `text-subtle` não passam 4,5:1 no tema claro: nunca em texto pequeno que precise de ser lido.
-- **Texto em destaque sobre fundo claro:** usa `accent-dark`, não `accent`. O `accent` (sálvia) não tem contraste suficiente como cor de texto.
-- **Fundo:** gradiente vertical de `bg` para `bg-soft`. Cartões de vidro: `surface`, borda `line`, sombra `shadow-card` com `glass-highlight`.
-- **Botões:** sempre pílula (`radius-pill`), altura mínima `control-height`.
-- **Voz:** português do Brasil como língua canónica. Frases curtas, convite em vez de ordem.
+- **Uma ação óbvia por tela.** Botão principal em `accent` (sol) com `button-text`; o resto é secundário (borda `line`) ou link.
+- **Texto:** `text` para títulos, `text-soft` para parágrafos, `accent-dark` para rótulos e ênfases. Nunca `accent` como cor de texto sobre `bg`.
+- **Paisagem:** `ceu`, `agua`, `folha`, `mata` em fundos, faixas e ilustração, não em texto pequeno.
+- **Títulos** (`h1`, `h2`) em Fraunces; interface em Manrope.
+- **Símbolo:** sigilo LN (`assets/marca/sigilo.svg`, `sigilo-noite.svg`); favicon em `favicon.svg`.
+- **Voz:** português do Brasil como língua canônica; frases curtas, convite em vez de ordem.
 
 ## Dívida conhecida
 
-- As páginas ainda têm medidas fixas em pixels (larguras de controlos, tamanhos de ícones). O design system só cobre cor, tipo, raio, sombra e espaçamento, por isso não são violações, mas convém revê-las.
-- A fonte serifada em itálico, usada nos destaques (`em`), é a do design system, mas lá só está prevista para a versão Luz. Convém perguntar se vale também aqui.
-- O estudo `tendencias-ux-2026.html` descreve a paleta antiga (terracota `#8A4726`) na tabela da auditoria de contraste. É o registo do que foi feito, não o visual atual.
+- Os estudos de caso ainda têm medidas fixas em pixels e estilos próprios herdados do sistema anterior; usam os tokens novos, mas não foram redesenhados.
+- O estudo `tendencias-ux-2026.html` descreve paletas antigas na auditoria de contraste: é o registo do que foi feito.
