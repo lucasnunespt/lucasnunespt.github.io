@@ -2479,7 +2479,7 @@
     h2_build_dlead: "quién soy en tres frases: lo que uno y lo que ya hice.",
     h2_build_dact: "una acción principal por pantalla; ver la construcción es opcional.",
     h2_cv: "Descargar CV (PDF)",
-    h2_cv_href: "assets/cv/Lucas-Nunes-CV-UX-UI-Designer-EN.pdf"
+    h2_cv_href: "assets/cv/Lucas-Nunes-CV-UX-UI-Designer-ES.pdf"
   });
   window.PortfolioTranslations.it = Object.assign({}, window.PortfolioTranslations.it, {
     idx_title: "Lucas Nunes — UX Designer a Lisbona",
