@@ -87,6 +87,33 @@ em{ font-family:var(--font-serif); font-style:italic; font-weight:400; color:var
 .language-options button.is-active{ color:var(--button-text); background:var(--accent); }
 @media (max-width:760px){ .nav{ padding:.5rem .5rem .5rem 1.1rem; } }
 
+
+/* ---------- a IA constrói a página (design system: duration-calm, easing-calm) ---------- */
+.build-btn svg{ fill:var(--accent); stroke:var(--text); stroke-width:1.5; stroke-linejoin:round; }
+html.building [data-build]:not(.built){ opacity:0; }
+html.building [data-build]{ transition:opacity var(--duration-calm) var(--easing-calm); }
+html.building [data-build].built{ opacity:1; }
+html.building .bottom-bar{ display:none; }
+.build-ui{ position:absolute; inset:0 auto auto 0; width:100%; height:0; z-index:70; pointer-events:none; }
+.build-frame{ position:absolute; border:1.5px solid var(--accent-dark); border-radius:var(--radius-md); opacity:0;
+  transition:left var(--duration-calm) var(--easing-calm), top var(--duration-calm) var(--easing-calm), width var(--duration-calm) var(--easing-calm), height var(--duration-calm) var(--easing-calm), opacity var(--duration-quick) var(--easing-calm); }
+.build-frame.on{ opacity:1; }
+.build-size{ position:absolute; right:-1px; bottom:-30px; font-size:.75rem; font-weight:700; padding:.2rem .5rem; border-radius:var(--radius-chip); background:var(--accent-dark); color:var(--bg); font-variant-numeric:tabular-nums; }
+.build-tag{ position:absolute; max-width:22rem; font-size:.88rem; line-height:1.45; padding:.65rem .85rem; border-radius:var(--radius-sm); background:var(--text); color:var(--bg); box-shadow:var(--shadow-card); opacity:0;
+  transition:opacity var(--duration-calm) var(--easing-calm), left var(--duration-calm) var(--easing-calm), top var(--duration-calm) var(--easing-calm); }
+.build-tag b{ color:var(--accent); font-weight:700; }
+.build-tag.on{ opacity:1; }
+.build-cursor{ position:absolute; display:flex; align-items:flex-start; gap:.2rem;
+  transition:left var(--duration-calm) var(--easing-calm), top var(--duration-calm) var(--easing-calm); }
+.build-cursor svg{ fill:var(--accent); stroke:var(--text); stroke-width:1.5; stroke-linejoin:round; }
+.build-cursor span{ margin-top:1.1rem; font-size:.72rem; font-weight:700; padding:.15rem .45rem; border-radius:var(--radius-chip); background:var(--text); color:var(--bg); }
+.build-bar{ position:fixed; z-index:75; left:50%; transform:translateX(-50%); bottom:max(1rem, env(safe-area-inset-bottom)); width:min(calc(100% - 2rem), 34rem);
+  display:flex; align-items:center; gap:.8rem; padding:.45rem .45rem .45rem .9rem; border-radius:var(--radius-pill);
+  background:var(--surface-strong); border:1px solid var(--line); box-shadow:var(--shadow-card), var(--glass-highlight); }
+.build-count{ flex:1; font-size:.9rem; color:var(--text); font-variant-numeric:tabular-nums; }
+.build-skip{ min-height:42px; padding:0 1.1rem; }
+.build-bar[hidden], .build-ui[hidden], .build-bar [hidden]{ display:none; }
+
 /* barra inferior no celular: contato sempre na zona do polegar */
 .bottom-bar{ display:none; }
 @media (max-width:760px){
@@ -286,19 +313,20 @@ footer p{ font-size:.86rem; }
     <div class="hero-grid">
       <div>
         <span class="status rv"><i aria-hidden="true"></i><span data-i18n="h2_status">Aberto a vagas de UX/UI júnior em Lisboa</span></span>
-        <h1 class="rv" data-i18n="h2_h1" data-i18n-html>Desenho produtos que <em>acalmam</em> a mente.</h1>
+        <h1 class="rv" data-build="1" data-i18n="h2_h1" data-i18n-html>Desenho produtos que <em>acalmam</em> a mente.</h1>
         <p class="lead rv" data-i18n="h2_lead">Sou o Lucas Nunes, designer de UX em Lisboa. Junto design de interface, neurociência e front-end. Criei o NeuroMedit, uma plataforma de meditação que está no ar, e o Sistema da Consciência, um e-book interativo em quatro línguas.</p>
         <div class="hero-actions rv">
-          <a class="button secondary" href="#trabalho" data-i18n="h2_cta_work">Ver trabalho</a>
+          <button class="button secondary build-btn" type="button" id="buildBtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M4 3l15 7-6.5 2L10 19z"/></svg><span data-i18n="h2_build_btn">Ver a IA construir</span></button>
+          <a class="link" href="#trabalho" data-i18n="h2_cta_work">Ver trabalho</a>
           <a class="link" href="https://www.linkedin.com/in/lucasnunespt/" target="_blank" rel="noopener">LinkedIn ↗</a>
         </div>
       </div>
-      <figure class="portrait rv">
+      <figure class="portrait rv" data-build="2">
         <img src="lucas-foto.jpg" alt="Retrato de Lucas Nunes" data-i18n="idx_hero_photo_alt" data-i18n-attr="alt" width="900" height="1125">
         <figcaption>Lucas Nunes <span data-i18n="idx_hero_photo_cap">Lisboa, Portugal</span></figcaption>
       </figure>
     </div>
-    <div class="facts">
+    <div class="facts" data-build="3">
       <div class="fact rv"><strong data-i18n="h2_f1_h">1 produto no ar</strong><span data-i18n="h2_f1_p">NeuroMedit, do roteiro ao código</span></div>
       <div class="fact rv"><strong data-i18n="h2_f2_h">4 línguas</strong><span data-i18n="h2_f2_p">no e-book: português, inglês, espanhol e italiano</span></div>
       <div class="fact rv"><strong data-i18n="h2_f3_h">Design e front-end</strong><span data-i18n="h2_f3_p">desenho e construo o que proponho</span></div>
@@ -313,7 +341,7 @@ footer p{ font-size:.86rem; }
       <h2 data-i18n="h2_work_h">Dois produtos reais e quatro estudos.</h2>
     </div>
 
-    <article class="feature rv" id="case-neuromedit">
+    <article class="feature rv" id="case-neuromedit" data-build="4">
       <div class="shot" tabindex="0" aria-label="Duas telas do NeuroMedit: a entrada e a respiração" data-i18n="h2_shot_aria" data-i18n-attr="aria-label">
         <img src="assets/entry.jpg" alt="Tela de entrada do NeuroMedit: Bem-vindo ao NeuroMedit, faz uma pausa, com um botão Começar." data-i18n="h2_alt_entry" data-i18n-attr="alt" loading="lazy">
         <img src="assets/airlock.jpg" alt="A respiração de entrada: um orbe que respira ao centro e o botão Sair no canto." data-i18n="h2_alt_airlock" data-i18n-attr="alt" loading="lazy">
@@ -343,7 +371,7 @@ footer p{ font-size:.86rem; }
 
 <section class="band" id="case-sistema" data-theme="noite" aria-label="Sistema da Consciência">
   <div class="container">
-    <article class="feature rv">
+    <article class="feature rv" data-build="5">
       <div class="feature-copy">
         <span class="label" data-i18n="h2_sc_label">02 · Protótipo funcional · 2026</span>
         <h3 data-i18n="cs3_h1">Sistema da Consciência</h3>
@@ -364,7 +392,7 @@ footer p{ font-size:.86rem; }
 
 <section class="section" aria-label="Outros estudos" data-i18n="h2_studies_aria" data-i18n-attr="aria-label">
   <div class="container">
-    <div class="studies">
+    <div class="studies" data-build="6">
       <a class="study rv" id="case-silencio" href="case-study-silencio.html">
         <div class="meta"><b>03</b><span data-i18n="idx_case5_tag">Estudo conceptual · 2026</span></div>
         <h3 data-i18n="idx_case5_title">O utilizador e o silêncio</h3>
@@ -406,7 +434,7 @@ footer p{ font-size:.86rem; }
 </section>
 
 <section class="section" id="sobre">
-  <div class="container about">
+  <div class="container about" data-build="7">
     <div class="rv">
       <span class="label" data-i18n="common_nav_sobre">Sobre</span>
       <h2 data-i18n="h2_about_h">Do Rio São Francisco a Lisboa.</h2>
@@ -426,7 +454,7 @@ footer p{ font-size:.86rem; }
 
 <section class="contact" id="contato">
   <div class="container">
-    <div class="box rv">
+    <div class="box rv" data-build="8">
       <span class="label" data-i18n="common_nav_contato">Contato</span>
       <h2 data-i18n="h2_contact_h">Vamos conversar?</h2>
       <p data-i18n="h2_contact_p">Procuro uma vaga de UX/UI júnior. Respondo pessoalmente, sobre uma vaga, um projeto ou só para trocar uma ideia.</p>
@@ -439,6 +467,19 @@ footer p{ font-size:.86rem; }
   </div>
 </section>
 </main>
+
+<div class="build-ui" id="buildUi" hidden>
+  <div class="build-frame" id="buildFrame"><span class="build-size" id="buildSize"></span></div>
+  <div class="build-tag" id="buildTag"><b data-i18n="h2_build_decided">Lucas decidiu:</b> <span id="buildTagText"></span></div>
+  <div class="build-cursor" id="buildCursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M4 3l15 7-6.5 2L10 19z"/></svg><span data-i18n="h2_build_ai">IA</span></div>
+</div>
+<div class="build-bar" id="buildBar" role="status" hidden>
+  <img src="assets/marca/sigilo.svg" alt="" width="28" height="28">
+  <span class="build-count" id="buildCount"></span>
+  <a class="link" id="buildLog" href="case-study-sistema-da-consciencia.html#direcao" hidden data-i18n="h2_build_log">Ver o diário de direção →</a>
+  <button type="button" class="button secondary build-skip" id="buildSkip" data-i18n="h2_build_skip">Pular</button>
+</div>
+
 
 <footer><div class="container"><p data-i18n="common_footer">© 2026 Lucas Nunes · Lisboa, Portugal.</p></div></footer>
 
@@ -478,6 +519,58 @@ footer p{ font-size:.86rem; }
   a.addEventListener('pause', function(){ b.classList.remove('playing'); b.setAttribute('aria-label',T('h2_audio_play','Ouvir a amostra')); });
   a.addEventListener('timeupdate', function(){ if(a.duration){ f.style.width = (a.currentTime / a.duration * 100) + '%'; st.textContent = fmt(a.currentTime) + ' / ' + fmt(a.duration); } });
   a.addEventListener('ended', function(){ f.style.width = '0%'; st.textContent = T('h2_audio_st', 'A respiração de entrada · 4:25'); });
+
+
+  /* a IA constrói a página, sob a direção do Lucas */
+  (function(){
+    var btn = document.getElementById('buildBtn'); if(!btn) return;
+    var ui = document.getElementById('buildUi'), frame = document.getElementById('buildFrame'), size = document.getElementById('buildSize');
+    var tag = document.getElementById('buildTag'), tagText = document.getElementById('buildTagText'), cur = document.getElementById('buildCursor');
+    var bar = document.getElementById('buildBar'), count = document.getElementById('buildCount'), skip = document.getElementById('buildSkip'), log = document.getElementById('buildLog');
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var steps = Array.prototype.slice.call(document.querySelectorAll('[data-build]')).sort(function(a, b){ return a.dataset.build - b.dataset.build; });
+    var timer = 0, i = 0, running = false;
+    function t(k, fb){ return (window.PortfolioI18n && window.PortfolioI18n.t(k)) || fb; }
+    function setCount(n){ count.textContent = t('h2_build_status', 'Direção: Lucas · {n} de {t} decisões').replace('{n}', n).replace('{t}', steps.length); }
+    function place(el){
+      var r = el.getBoundingClientRect(), x = r.left + scrollX, y = r.top + scrollY;
+      frame.style.left = (x - 8) + 'px'; frame.style.top = (y - 8) + 'px'; frame.style.width = (r.width + 16) + 'px'; frame.style.height = (r.height + 16) + 'px';
+      size.textContent = Math.round(r.width) + ' × ' + Math.round(r.height);
+      cur.style.left = (x + r.width - 10) + 'px'; cur.style.top = (y + r.height - 6) + 'px';
+      var tx = Math.min(x + 12, scrollX + innerWidth - 360), ty = y + Math.min(r.height * 0.35, 160);
+      tag.style.left = Math.max(12, tx) + 'px'; tag.style.top = ty + 'px';
+      scrollTo({ top: Math.max(0, y - innerHeight * 0.22), behavior: reduce ? 'auto' : 'smooth' });
+    }
+    function step(){
+      if(i >= steps.length){ return finish(); }
+      var el = steps[i]; place(el);
+      frame.classList.add('on'); tag.classList.remove('on');
+      tagText.textContent = t('h2_build_d' + el.dataset.build, '');
+      timer = setTimeout(function(){
+        el.classList.add('built'); tag.classList.add('on'); i++; setCount(i);
+        timer = setTimeout(step, reduce ? 1600 : 1500);
+      }, reduce ? 0 : 750);
+    }
+    function finish(){
+      clearTimeout(timer); running = false;
+      steps.forEach(function(el){ el.classList.add('built'); });
+      frame.classList.remove('on'); tag.classList.remove('on'); ui.hidden = true;
+      setCount(steps.length); count.textContent = t('h2_build_done', 'Página construída.') + ' ' + count.textContent;
+      log.hidden = false; skip.textContent = t('h2_build_close', 'Fechar');
+      setTimeout(function(){ document.documentElement.classList.remove('building'); }, 50);
+    }
+    function close(){ bar.hidden = true; log.hidden = true; skip.textContent = t('h2_build_skip', 'Pular'); document.documentElement.classList.remove('building'); }
+    btn.addEventListener('click', function(){
+      if(running) return; running = true; i = 0;
+      steps.forEach(function(el){ el.classList.remove('built'); el.classList.add('in'); });
+      document.documentElement.classList.add('building');
+      ui.hidden = false; bar.hidden = false; log.hidden = true; skip.textContent = t('h2_build_skip', 'Pular'); setCount(0);
+      cur.style.left = (btn.getBoundingClientRect().left + scrollX) + 'px'; cur.style.top = (btn.getBoundingClientRect().top + scrollY) + 'px';
+      timer = setTimeout(step, 300);
+    });
+    skip.addEventListener('click', function(){ if(running) finish(); else close(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !bar.hidden){ if(running) finish(); else close(); } });
+  })();
 
   /* copiar e-mail */
   var cb = document.getElementById('copyMail');

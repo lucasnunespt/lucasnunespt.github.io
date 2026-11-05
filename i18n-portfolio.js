@@ -2048,7 +2048,23 @@
     h2_copy: "Copiar e-mail",
     h2_copied: "Copiado",
     h2_audio_play: "Ouvir a amostra",
-    h2_audio_pause: "Pausar a amostra"
+    h2_audio_pause: "Pausar a amostra",
+    h2_build_btn: "Ver a IA construir",
+    h2_build_decided: "Lucas decidiu:",
+    h2_build_status: "Direção: Lucas · {n} de {t} decisões",
+    h2_build_skip: "Pular",
+    h2_build_close: "Fechar",
+    h2_build_done: "Página construída.",
+    h2_build_log: "Ver o diário de direção →",
+    h2_build_d1: "uma frase que diz o que faço, não um cargo.",
+    h2_build_d2: "o rosto perto do texto: confiança antes do portfólio.",
+    h2_build_d3: "três fatos curtos em vez de um parágrafo.",
+    h2_build_d4: "mostrar o trabalho com imagem, não só texto.",
+    h2_build_d5: "uma faixa noturna para o projeto que vive no escuro.",
+    h2_build_d6: "os estudos menores em cartões, para não competir.",
+    h2_build_d7: "a história em duas frases; a linha do tempo saiu.",
+    h2_build_d8: "o contato sempre à mão, e aqui no fim.",
+    h2_build_ai: "IA"
   });
   window.PortfolioTranslations.en = Object.assign({}, window.PortfolioTranslations.en, {
     idx_title: "Lucas Nunes — UX Designer in Lisbon",
@@ -2232,7 +2248,23 @@
     h2_copy: "Copy email",
     h2_copied: "Copied",
     h2_audio_play: "Play the sample",
-    h2_audio_pause: "Pause the sample"
+    h2_audio_pause: "Pause the sample",
+    h2_build_btn: "Watch the AI build it",
+    h2_build_decided: "Lucas decided:",
+    h2_build_status: "Direction: Lucas · {n} of {t} decisions",
+    h2_build_skip: "Skip",
+    h2_build_close: "Close",
+    h2_build_done: "Page built.",
+    h2_build_log: "See the direction log →",
+    h2_build_d1: "one sentence that says what I do, not a job title.",
+    h2_build_d2: "my face next to the text: trust before the portfolio.",
+    h2_build_d3: "three short facts instead of a paragraph.",
+    h2_build_d4: "show the work with images, not only text.",
+    h2_build_d5: "a night band for the project that lives in the dark.",
+    h2_build_d6: "the smaller studies in cards, so they don’t compete.",
+    h2_build_d7: "my story in two sentences; the timeline went.",
+    h2_build_d8: "contact always at hand, and here at the end.",
+    h2_build_ai: "AI"
   });
   window.PortfolioTranslations.es = Object.assign({}, window.PortfolioTranslations.es, {
     idx_title: "Lucas Nunes — Diseñador UX en Lisboa",
@@ -2416,7 +2448,23 @@
     h2_copy: "Copiar e-mail",
     h2_copied: "Copiado",
     h2_audio_play: "Escuchar la muestra",
-    h2_audio_pause: "Pausar la muestra"
+    h2_audio_pause: "Pausar la muestra",
+    h2_build_btn: "Ver a la IA construir",
+    h2_build_decided: "Lucas decidió:",
+    h2_build_status: "Dirección: Lucas · {n} de {t} decisiones",
+    h2_build_skip: "Saltar",
+    h2_build_close: "Cerrar",
+    h2_build_done: "Página construida.",
+    h2_build_log: "Ver el diario de dirección →",
+    h2_build_d1: "una frase que dice lo que hago, no un cargo.",
+    h2_build_d2: "el rostro junto al texto: confianza antes del portafolio.",
+    h2_build_d3: "tres datos cortos en lugar de un párrafo.",
+    h2_build_d4: "mostrar el trabajo con imagen, no solo texto.",
+    h2_build_d5: "una franja nocturna para el proyecto que vive en la oscuridad.",
+    h2_build_d6: "los estudios menores en tarjetas, para no competir.",
+    h2_build_d7: "la historia en dos frases; la línea de tiempo salió.",
+    h2_build_d8: "el contacto siempre a mano, y aquí al final.",
+    h2_build_ai: "IA"
   });
   window.PortfolioTranslations.it = Object.assign({}, window.PortfolioTranslations.it, {
     idx_title: "Lucas Nunes — UX Designer a Lisbona",
@@ -2600,7 +2648,23 @@
     h2_copy: "Copia e-mail",
     h2_copied: "Copiato",
     h2_audio_play: "Ascolta l’anteprima",
-    h2_audio_pause: "Metti in pausa l’anteprima"
+    h2_audio_pause: "Metti in pausa l’anteprima",
+    h2_build_btn: "Guarda l’IA costruire",
+    h2_build_decided: "Lucas ha deciso:",
+    h2_build_status: "Regia: Lucas · {n} di {t} decisioni",
+    h2_build_skip: "Salta",
+    h2_build_close: "Chiudi",
+    h2_build_done: "Pagina costruita.",
+    h2_build_log: "Vedi il diario di regia →",
+    h2_build_d1: "una frase che dice cosa faccio, non un titolo.",
+    h2_build_d2: "il volto vicino al testo: fiducia prima del portfolio.",
+    h2_build_d3: "tre fatti brevi invece di un paragrafo.",
+    h2_build_d4: "mostrare il lavoro con immagini, non solo testo.",
+    h2_build_d5: "una fascia notturna per il progetto che vive al buio.",
+    h2_build_d6: "gli studi minori in schede, perché non competano.",
+    h2_build_d7: "la storia in due frasi; la linea del tempo è uscita.",
+    h2_build_d8: "il contatto sempre a portata di mano, e qui alla fine.",
+    h2_build_ai: "IA"
   });
 
   /* ---------- motor de idioma ---------- */
