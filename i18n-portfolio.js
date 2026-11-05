@@ -2755,6 +2755,7 @@
     document.querySelectorAll("[data-i18n]").forEach(function (element) {
       var key = element.dataset.i18n;
       var value = getTranslation(language, key);
+      if (value === "[" + key + "]") return; /* tradução em falta: mantém o texto que já está na página */
       var attrNames = (element.dataset.i18nAttr || "")
         .split(",").map(function (n) { return n.trim(); }).filter(Boolean);
 
@@ -2855,7 +2856,7 @@
   }
 
   window.PortfolioI18n = {
-    t: function (key) { return getTranslation(getCurrentLanguage(), key); },
+    t: function (key) { var v = getTranslation(getCurrentLanguage(), key); return v === "[" + key + "]" ? null : v; },
     getCurrentLanguage: getCurrentLanguage,
     setLanguage: setLanguage
   };
