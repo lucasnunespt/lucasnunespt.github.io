@@ -2938,7 +2938,7 @@ function makeCine(cfg){
   var CPL=CFL.map(function(f,i){var o={n:i+1,name:CH[i].planet,theme:CH[i].title};for(var k in f)o[k]=f[k];return o});
   var CMO={design:{name:_(20,'Lua do Design'),c:'#A9B1FF',bg:'#11152F'},body:{name:_(23,'Lua do Corpo'),c:'#F0A56B',bg:'#26150B'},simple:{name:_(26,'Lua do Dia a Dia'),c:'#7FD8A8',bg:'#0C241A'}};
   var cineEl=document.getElementById('cine'),cineSkip=cineEl.querySelector('.cine-skip'),cineOn=false,cineStarted=false,cineNoBadge=false;
-  var CE=makeCine({host:cineEl,canvas:cineEl.querySelector('canvas'),overlay:cineEl.querySelector('.cine-ov'),skip:cineSkip,moons:CMO,timeScale:.6});
+  var CE=makeCine({host:cineEl,canvas:cineEl.querySelector('canvas'),overlay:cineEl.querySelector('.cine-ov'),skip:cineSkip,moons:CMO,timeScale:1.1});
   cineSkip.addEventListener('click',function(){CE.skip()});
   /*i18n-off*/
   if(/[?&]diag\b/.test(location.search)){(function(){var d=document.createElement('pre');d.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:99;margin:0;padding:8px 10px;font:11px/1.4 ui-monospace,monospace;color:#cfe;background:rgba(0,0,0,.75);border-radius:8px;white-space:pre-wrap;pointer-events:none';document.body.appendChild(d);
@@ -2966,12 +2966,12 @@ function makeCine(cfg){
   function cineMark(k){var cs=lsGet('sc-cine',{})||{};cs[k]=Date.now();lsSet('sc-cine',cs)}
   function runCine(pl){
     if(!pl)return false;var still=RM||calm;
-    if(pl.k==='abertura'){cine('abertura',{planets:CPL},{ts:.85,act:function(){cineMark('open');cineHide()}});return true}
+    if(pl.k==='abertura'){cine('abertura',{planets:CPL},{ts:1.9,act:function(){cineMark('open');cineHide()}});return true}
     if(pl.k==='final'){cineMark('fin');cine('final',{planets:CPL,sub:_(826,'24 luas, 8 fases e uma constelação feita por você.')});return true}
     if(still)return false;
     if(pl.k==='lua'){cine('lua',{planet:CPL[pl.n-1],moon:pl.moon});return true}
     var badge=(!cineNoBadge&&pl.pn&&pl.pn===pl.n-1&&anyMoon(pl.pn))?_(4,'Fase ')+CROM[pl.pn]+_(827,' <b>concluída</b>'):'';cineNoBadge=false;
-    cine('fase',{from:pl.pn?CPL[pl.pn-1]:null,to:CPL[pl.n-1],badge:badge},{ts:pl.first?undefined:1,startAt:pl.first?0:2.9,
+    cine('fase',{from:pl.pn?CPL[pl.pn-1]:null,to:CPL[pl.n-1],badge:badge},{ts:1.6,startAt:pl.first?0:2.9,
       then:pl.moon?function(){cine('lua',{planet:CPL[pl.n-1],moon:pl.moon})}:null});
     return true;
   }
