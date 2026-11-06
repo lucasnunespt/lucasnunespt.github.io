@@ -330,6 +330,9 @@ html[data-space="amplo"] .view p,html[data-space="amplo"] .view li{margin-bottom
 /* modo foco */
 html[data-foco="on"] .mapwrap,html[data-foco="on"] .timeline,html[data-foco="on"] .legend,html[data-foco="on"] .hint,html[data-foco="on"] #stars,html[data-foco="on"] .nebula{display:none}
 html[data-foco="on"] main{margin-top:18px}
+/* leitura: dentro de um capítulo, só o texto; o mapa volta pelo botão "Voltar ao mapa" */
+html[data-ler="on"] .mapwrap,html[data-ler="on"] .timeline,html[data-ler="on"] .legend,html[data-ler="on"] .hint,html[data-ler="on"] #stars,html[data-ler="on"] .nebula{display:none}
+html[data-ler="on"] main{margin-top:18px}
 /* movimento calmo */
 html[data-mov="calmo"] .view h1{animation:none}
 html[data-mov="calmo"] .nebula{animation:none}
@@ -498,6 +501,7 @@ html.compact .map{overflow:hidden}
 .map-all{display:none;margin:10px 2px 0;font:500 .7rem var(--font-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:0;padding:8px 0;min-height:36px;cursor:pointer}
 .map-all:hover{color:var(--gold)}
 html.cmp-ok .map-all{display:inline-flex;align-items:center;gap:8px}
+html[data-ler="on"] .map-all{display:none!important}
 .scroll-cue{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translate(-50%,0);z-index:24;display:inline-flex;align-items:center;gap:8px;font:500 .7rem var(--font-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--fg);background:rgba(12,16,30,.82);border:1px solid var(--hair);border-radius:999px;padding:10px 16px;min-height:40px;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:opacity .4s,transform .4s}
 .scroll-cue[hidden]{display:none}
 .scroll-cue.out{opacity:0;transform:translate(-50%,12px);pointer-events:none}
@@ -2566,6 +2570,7 @@ function makeCine(cfg){
   var dock=document.getElementById('dock'),dName=document.getElementById('dName'),dSub=document.getElementById('dSub'),dPlanet=document.getElementById('dPlanet'),dMoons=document.getElementById('dMoons'),dProg=document.getElementById('dProg');
   document.getElementById('dHere').addEventListener('click',function(){
     if(prefs.foco==='on'){window.scrollTo({top:0,behavior:RM?'auto':'smooth'});return}
+    if(document.documentElement.getAttribute('data-ler')==='on'){document.documentElement.setAttribute('data-ler','off');dispatchEvent(new Event('resize'));window.scrollTo({top:0,behavior:'auto'});return}
     document.querySelector('.mapwrap').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});
   });
   function updateDock(id){
@@ -2982,6 +2987,7 @@ function makeCine(cfg){
     var locked=isLocked(id),plan=locked?null:planCine(id,render.prev,!render.ran);render.prev=id;
     if(locked){html=viewLocked(id);w=_(636,'bloqueado')}else{visited[id]=1;save()}
     ttsStop(true);view.innerHTML=html;where.textContent=w;enhance(id);updateDock(id);markPref();closeSheet();
+    document.documentElement.setAttribute('data-ler',id==='intro'?'off':'on');
     paintMap(id);setCompact(locked?'intro':id);if(!locked)go(id,w,!render.ran);else setWhere(_(636,'bloqueado'));
     if(render.ran){view.focus({preventScroll:true});window.scrollTo({top:0,behavior:RM?'auto':'smooth'})}
     var firstRun=!render.ran;render.ran=true;runCine(plan);if(firstRun)langArrive();
