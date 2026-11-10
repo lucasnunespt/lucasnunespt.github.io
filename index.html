@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title data-i18n="idx_title">Lucas Nunes — Designer de UX em Lisboa</title>
 <meta name="description" content="Lucas Nunes, designer de UX júnior em Lisboa. Produtos calmos com base em neurociência: NeuroMedit e Sistema da Consciência.">
+<link rel="canonical" href="https://lucasnunespt.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lucasnunespt.github.io/">
+<meta property="og:title" content="Lucas Nunes — Designer de Experiência do Usuário que dirige IA">
+<meta property="og:description" content="Designer de UX em Lisboa. Produtos calmos com base em neurociência: NeuroMedit e Sistema da Consciência. Tudo está ligado.">
+<meta property="og:image" content="https://lucasnunespt.github.io/lucas-foto.jpg">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="lucasnunes-ds.css?v=2026110516">
 <style>
@@ -82,8 +90,9 @@ em{ font-family:var(--font-serif); font-style:italic; font-weight:400; color:var
   .language-wrapper:hover{ max-height:260px; background:var(--surface-strong); box-shadow:var(--shadow-card); }
   .language-wrapper:hover .language-options{ opacity:1; }
 }
-.language-options button{ appearance:none; min-width:46px; height:30px; border:0; border-radius:var(--radius-pill); color:var(--text-soft); background:transparent; font:inherit; font-size:.72rem; letter-spacing:.08em; cursor:pointer; }
-.language-options button:hover, .language-options button:focus-visible{ color:var(--text); background:var(--bg-soft); outline:none; }
+.language-options button{ appearance:none; min-width:46px; height:44px; border:0; border-radius:var(--radius-pill); color:var(--text-soft); background:transparent; font:inherit; font-size:.72rem; letter-spacing:.08em; cursor:pointer; }
+.language-options button:hover, .language-options button:focus-visible{ color:var(--text); background:var(--bg-soft); }
+.language-options button:focus-visible{ outline:2px solid var(--accent-dark); outline-offset:-2px; }
 .language-options button.is-active{ color:var(--button-text); background:var(--accent); }
 @media (max-width:760px){ .nav{ padding:.5rem .5rem .5rem 1.1rem; } }
 
@@ -156,6 +165,7 @@ html[data-theme="noite"] .brand-mark img{ content:url(assets/marca/sigilo-noite.
 .hero-grid{ display:grid; grid-template-columns:1.25fr .75fr; gap:clamp(2rem,5vw,4.5rem); align-items:center; }
 .hero h1{ font-size:clamp(2.6rem,6vw,4.8rem); line-height:1; margin:1.1rem 0 1.4rem; }
 .hero .lead{ font-size:1.12rem; line-height:1.75; max-width:54ch; }
+.hero .ligado{ margin-top:1.2rem; font-family:var(--font-serif); font-style:italic; font-size:1.6rem; line-height:1.4; color:var(--accent-dark); }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:.8rem; margin-top:2rem; align-items:center; }
 .status{
   display:inline-flex; align-items:center; gap:.6rem; font-size:.9rem; color:var(--text);
@@ -236,7 +246,7 @@ html[data-theme="noite"] .brand-mark img{ content:url(assets/marca/sigilo-noite.
 .duo{ position:relative; }
 .duo .shot{ aspect-ratio:16/10.3; }
 .duo .phone{
-  position:absolute; right:-.4rem; bottom:-1.4rem; width:26%; border-radius:var(--radius-sm);
+  position:absolute; right:-.4rem; bottom:-1.4rem; width:26%; height:auto; border-radius:var(--radius-sm);
   border:1px solid var(--line); box-shadow:var(--shadow-card);
 }
 @media (max-width:860px){
@@ -291,7 +301,7 @@ details.study .more p b{ color:var(--text); font-weight:600; }
 .contact p{ font-size:1.05rem; line-height:1.7; max-width:44ch; }
 .contact-actions{ display:flex; flex-wrap:wrap; gap:.8rem; justify-content:center; }
 .mail{ display:inline-flex; align-items:center; gap:.4rem; font-size:.95rem; color:var(--text); flex-wrap:wrap; justify-content:center; }
-.mail button{ font-size:.86rem; font-weight:600; color:var(--link-text); padding:0 .9rem; min-height:40px; border-radius:var(--radius-pill); border:1px solid var(--line); transition:border-color var(--duration-quick) var(--easing-calm); }
+.mail button{ font-size:.86rem; font-weight:600; color:var(--link-text); padding:0 .9rem; min-height:44px; border-radius:var(--radius-pill); border:1px solid var(--line); transition:border-color var(--duration-quick) var(--easing-calm); }
 .mail button:hover{ border-color:var(--accent); }
 footer{ padding:2rem 0 2.5rem; text-align:center; }
 footer p{ font-size:.86rem; }
@@ -329,10 +339,11 @@ footer p{ font-size:.86rem; }
       <div>
         <span class="status rv" data-build="2"><i aria-hidden="true"></i><span data-i18n="h2_status">Aberto a vagas de UX/UI júnior em Lisboa</span></span>
         <h1 class="rv" data-build="2" data-decision="d1" data-i18n="h2_h1" data-i18n-html>Desenho produtos que <em>acalmam</em> a mente.</h1>
-        <p class="lead rv" data-build="3" data-decision="dlead" data-i18n="h2_lead">Sou o Lucas Nunes, designer de UX em Lisboa. Junto design de interface, neurociência e front-end. Criei o NeuroMedit, uma plataforma de meditação que está no ar, e o Sistema da Consciência, um e-book interativo em quatro línguas.</p>
+        <p class="lead rv" data-build="3" data-decision="dlead" data-i18n="h2_lead">Sou o Lucas Nunes, designer de experiência do usuário que dirige IA, em Lisboa. Junto design de interface, neurociência e front-end. Criei o NeuroMedit, uma plataforma de meditação que está no ar, e o Sistema da Consciência, um e-book interativo em quatro línguas.</p>
+        <p class="ligado rv" data-build="3" data-i18n="idx_ligado">Tudo está ligado.</p>
         <div class="hero-actions rv" data-build="4" data-decision="dact">
+          <a class="button primary" href="#trabalho" data-i18n="h2_cta_work">Ver trabalho</a>
           <button class="button secondary build-btn" type="button" id="buildBtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M4 3l15 7-6.5 2L10 19z"/></svg><span data-i18n="h2_build_btn">Ver a IA construir</span></button>
-          <a class="link" href="#trabalho" data-i18n="h2_cta_work">Ver trabalho</a>
           <a class="link" href="https://www.linkedin.com/in/lucasnunespt/" target="_blank" rel="noopener">LinkedIn ↗</a>
           <a class="link" href="assets/cv/Lucas-Nunes-CV-UX-UI-Designer.pdf" download data-i18n="h2_cv_href" data-i18n-attr="href"><span data-i18n="h2_cv">Baixar currículo (PDF)</span> ↓</a>
         </div>
@@ -358,9 +369,9 @@ footer p{ font-size:.86rem; }
     </div>
 
     <article class="feature rv" id="case-neuromedit" data-build="7" data-decision="d4">
-      <div class="shot" tabindex="0" aria-label="Duas telas do NeuroMedit: a entrada e a respiração" data-i18n="h2_shot_aria" data-i18n-attr="aria-label">
-        <img src="assets/entry.jpg" alt="Tela de entrada do NeuroMedit: Bem-vindo ao NeuroMedit, faz uma pausa, com um botão Começar." data-i18n="h2_alt_entry" data-i18n-attr="alt" loading="lazy">
-        <img src="assets/airlock.jpg" alt="A respiração de entrada: um orbe que respira ao centro e o botão Sair no canto." data-i18n="h2_alt_airlock" data-i18n-attr="alt" loading="lazy">
+      <div class="shot" role="group" tabindex="0" aria-label="Duas telas do NeuroMedit: a entrada e a respiração" data-i18n="h2_shot_aria" data-i18n-attr="aria-label">
+        <img src="assets/entry.jpg" width="1600" height="851" alt="Tela de entrada do NeuroMedit: Bem-vindo ao NeuroMedit, faz uma pausa, com um botão Começar." data-i18n="h2_alt_entry" data-i18n-attr="alt" loading="lazy">
+        <img src="assets/airlock.jpg" width="1600" height="1020" alt="A respiração de entrada: um orbe que respira ao centro e o botão Sair no canto." data-i18n="h2_alt_airlock" data-i18n-attr="alt" loading="lazy">
         <span class="shot-hint" aria-hidden="true"><span class="h-mouse" data-i18n="h2_hint_mouse">Passe o cursor: a respiração</span><span class="h-touch" data-i18n="h2_hint_touch">Toque: a respiração</span></span>
       </div>
       <div class="feature-copy">
@@ -399,8 +410,8 @@ footer p{ font-size:.86rem; }
         </div>
       </div>
       <div class="duo">
-        <div class="shot"><img src="assets/sistema-da-consciencia/mapa.jpg" alt="O mapa do e-book: oito planetas em órbita à volta do Sol, com a linha do tempo dos capítulos em baixo." data-i18n="h2_alt_map" data-i18n-attr="alt" loading="lazy"></div>
-        <img class="phone" src="assets/sistema-da-consciencia/celular-mapa.jpg" alt="O mesmo mapa no celular." data-i18n="h2_alt_phone" data-i18n-attr="alt" loading="lazy">
+        <div class="shot"><img src="assets/sistema-da-consciencia/mapa.jpg" width="1692" height="1083" alt="O mapa do e-book: oito planetas em órbita à volta do Sol, com a linha do tempo dos capítulos em baixo." data-i18n="h2_alt_map" data-i18n-attr="alt" loading="lazy"></div>
+        <img class="phone" src="assets/sistema-da-consciencia/celular-mapa.jpg" width="780" height="1328" alt="O mesmo mapa no celular." data-i18n="h2_alt_phone" data-i18n-attr="alt" loading="lazy">
       </div>
     </article>
   </div>

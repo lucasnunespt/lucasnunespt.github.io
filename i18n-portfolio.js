@@ -271,7 +271,7 @@
 
     cs_footer: "© 2026 Lucas Nunes · Estudo de caso de UX, adaptado da documentação original de design do NeuroMedit.",
 
-    tend_eyebrow: "Caso 04 · Estudo próprio",
+    tend_eyebrow: "Caso 05 · Estudo próprio",
     tend_h1: "Para onde a experiência do usuário vai em 2026",
     tend_lede: "Onde o dedo alcança melhor no mobile. Para onde o olho vai primeiro no desktop. Que forma de botão converte mais. O que muda de verdade para quem navega com leitor de tela. Pesquisei tudo isso antes de continuar desenhando — e apliquei cada achado nesta página e no NeuroMedit.",
     tend_meta_link: "Ver resumo no portfólio",
@@ -734,7 +734,7 @@
 
     cs_footer: "© 2026 Lucas Nunes · UX case study, adapted from the original NeuroMedit design documentation.",
 
-    tend_eyebrow: "Case 04 · Original research",
+    tend_eyebrow: "Case 05 · Original research",
     tend_h1: "Where user experience is headed in 2026",
     tend_lede: "Where the thumb reaches best on mobile. Where the eye goes first on desktop. Which button shape converts more. What actually changes for screen-reader users. I researched all of this before designing further — and applied every finding to this page and to NeuroMedit.",
     tend_meta_link: "See the summary on the portfolio",
@@ -1197,7 +1197,7 @@
 
     cs_footer: "© 2026 Lucas Nunes · Caso de estudio de UX, adaptado de la documentación de diseño original de NeuroMedit.",
 
-    tend_eyebrow: "Caso 04 · Estudio propio",
+    tend_eyebrow: "Caso 05 · Estudio propio",
     tend_h1: "Hacia dónde va la experiencia de usuario en 2026",
     tend_lede: "Dónde alcanza mejor el pulgar en móvil. Hacia dónde va el ojo primero en escritorio. Qué forma de botón convierte más. Qué cambia de verdad para quien navega con lector de pantalla. Investigué todo esto antes de seguir diseñando — y apliqué cada hallazgo en esta página y en NeuroMedit.",
     tend_meta_link: "Ver resumen en el portafolio",
@@ -1660,7 +1660,7 @@
 
     cs_footer: "© 2026 Lucas Nunes · Case study UX, adattato dalla documentazione di design originale di NeuroMedit.",
 
-    tend_eyebrow: "Caso 04 · Ricerca propria",
+    tend_eyebrow: "Caso 05 · Ricerca propria",
     tend_h1: "Dove va l'esperienza utente nel 2026",
     tend_lede: "Dove il pollice arriva meglio su mobile. Dove va prima l'occhio su desktop. Quale forma di pulsante converte di più. Cosa cambia davvero per chi naviga con uno screen reader. Ho fatto questa ricerca prima di continuare a progettare — e ho applicato ogni scoperta a questa pagina e a NeuroMedit.",
     tend_meta_link: "Vedi il riassunto sul portfolio",
@@ -2056,7 +2056,8 @@
     h2_nav_work: "Trabalho",
     h2_status: "Aberto a vagas de UX/UI júnior em Lisboa",
     h2_h1: "Desenho produtos que <em>acalmam</em> a mente.",
-    h2_lead: "Sou o Lucas Nunes, designer de UX em Lisboa. Junto design de interface, neurociência e front-end. Criei o NeuroMedit, uma plataforma de meditação que está no ar, e o Sistema da Consciência, um e-book interativo em quatro línguas.",
+    h2_lead: "Sou o Lucas Nunes, designer de experiência do usuário que dirige IA, em Lisboa. Junto design de interface, neurociência e front-end. Criei o NeuroMedit, uma plataforma de meditação que está no ar, e o Sistema da Consciência, um e-book interativo em quatro línguas.",
+    idx_ligado: "Tudo está ligado.",
     h2_cta_work: "Ver trabalho",
     h2_f1_h: "1 produto no ar",
     h2_f1_p: "NeuroMedit, do roteiro ao código",
@@ -2329,7 +2330,8 @@
     h2_nav_work: "Work",
     h2_status: "Open to junior UX/UI roles in Lisbon",
     h2_h1: "I design products that <em>calm</em> the mind.",
-    h2_lead: "I’m Lucas Nunes, a UX designer in Lisbon. I bring together interface design, neuroscience and front-end. I created NeuroMedit, a live meditation platform, and The Consciousness System, an interactive e-book in four languages.",
+    h2_lead: "I’m Lucas Nunes, a user experience designer who directs AI, in Lisbon. I bring together interface design, neuroscience and front-end. I created NeuroMedit, a live meditation platform, and The Consciousness System, an interactive e-book in four languages.",
+    idx_ligado: "Everything is connected.",
     h2_cta_work: "See my work",
     h2_f1_h: "1 live product",
     h2_f1_p: "NeuroMedit, from script to code",
@@ -2602,7 +2604,8 @@
     h2_nav_work: "Trabajo",
     h2_status: "Disponible para puestos de UX/UI junior en Lisboa",
     h2_h1: "Diseño productos que <em>calman</em> la mente.",
-    h2_lead: "Soy Lucas Nunes, diseñador UX en Lisboa. Uno diseño de interfaz, neurociencia y front-end. Creé NeuroMedit, una plataforma de meditación que está en línea, y el Sistema de la Conciencia, un e-book interactivo en cuatro idiomas.",
+    h2_lead: "Soy Lucas Nunes, diseñador de experiencia de usuario que dirige la IA, en Lisboa. Uno diseño de interfaz, neurociencia y front-end. Creé NeuroMedit, una plataforma de meditación que está en línea, y el Sistema de la Conciencia, un e-book interactivo en cuatro idiomas.",
+    idx_ligado: "Todo está conectado.",
     h2_cta_work: "Ver trabajo",
     h2_f1_h: "1 producto en línea",
     h2_f1_p: "NeuroMedit, del guion al código",
@@ -2875,7 +2878,8 @@
     h2_nav_work: "Lavori",
     h2_status: "Disponibile per ruoli UX/UI junior a Lisbona",
     h2_h1: "Progetto prodotti che <em>calmano</em> la mente.",
-    h2_lead: "Sono Lucas Nunes, UX designer a Lisbona. Unisco design di interfaccia, neuroscienze e front-end. Ho creato NeuroMedit, una piattaforma di meditazione online, e il Sistema della Coscienza, un e-book interattivo in quattro lingue.",
+    h2_lead: "Sono Lucas Nunes, designer dell’esperienza utente che guida l’IA, a Lisbona. Unisco design di interfaccia, neuroscienze e front-end. Ho creato NeuroMedit, una piattaforma di meditazione online, e il Sistema della Coscienza, un e-book interattivo in quattro lingue.",
+    idx_ligado: "Tutto è collegato.",
     h2_cta_work: "Vedi i lavori",
     h2_f1_h: "1 prodotto online",
     h2_f1_p: "NeuroMedit, dal copione al codice",
@@ -3051,7 +3055,7 @@
       }
     });
 
-    document.documentElement.lang = language;
+    document.documentElement.lang = language === "pt" ? "pt-BR" : language;
     updateLanguageButtons(language);
     window.dispatchEvent(new CustomEvent("portfolio:languagechange", { detail: { language: language } }));
   }

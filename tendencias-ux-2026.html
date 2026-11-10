@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@ body{ overflow-x:hidden; }
 img{ max-width:100%; display:block; }
 a{ color:inherit; text-decoration:none; }
 button{ font:inherit; background:none; border:none; cursor:pointer; }
-a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+a:focus-visible, button:focus-visible{ outline:2px solid var(--accent-dark); outline-offset:3px; }
 
 .skip-link{
   position:absolute; left:1rem; top:-4rem; z-index:999;
@@ -143,13 +143,14 @@ p{ color:var(--text-soft); }
   .language-wrapper:hover .language-options{ opacity:1; transform:translateY(0); }
 }
 .language-options button{
-  appearance:none; min-width:46px; height:30px; border:0; border-radius:999px;
+  appearance:none; min-width:46px; height:44px; border:0; border-radius:999px;
   color:var(--text-soft); background:transparent; font:inherit; font-size:.72rem; letter-spacing:.08em;
   cursor:pointer;
 }
 .language-options button:hover, .language-options button:focus-visible{
-  color:var(--text); background:var(--bg-soft); outline:none;
+  color:var(--text); background:var(--bg-soft);
 }
+.language-options button:focus-visible{ outline:2px solid var(--accent-dark); outline-offset:-2px; }
 .language-options button.is-active{ color:var(--button-text); background-color:var(--accent); outline:none; }
 .language-options button:active{ transform:scale(.96); }
 @media (prefers-reduced-motion:reduce){
@@ -258,7 +259,7 @@ footer p{ font-size:.85rem; color:var(--text-soft); }
 <article>
 
   <div class="container article-hero">
-    <span class="eyebrow reveal" data-i18n="tend_eyebrow">Caso 04 · Estudo próprio</span>
+    <span class="eyebrow reveal" data-i18n="tend_eyebrow">Caso 05 · Estudo próprio</span>
     <h1 class="reveal" data-i18n="tend_h1">Para onde a experiência do usuário vai em 2026</h1>
     <p class="lede reveal" data-i18n="tend_lede">Onde o dedo alcança melhor no mobile. Para onde o olho vai primeiro no desktop. Que forma de botão converte mais. O que muda de verdade para quem navega com leitor de tela. Pesquisei tudo isso antes de continuar desenhando — e apliquei cada achado nesta página e no NeuroMedit.</p>
     <div class="article-meta reveal">

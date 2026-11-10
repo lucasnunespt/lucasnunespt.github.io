@@ -138,13 +138,14 @@ p{ color:var(--text-soft); }
   .language-wrapper:hover .language-options{ opacity:1; transform:translateY(0); }
 }
 .language-options button{
-  appearance:none; min-width:46px; height:30px; border:0; border-radius:999px;
+  appearance:none; min-width:46px; height:44px; border:0; border-radius:999px;
   color:var(--text-soft); background:transparent; font:inherit; font-size:.72rem; letter-spacing:.08em;
   cursor:pointer;
 }
 .language-options button:hover, .language-options button:focus-visible{
-  color:var(--text); background:var(--bg-soft); outline:none;
+  color:var(--text); background:var(--bg-soft);
 }
+.language-options button:focus-visible{ outline:2px solid var(--accent-dark); outline-offset:-2px; }
 .language-options button.is-active{ color:var(--button-text); background-color:var(--accent); outline:none; }
 .language-options button:active{ transform:scale(.96); }
 @media (prefers-reduced-motion:reduce){
