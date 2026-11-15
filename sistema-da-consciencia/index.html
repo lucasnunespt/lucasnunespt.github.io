@@ -333,6 +333,17 @@ html[data-foco="on"] main{margin-top:18px}
 /* leitura: dentro de um capítulo, só o texto; o mapa volta pelo botão "Voltar ao mapa" */
 html[data-ler="on"] .mapwrap,html[data-ler="on"] .timeline,html[data-ler="on"] .legend,html[data-ler="on"] .hint,html[data-ler="on"] #stars,html[data-ler="on"] .nebula{display:none}
 html[data-ler="on"] main{margin-top:18px}
+/* tela cheia do sistema solar */
+html.imerso,html.imerso body{overflow:hidden}
+html.imerso .mapwrap{display:block!important;position:fixed;inset:0;z-index:300;margin:0;background:#03050C}
+html.imerso .map{position:absolute;inset:0;border:0!important;border-radius:0!important;overflow:hidden;background:radial-gradient(ellipse 45% 60% at 50% 50%,rgba(242,196,109,.07),transparent 65%),#03050C!important}
+html.imerso .map svg{width:100%;height:100%;min-width:0}
+html.imerso .zoom{display:flex!important;left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+html.imerso .zoom .zl{display:inline}
+html.imerso-rot .mapwrap{inset:auto;top:0;left:0;width:100vh;width:100dvh;height:100vw;transform-origin:0 0;transform:translateX(100vw) rotate(90deg)}
+#system.deep .moonN,#system.deep .plabel,#system.deep .halo,#system.deep #Lship{opacity:0!important;pointer-events:none}
+html.imerso .planet.locked .body{filter:none!important}
+html.imerso .planet.locked .moonN{opacity:.5!important}
 /* planeta bloqueado: vê-se o planeta e o título, o texto fica fechado */
 .lk-wrap{position:relative;margin:0 0 1.6rem}
 .lk-blur{filter:blur(6px);opacity:.45;user-select:none;pointer-events:none;max-height:15em;overflow:hidden;-webkit-mask:linear-gradient(#000 40%,transparent);mask:linear-gradient(#000 40%,transparent)}
@@ -458,6 +469,9 @@ html[data-mov="calmo"] .ic-pill,html[data-mov="calmo"] .ic-pill>span{transition:
 .tts-start.ic-pill{--icw:42px;margin:-10px 0 26px}
 .hero-pl{float:right;width:168px;height:168px;margin:-14px -18px 6px 16px;shape-outside:circle(42%)}
 .hero-pl svg{width:100%;height:100%;display:block;overflow:visible}
+.pl-real{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 22px rgba(255,255,255,.14))}
+.pl-real.pl-ring{width:150%;max-width:none;margin-left:-25%}
+#system.deep .dust{opacity:0!important}
 @media (max-width:600px){.hero-pl{width:108px;height:108px;margin:-8px -10px 8px 10px}}
 .hero-sph{float:right;width:132px;height:132px;margin:4px 0 20px 28px;border-radius:50%;background:var(--g);position:relative;overflow:hidden;box-shadow:0 0 70px -10px var(--glow,rgba(255,255,255,.35)),inset -22px -26px 44px rgba(0,0,0,.55),inset 10px 10px 30px rgba(255,255,255,.12)}
 .hero-sph i{position:absolute;inset:0;border-radius:50%;background:repeating-linear-gradient(172deg,transparent 0 9px,rgba(255,255,255,.07) 9px 12px,transparent 12px 21px);background-size:220% 100%;mix-blend-mode:soft-light}
@@ -626,6 +640,7 @@ body{margin:0}img{max-width:100%}[hidden]{display:none!important}
       <li><i style="background:#F7E2A8"></i>Cometa: poeira de estrelas</li>
     </ul>
     <p class="hint">Toque ou clique num planeta para a nave viajar até a introdução dele. As luas mostram o que você já leu, e os planetas apagados se abrem conforme você avança. Use + e − para aproximar; com zoom, arraste para explorar.</p>
+    <p class="hint">Imagens dos planetas: Solar System Scope (CC BY 4.0), feitas a partir de dados da NASA.</p>
   </nav>
   <main id="view" tabindex="-1"></main>
 </div>
@@ -1741,6 +1756,8 @@ function makeCine(cfg){
   CH.forEach(function(c,i){c.o=ORB[i]});
   var seed=11;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
   function f(n){return n.toFixed(1)}
+  function f3(n){return n.toFixed(3)}
+  var SLUG=['mercurio','venus','terra','marte','jupiter','saturno','urano','netuno'];
   var svgEl=document.getElementById('system'),mapBox=document.querySelector('.map'),whereEl=document.getElementById('where');
 
   /* superfícies desenhadas para raio 10 e escaladas para cada planeta */
@@ -1784,7 +1801,7 @@ function makeCine(cfg){
   for(i=0;i<46;i++){var ga=rnd()*TAU,gr=Math.sqrt(rnd())*40;gran+='<circle cx="'+f(gr*Math.cos(ga))+'" cy="'+f(gr*Math.sin(ga))+'" r="'+f(1.6+rnd()*3.6)+'" fill="'+(rnd()>.5?'rgba(255,245,210,.32)':'rgba(205,95,20,.28)')+'"/>'}
   s+='<g class="planet sun" data-id="intro" transform="translate('+SUN.x+' '+SUN.y+') scale(.75)">'+
     '<circle id="corona" class="hglow" r="125" fill="url(#gCorona)"/><g id="rays" class="hglow">'+rays+'</g>'+
-    _(615,'<a href="#intro" aria-label="O Sol: introdução geral"><title>O Sol · introdução</title><g class="sun-core"><circle r="40" fill="url(#gSun)"/><g clip-path="url(#cSun)"><g id="gran">')+gran+'</g></g><circle r="40" fill="url(#gLimb)"/></g></a>'+
+    _(615,'<a href="#intro" aria-label="O Sol: introdução geral"><title>O Sol · introdução</title><g class="sun-core"><circle r="40" fill="url(#gSun)"/><g clip-path="url(#cSun)"><g id="gran">')+'<image id="sunImg" href="planetas/sol-128.webp" x="-40" y="-40" width="80" height="80" preserveAspectRatio="none"/></g></g><circle r="40" fill="url(#gLimb)"/></g></a>'+
     '</g>';
   s+='<g id="Lfront"></g>';
   /* cometa e além */
@@ -1827,7 +1844,7 @@ function makeCine(cfg){
     var cl=c.pk==='Terra'?'<g class="cloud">'+clouds(r)+'<g transform="translate('+(-2*r)+' 0)">'+clouds(r)+'</g></g>':'';
     var h='<g class="pos"><circle class="hglow" r="'+(r*3.2)+'" fill="url(#h'+n+')"/>'+
       '<a href="#c'+n+'" aria-label="'+c.planet+_(618,': Capítulo ')+n+', '+c.title+'"><title>'+c.planet+_(619,' · Capítulo ')+n+'</title><circle class="hit" r="'+(r+14)+'"/><circle class="halo" r="'+(r+7)+'"/>'+
-      '<g class="body">'+ringB+'<circle r="'+r+'" fill="url(#g'+n+')"/><g clip-path="url(#cp'+n+')"><g class="surf">'+feat+'</g>'+cl+'</g>'+dup+'<g class="shade"><circle r="'+r+'" fill="url(#gShade)"/></g>'+ringF+'</g></a>';
+      '<g class="body"><g class="surf"></g>'+(c.ring?'<image class="pimg" href="planetas/saturno-128.webp" x="'+f3(-r*2.3906)+'" y="'+f3(-r*1.1094)+'" width="'+f3(r*4.7812)+'" height="'+f3(r*2.2188)+'" transform="rotate(-14)" preserveAspectRatio="none"/>':'<image class="pimg" href="planetas/'+SLUG[n-1]+'-128.webp" x="'+(-r)+'" y="'+(-r)+'" width="'+(2*r)+'" height="'+(2*r)+'" preserveAspectRatio="none"/>')+'<g class="shade"><circle r="'+r+'" fill="url(#gShade)"/></g></g></a>';
     PATHS.forEach(function(pt){
       var id='c'+n+'-'+pt.k,lab=c.planet+', '+pt.name+(c.ready?'':_(620,' (em breve)'));
       h+='<g class="moonN'+(c.ready?'':' off')+'" data-id="'+id+'" style="--mc:var('+pt.c+')">'+
@@ -1835,7 +1852,7 @@ function makeCine(cfg){
     });
     h+='</g>';
     g.innerHTML=h;Lback.appendChild(g);
-    return {g:g,pos:g.querySelector('.pos'),surf:g.querySelector('.surf'),cloud:g.querySelector('.cloud'),shade:g.querySelector('.shade'),hg:g.querySelector('.hglow'),
+    return {g:g,pos:g.querySelector('.pos'),surf:g.querySelector('.surf'),cloud:g.querySelector('.cloud'),shade:g.querySelector('.shade'),img:g.querySelector('.pimg'),lv:0,slug:SLUG[n-1],lvs:c.ring?[128,512,1280]:[128,512,2048],hg:g.querySelector('.hglow'),
       rd:[].slice.call(g.querySelectorAll('.rd')),moons:[].slice.call(g.querySelectorAll('.moonN')).map(function(m){return {g:m,lx:0,ly:0}}),front:false,x:0,y:0,s:1,r:r,c:c};
   });
   /* ---------- rótulos sem sobreposição ---------- */
@@ -1852,7 +1869,23 @@ function makeCine(cfg){
 
   /* ---------- câmera (zoom) ---------- */
   var cam={x:500,y:210,z:1,tz:1,follow:true,px:500,py:210};
-  var ZL=[1,1.6,2.5,4],ZMAX=5;
+  var ZL=[1,1.6,2.5,4,7,12,20,32,48],ZMAX=48;
+  /* geometria do ecrã: funciona com o mapa em faixas (tela cheia) e rodado 90° no telemóvel */
+  function rotd(){return document.documentElement.classList.contains('imerso-rot')}
+  function geo(){var r=svgEl.getBoundingClientRect(),ro=rotd(),LW=ro?r.height:r.width,LH=ro?r.width:r.height;return {r:r,ro:ro,LW:LW||1,LH:LH||1}}
+  function pxU(G,z){return Math.min(G.LW/(1000/z),G.LH/(420/z))}
+  function loc(G,cx,cy){return G.ro?{x:cy-G.r.top,y:G.r.right-cx}:{x:cx-G.r.left,y:cy-G.r.top}}
+  /* nível de detalhe: quanto mais perto, maior a imagem real carregada */
+  var SUNL={lv:0,lvs:[128,512,2048],slug:'sol',r:30,s:1,x:500,y:210},lodN=0,lodS=1;
+  function lodUp(o,img,lv){o.lv=lv;var u='planetas/'+o.slug+'-'+o.lvs[lv]+'.webp',im=new Image();im.onload=function(){if(o.lv===lv)img.setAttribute('href',u)};im.src=u}
+  function lod(){
+    if(lodN++%12===0){var G=geo();lodS=pxU(G,cam.z)*Math.min(2,window.devicePixelRatio||1)}
+    var hw=500/cam.z,hh=210/cam.z;
+    function one(o,img){if(!img||o.lv>=2)return;if(Math.abs(o.x-cam.x)>hw*1.6+o.r*3||Math.abs(o.y-cam.y)>hh*2.2+o.r*3)return;
+      var px=2*o.r*o.s*lodS,want=px>560?2:px>140?1:0;if(want>o.lv)lodUp(o,img,want)}
+    P.forEach(function(p){one(p,p.img)});one(SUNL,SUNL.img||(SUNL.img=document.getElementById('sunImg')));
+  }
+  function nearBody(x,y,lim){var b=null,bd=lim;P.forEach(function(p){var d=Math.hypot(p.x-x,p.y-y)-p.r;if(d<bd){bd=d;b=p}});return b}
   function camBox(){var hw=500/cam.z,hh=210/cam.z;return {x0:cam.x-hw,y0:cam.y-hh,w:2*hw,h:2*hh}}
   function applyCam(dt){
     var k=RM?1:Math.min(1,dt*4);
@@ -1860,14 +1893,19 @@ function makeCine(cfg){
     var tx=500,ty=210;
     if(cam.tz>1.01){
       if(cam.follow){var c=ship.mode==='fly'?{x:ship.x,y:ship.y}:center(ship.target);tx=c.x;ty=c.y}
-      else{tx=cam.px;ty=cam.py}
-    }
-    cam.x+=(tx-cam.x)*k;cam.y+=(ty-cam.y)*k;
+      else{
+        if(cam.tz<3)cam.lock=null;
+        else if(!cam.lock&&!cam.free)cam.lock=nearBody(cam.px,cam.py,140/cam.tz);
+        if(cam.lock){cam.px=cam.lock.x;cam.py=cam.lock.y;var zm=(cam.lock.c&&cam.lock.c.ring?150:290)/(cam.lock.r*cam.lock.s);if(cam.tz>zm){cam.tz=zm;syncZoomUI()}}
+        tx=cam.px;ty=cam.py}
+    }else cam.lock=null;
+    var kk=cam.lock?Math.min(1,k*3):k;cam.x+=(tx-cam.x)*kk;cam.y+=(ty-cam.y)*kk;
     var hw=500/cam.z,hh=210/cam.z;
     cam.x=Math.min(1000-hw,Math.max(hw,cam.x));cam.y=Math.min(420-hh,Math.max(hh,cam.y));
-    svgEl.setAttribute('viewBox',f(cam.x-hw)+' '+f(cam.y-hh)+' '+f(2*hw)+' '+f(2*hh));
-    svgEl.classList.toggle('grab',cam.tz>1.01);
-    svgEl.style.touchAction=(cam.tz>1.01||document.documentElement.classList.contains('compact'))?'none':'pan-y';
+    svgEl.setAttribute('viewBox',f3(cam.x-hw)+' '+f3(cam.y-hh)+' '+f3(2*hw)+' '+f3(2*hh));
+    lod();
+    svgEl.classList.toggle('grab',cam.tz>1.01);svgEl.classList.toggle('deep',cam.z>5);
+    svgEl.style.touchAction=(cam.tz>1.01||document.documentElement.classList.contains('compact')||document.documentElement.classList.contains('imerso'))?'none':'pan-y';
   }
   function boxHit(a,b){return a.x0<b.x1&&a.x1>b.x0&&a.y0<b.y1&&a.y1>b.y0}
   function layoutLabels(){
@@ -1935,13 +1973,13 @@ function makeCine(cfg){
   svgEl.addEventListener('pointerleave',function(){hovering=false;hoverId=null});
 
   function sim(){
-    granEl.setAttribute('transform','rotate('+f(ST*6)+')');
+    granEl.setAttribute('transform','rotate('+f3(ST*.6)+')');
     raysEl.setAttribute('transform','rotate('+f(-ST*3)+')');
     corona.setAttribute('transform','scale('+(1+.05*Math.sin(ST*.7)).toFixed(3)+')');
     P.forEach(function(p,i){
       var o=p.c.o,a=o.a0-ST*TAU/o.P,x=SUN.x+o.rx*Math.cos(a),y=SUN.y+o.rx*RY*Math.sin(a),sc=.86+.14*Math.sin(a);
       p.x=x;p.y=y;p.s=sc;
-      p.pos.setAttribute('transform','translate('+f(x)+' '+f(y)+') scale('+sc.toFixed(3)+')');
+      p.pos.setAttribute('transform','translate('+f3(x)+' '+f3(y)+') scale('+sc.toFixed(3)+')');
       var front=Math.sin(a)>=0;if(front!==p.front){(front?Lfront:Lback).appendChild(p.g);p.front=front}
       var off=((ST*o.spin)%(2*p.r)+2*p.r)%(2*p.r);
       p.surf.setAttribute('transform',p.c.pk==='Urano'?'translate(0 '+f(off)+')':'translate('+f(off)+' 0)');
@@ -2094,28 +2132,60 @@ function makeCine(cfg){
   var zIn=document.getElementById('zIn'),zOut=document.getElementById('zOut'),zAll=document.getElementById('zAll'),zFollow=document.getElementById('zFollow');
   function refresh(){if(RM){sim();applyCam(1);layoutLabels();drawShip()}}
   function syncZoomUI(){
-    zOut.disabled=cam.tz<=1.01;zAll.disabled=cam.tz<=1.01;zIn.disabled=cam.tz>=ZL[ZL.length-1]-.01;
+    zOut.disabled=cam.tz<=1.01;zAll.disabled=false;zIn.disabled=cam.tz>=ZL[ZL.length-1]-.01;
     zFollow.setAttribute('aria-pressed',cam.follow?'true':'false');
   }
   function setZoom(z){cam.tz=Math.max(1,Math.min(ZMAX,z));if(cam.tz<=1.01)cam.follow=true;syncZoomUI();refresh()}
-  zIn.addEventListener('click',function(){var n=ZL.filter(function(z){return z>cam.tz+.01})[0];setZoom(n||ZL[ZL.length-1])});
+  zIn.addEventListener('click',function(){cam.free=false;var n=ZL.filter(function(z){return z>cam.tz+.01})[0];setZoom(n||ZL[ZL.length-1])});
   zOut.addEventListener('click',function(){var n=ZL.filter(function(z){return z<cam.tz-.01}).pop();setZoom(n||1)});
-  zAll.addEventListener('click',function(){document.documentElement.classList.remove('compact');setZoom(1);if(window.__syncMapAll)__syncMapAll()});
+  /* tela cheia: só o sistema solar; no telemóvel fica na horizontal */
+  var IM_T={pt:['Tela cheia','Sair da tela cheia'],en:['Full screen','Exit full screen'],es:['Pantalla completa','Salir de pantalla completa'],it:['Schermo intero','Esci da schermo intero']}[window.SC_LANG||'pt']||['Tela cheia','Sair da tela cheia'];
+  var HT=document.documentElement,imSaved=null,imFS=false;
+  function imLabel(){var on=HT.classList.contains('imerso'),t=IM_T[on?1:0],sp=zAll.querySelector('.zl');if(sp)sp.textContent=t;zAll.setAttribute('aria-label',t);zAll.title=t;zAll.setAttribute('aria-pressed',on?'true':'false')}
+  function imRot(){HT.classList.toggle('imerso-rot',HT.classList.contains('imerso')&&!imFS.locked&&matchMedia('(pointer:coarse)').matches&&innerHeight>innerWidth);refresh()}
+  function imerso(on){
+    if(on===HT.classList.contains('imerso'))return;
+    if(on){
+      imSaved={compact:HT.classList.contains('compact'),tz:cam.tz,follow:cam.follow};imFS={on:false,locked:false};
+      HT.classList.remove('compact');HT.classList.add('imerso');cam.lock=null;cam.free=false;setZoom(1);
+      var rq=HT.requestFullscreen||HT.webkitRequestFullscreen,pr=null;
+      try{if(rq)pr=rq.call(HT)}catch(e){}
+      if(pr&&pr.then)pr.then(function(){imFS.on=true;
+        try{var lk=screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape');if(lk&&lk.then)lk.then(function(){imFS.locked=true;setTimeout(function(){if(imFS&&innerHeight>innerWidth)imFS.locked=false;imRot()},700)},imRot);else imRot()}catch(e){imRot()}
+      },imRot);else imRot();
+    }else{
+      HT.classList.remove('imerso','imerso-rot');
+      try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}
+      try{if(document.fullscreenElement||document.webkitFullscreenElement)(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}
+      cam.lock=null;if(imSaved){if(imSaved.compact)HT.classList.add('compact');cam.follow=imSaved.follow;setZoom(imSaved.tz)}imSaved=null;imFS=false;
+    }
+    imLabel();if(window.__syncMapAll)__syncMapAll();refresh();
+  }
+  zAll.addEventListener('click',function(){imerso(!HT.classList.contains('imerso'))});
+  function fsChange(){if(HT.classList.contains('imerso')&&imFS&&imFS.on&&!(document.fullscreenElement||document.webkitFullscreenElement))imerso(false)}
+  document.addEventListener('fullscreenchange',fsChange);document.addEventListener('webkitfullscreenchange',fsChange);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&HT.classList.contains('imerso'))imerso(false)});
+  addEventListener('resize',function(){if(HT.classList.contains('imerso'))imRot()});
+  addEventListener('hashchange',function(){imerso(false)});
+  imLabel();
   zFollow.addEventListener('click',function(){
     cam.follow=!cam.follow;
     if(cam.follow&&cam.tz<=1.01)cam.tz=ZL[1];
     if(!cam.follow){cam.px=cam.x;cam.py=cam.y}
     syncZoomUI();refresh();
   });
-  function toWorld(cx,cy){var B=camBox(),r=svgEl.getBoundingClientRect();return {x:B.x0+(cx-r.left)/r.width*B.w,y:B.y0+(cy-r.top)/r.height*B.h}}
+  function toWorld(cx,cy){var G=geo(),l=loc(G,cx,cy),u=pxU(G,cam.z);return {x:cam.x+(l.x-G.LW/2)/u,y:cam.y+(l.y-G.LH/2)/u}}
   svgEl.addEventListener('wheel',function(e){
-    if(!e.ctrlKey)return;e.preventDefault();
-    setZoom(cam.tz*Math.exp(-e.deltaY*.01));
+    var im=document.documentElement.classList.contains('imerso');
+    if(!e.ctrlKey&&!im)return;e.preventDefault();
+    var w=toWorld(e.clientX,e.clientY),z=Math.max(1,Math.min(ZMAX,cam.tz*Math.exp(-e.deltaY*(e.ctrlKey?.01:.0022))));
+    if(z>cam.tz){cam.free=false;var G=geo(),l=loc(G,e.clientX,e.clientY),u=pxU(G,z);cam.follow=false;cam.lock=null;cam.px=w.x-(l.x-G.LW/2)/u;cam.py=w.y-(l.y-G.LH/2)/u}
+    setZoom(z);
   },{passive:false});
   svgEl.addEventListener('dblclick',function(e){
     if(e.target.closest('a'))return;
     var w=toWorld(e.clientX,e.clientY),n=ZL.filter(function(z){return z>cam.tz+.01})[0];
-    cam.follow=false;cam.px=w.x;cam.py=w.y;setZoom(n||ZL[ZL.length-1]);
+    cam.follow=false;cam.free=false;cam.lock=null;cam.px=w.x;cam.py=w.y;setZoom(n||ZL[ZL.length-1]);
   });
   var drag=null,dragMoved=false,touches={},pinch=null;
   function tlist(){return Object.keys(touches).map(function(k){return touches[k]})}
@@ -2127,13 +2197,13 @@ function makeCine(cfg){
   svgEl.addEventListener('pointermove',function(e){
     if(!touches[e.pointerId])return;touches[e.pointerId]={x:e.clientX,y:e.clientY};
     if(!pinch)return;var a=tlist();if(a.length<2)return;e.preventDefault();
-    var r=svgEl.getBoundingClientRect(),mx=(a[0].x+a[1].x)/2,my=(a[0].y+a[1].y)/2,d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
-    var z=Math.max(1,Math.min(ZMAX,pinch.z0*d/pinch.d0)),hw=500/z,hh=210/z,fx=(mx-r.left)/r.width,fy=(my-r.top)/r.height;
-    cam.z=cam.tz=z;cam.follow=false;cam.px=cam.x=pinch.w.x-fx*2*hw+hw;cam.py=cam.y=pinch.w.y-fy*2*hh+hh;
+    var mx=(a[0].x+a[1].x)/2,my=(a[0].y+a[1].y)/2,d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);
+    var z=Math.max(1,Math.min(ZMAX,pinch.z0*d/pinch.d0)),G=geo(),l=loc(G,mx,my),u=pxU(G,z);
+    cam.z=cam.tz=z;cam.follow=false;cam.lock=null;cam.free=true;cam.px=cam.x=pinch.w.x-(l.x-G.LW/2)/u;cam.py=cam.y=pinch.w.y-(l.y-G.LH/2)/u;
     sim();applyCam(0);layoutLabels();drawShip();syncZoomUI();
   },true);
   function touchEnd(e){if(!touches[e.pointerId])return;delete touches[e.pointerId];
-    if(pinch&&tlist().length<2){pinch=null;if(cam.tz<1.06)setZoom(1);else syncZoomUI()}}
+    if(pinch&&tlist().length<2){pinch=null;cam.free=false;if(cam.tz<1.06)setZoom(1);else syncZoomUI()}}
   svgEl.addEventListener('pointerup',touchEnd,true);svgEl.addEventListener('pointercancel',touchEnd,true);
   svgEl.addEventListener('pointerdown',function(e){
     if(pinch||cam.tz<=1.01||e.button>0)return;
@@ -2144,8 +2214,8 @@ function makeCine(cfg){
     var dx=e.clientX-drag.x,dy=e.clientY-drag.y;
     if(!dragMoved&&Math.hypot(dx,dy)<5)return;
     if(!dragMoved){dragMoved=true;try{svgEl.setPointerCapture(drag.id)}catch(err){}svgEl.classList.add('grabbing')}
-    var B=camBox(),r=svgEl.getBoundingClientRect();
-    cam.follow=false;cam.px=drag.cx-dx/r.width*B.w;cam.py=drag.cy-dy/r.height*B.h;
+    var G=geo(),u=pxU(G,cam.z),lx=G.ro?dy:dx,ly=G.ro?-dx:dy;
+    cam.follow=false;cam.lock=null;cam.free=true;cam.px=drag.cx-lx/u;cam.py=drag.cy-ly/u;
     cam.x=cam.px;cam.y=cam.py;syncZoomUI();refresh();
   });
   function endDrag(){if(drag){drag=null;svgEl.classList.remove('grabbing')}}
@@ -2159,7 +2229,7 @@ function makeCine(cfg){
     var h='<ol>';
     h+=_(633,'<li class="tl" data-id="intro"><a class="tl-link" href="#intro" aria-label="Sol: introdução"><i class="tl-dot" style="--g:radial-gradient(circle at 42% 40%,#FFF6D6,#FFC75E 55%,#E07B1F)"></i><span class="tl-num">início</span><span class="tl-name">Sol</span><span class="tl-topic">Introdução: como viajar</span></a></li>');
     CH.forEach(function(c){
-      h+='<li class="tl" data-id="c'+c.n+'"><a class="tl-link" href="#c'+c.n+'" aria-label="'+c.planet+_(634,', capítulo ')+c.n+': '+c.title+'"><i class="tl-dot" style="--g:radial-gradient(circle at 35% 32%,'+c.g[0]+','+c.g[1]+' 55%,'+c.g[2]+')"></i>'+
+      h+='<li class="tl" data-id="c'+c.n+'"><a class="tl-link" href="#c'+c.n+'" aria-label="'+c.planet+_(634,', capítulo ')+c.n+': '+c.title+'"><i class="tl-dot" style="--g:'+dotBg(c)+'"></i>'+
         '<span class="tl-num">'+R[c.n]+'</span><span class="tl-name">'+c.planet+'</span><span class="tl-topic">'+c.title+'</span><span class="tl-moons" aria-hidden="true">';
       PATHS.forEach(function(pt){h+='<i class="tl-moon" data-id="c'+c.n+'-'+pt.k+'" style="--mc:var('+pt.c+')"></i>'});
       if(c.n===1)h+='<i class="tl-comet" data-id="poeira">☄</i>';
@@ -2194,7 +2264,9 @@ function makeCine(cfg){
   }
 
   /* ---------- páginas ---------- */
+  function dotBg(c){return c?'url(planetas/'+(c.ring?'saturno-dot':SLUG[c.n-1]+'-128')+'.webp) center/cover':'url(planetas/sol-128.webp) center/cover'}
   function planetSVG(c,uid){
+    return '<img class="pl-real'+(c.ring?' pl-ring':'')+'" src="planetas/'+SLUG[c.n-1]+'-512.webp" alt="" decoding="async">';
     var u=uid+c.n,R=c.ring?18:c.tilt?20:24,o='';
     function arc(rx,ry,rot,w,col,op,back){return '<path d="M'+(36-rx)+' 36 A'+rx+' '+ry+' 0 0 '+(back?1:0)+' '+(36+rx)+' 36" fill="none" stroke="'+col+'" stroke-width="'+w+'" stroke-opacity="'+op+'" stroke-linecap="round" transform="rotate('+rot+' 36 36)"/>'}
     function rings(back){var r='';
@@ -2586,7 +2658,7 @@ function makeCine(cfg){
     var m=/^c(\d)(?:-(\w+))?$/.exec(id),g,name,sub,moons='';
     if(m){
       var c=CH[+m[1]-1];name=c.planet;
-      g='radial-gradient(circle at 35% 32%,'+c.g[0]+','+c.g[1]+' 55%,'+c.g[2]+')';
+      g=dotBg(c);
       sub=m[2]?PATHS.filter(function(p){return p.k===m[2]})[0].name:_(782,'Capítulo ')+c.n;
       PATHS.forEach(function(pt){moons+='<a class="d-moon'+(m[2]===pt.k?' on':'')+'" href="#c'+c.n+'-'+pt.k+'" style="--mc:var('+pt.c+')" aria-label="'+pt.name+'" title="'+pt.name+'"></a>'});
     }else if(id==='poeira'){name=_(783,'Cometa');sub=_(624,'poeira de estrelas');g='radial-gradient(circle,#FFF3CF,#E9C987 60%,#8a6a33)'}
@@ -2735,7 +2807,7 @@ function makeCine(cfg){
       '<p class="lead">'+lockMsg(id)+'</p>'+
       _(814,'<p>A viagem segue uma ordem porque cada planeta usa ideias do anterior. Para revisar ou ensinar sem seguir a ordem, ative “Liberar todos” nas Preferências.</p><nav class="next"></nav></div>');
   }
-  function sphereG(c){return c?'radial-gradient(circle at 35% 32%,'+c.g[0]+','+c.g[1]+' 55%,'+c.g[2]+')':'radial-gradient(circle at 42% 40%,#FFF6D6,#FFC75E 55%,#E07B1F)'}
+  function sphereG(c){return dotBg(c)}
   var FIM_G='radial-gradient(circle at 40% 38%,#EAF2FF,#7FA6FF 60%,#14246B)';
   function nextCard(href,label,name,topic,g,locked,msg){var ring=/^#c6$/.test(href)||name===CH[5].planet;
     if(locked)return '<div class="nx-card is-locked"><i class="nx-sph'+(ring?' has-ring':'')+'" style="--g:'+g+'"></i><span class="nx-tx"><small>'+label+'</small><b>'+name+'</b><em>'+msg+'</em></span><span class="nx-lock">'+LOCKSVG+'</span></div>';
