@@ -2320,6 +2320,7 @@ function makeCine(cfg){
     var h=_(640,'<div class="view"><p class="eyebrow">O Sol · introdução geral</p>')+
       _(641,'<h1>Um sistema solar para aprender a observar a própria mente</h1>')+
       _(642,'<p class="lead">No centro está o Sol: você, a consciência que observa. À volta dele giram os oito planetas, na ordem real, e cada um é um capítulo sobre como o cérebro constrói o que você vive.</p>')+
+      '<a class="comet-card" href="../universo-gnose/"><svg width="46" height="30" viewBox="0 0 46 30" aria-hidden="true"><ellipse cx="23" cy="15" rx="21" ry="6" fill="none" style="stroke:var(--line)"/><circle cx="23" cy="15" r="8" style="fill:var(--panel);stroke:var(--accent)"/><circle cx="4" cy="14" r="2.2" style="fill:var(--accent)"/><circle cx="41" cy="18" r="2.2" style="fill:var(--accent)"/></svg><div><b>Entrar no Universo Gnose</b><span>Um sistema à parte: o Planeta Gnose e as suas oito luas, da cosmologia aos chakras.</span></div></a>'+
       _(643,'<h2>Por onde começar</h2>')+
       _(644,'<p>Começamos pela forma como você estuda, não pela anatomia. Quem decora regiões do cérebro termina com vocabulário e quase nenhuma mudança na forma de pensar. Quem desenvolve metacognição, a capacidade de observar o próprio pensamento enquanto pensa, ganha uma ferramenta que acelera todo o resto.</p>')+
       _(645,'<h2>Como viajar por este sistema</h2>')+
@@ -2329,7 +2330,6 @@ function makeCine(cfg){
       _(649,'<h2>Os oito planetas</h2><ol class="chapters">');
     CH.forEach(function(c){h+='<li><i style="--g:radial-gradient(circle at 35% 32%,'+c.g[0]+','+c.g[1]+' 55%,'+c.g[2]+')"></i><div><b>'+c.planet+_(619,' · Capítulo ')+c.n+'</b><span>'+c.title+': '+c.sub+'</span></div></li>'});
     h+=_(650,'</ol><div class="note"><strong>Sobre este material.</strong> Ele ensina conceitos de neurociência e práticas de atenção. Não substitui acompanhamento de saúde mental ou médico.</div>')+
-      '<p>Quer estudar também a Gnose? Ela tem o seu próprio sistema: <a href="../universo-gnose/">Universo Gnose</a>, um planeta com oito luas.</p>'+
       _(651,'<a class="btn" href="#c1">Viajar até Mercúrio</a></div>');
     return h;
   }
