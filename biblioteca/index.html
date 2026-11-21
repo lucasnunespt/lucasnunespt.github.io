@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca — Lucas Nunes</title>
+<meta name="description" content="Os livros de Lucas Nunes para ler como quem viaja: os que já existem e os que estão a caminho.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../lucasnunes-ds.css?v=2026110516">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+body{font-family:var(--font-sans);background:linear-gradient(to bottom,var(--bg) 0%,var(--bg-soft) 100%);color:var(--text);line-height:1.7}
+/* voltar — discreto, sem header pesado */
+.back-link{
+  position:fixed; top:1.5rem; left:1.5rem; z-index:20;
+  display:flex; align-items:center; gap:.5rem;
+  padding:.6rem 1.1rem; border-radius:999px;
+  background:var(--surface-strong); border:1px solid var(--line);
+  font-size:.88rem; font-weight:600; color:var(--text-soft);
+  box-shadow:var(--shadow-soft);
+ 
+}
+.back-link:hover{ color:var(--text); background:var(--surface-strong); transform:translateY(-1px); }
+
+/* ============================================================
+   SELETOR DE IDIOMA — versão discreta para a página do poema
+   ============================================================ */
+.lang-slot{ position:fixed; top:1.5rem; right:1.5rem; z-index:20; }
+.language-wrapper{
+  position:relative; display:inline-flex; flex-direction:column;
+  width:60px; max-height:38px; border-radius:999px;
+  background:var(--surface-strong);
+  border:1px solid var(--line);
+  box-shadow:var(--shadow-soft);
+  overflow:hidden;
+ 
+}
+.language-trigger{
+  appearance:none; position:relative; z-index:2; flex:0 0 38px; width:100%; height:38px;
+  border:0; border-radius:0; display:inline-flex; align-items:center; justify-content:center;
+  gap:.25rem; color:var(--text-soft); background:transparent; cursor:pointer;
+}
+.language-trigger svg{ width:14px; height:14px; }
+.language-current{ font-size:.68rem; letter-spacing:.08em; line-height:1; font-weight:600; }
+.language-trigger:focus-visible{ outline:none; }
+.language-options{
+  width:100%; padding:0 .3rem .5rem; display:grid; align-items:center; gap:.2rem; box-sizing:border-box;
+  opacity:0; transform:translateY(-10px);
+ 
+}
+.language-wrapper.is-open{
+  max-height:250px; color:var(--text);
+  background:var(--surface-strong);
+  box-shadow:var(--shadow-card);
+}
+.language-wrapper.is-open .language-options{ opacity:1; transform:translateY(0); }
+@media (hover:hover) and (pointer:fine){
+  .language-wrapper:hover{ max-height:250px; background:var(--surface-strong); box-shadow:var(--shadow-card); }
+  .language-wrapper:hover .language-options{ opacity:1; transform:translateY(0); }
+}
+.language-options button{
+  appearance:none; min-width:44px; height:28px; border:0; border-radius:999px;
+  color:var(--text-soft); background:transparent; font:inherit; font-size:.7rem; letter-spacing:.08em;
+  cursor:pointer;
+}
+.language-options button:hover, .language-options button:focus-visible{
+  color:var(--text); background:var(--surface); outline:none;
+}
+.language-options button.is-active{ color:var(--button-text); background-color:var(--accent); outline:none; }
+.language-options button:active{ transform:scale(.96); }
+@media (max-width:600px){
+  .lang-slot{ top:1rem; right:1rem; }
+  .language-wrapper{ width:52px; max-height:34px; }
+  .language-trigger{ flex:0 0 34px; height:34px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .language-wrapper, .language-trigger, .language-options, .language-options button{ }
+}
+
+
+
+.wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+.label{display:block;font:700 .82rem/1.4 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-dark)}
+.opening{padding:8rem 0 3rem;max-width:44rem}
+.opening h1{font:400 clamp(2.6rem,6vw,4.8rem)/1 var(--font-serif);letter-spacing:-.02em;margin:1rem 0 1.4rem}
+.lead{font-size:1.12rem;line-height:1.75;color:var(--text-soft);max-width:60ch}
+.lead em{color:var(--accent-dark)}
+/* faixa noturna: a constelação dos livros */
+.sky{background:var(--bg);border-radius:var(--radius-lg);box-shadow:var(--shadow-card),var(--glass-highlight);overflow:hidden;margin:1rem 0 3.5rem}
+.sky svg{display:block;width:100%;height:auto}.sky .tall{display:none;max-width:420px;margin:0 auto}
+@media (max-width:700px){.sky .wide{display:none}.sky .tall{display:block}}
+.sky .rio{fill:none;stroke:var(--agua);stroke-width:1.6;stroke-linecap:round;filter:drop-shadow(var(--glow-rio))}
+.sky .rio.next{stroke:var(--text-subtle);stroke-dasharray:2 7}
+.sky .star{fill:var(--sinal)}
+.sky .star.soon{fill:none;stroke:var(--text-subtle);stroke-width:1.6}
+.sky .halo{fill:var(--sinal);opacity:.16;animation:breath var(--duration-breath) var(--easing-calm) infinite}
+.sky text{font:600 15px var(--font-sans);fill:var(--text)}
+.sky text.k{font:700 11px var(--font-sans);letter-spacing:.12em;fill:var(--accent-dark)}
+.sky a:focus-visible text{text-decoration:underline}
+@keyframes breath{0%,100%{opacity:.1}41%{opacity:.32}}
+/* cartões */
+.books{display:grid;grid-template-columns:1fr;gap:1.25rem;padding-bottom:5rem}
+@media (min-width:760px){.books{grid-template-columns:1fr 1fr}}
+.book{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-card),var(--glass-highlight);padding:1.6rem;display:flex;flex-direction:column;gap:.8rem;opacity:0;transform:translateY(var(--rise-distance));transition:opacity var(--duration-calm) var(--easing-calm),transform var(--duration-calm) var(--easing-calm),border-color var(--duration-quick) var(--easing-calm)}
+.book.in{opacity:1;transform:none}
+.book h2{font:600 1.25rem/1.25 var(--font-sans);color:var(--text)}
+.book p{color:var(--text-soft);max-width:60ch}
+.book .go{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;min-height:var(--control-height);padding:0 var(--button-pad-x);border-radius:var(--radius-pill);border:1px solid var(--line);background:var(--surface-strong);color:var(--link-text);font-weight:600;transition:border-color var(--duration-quick) var(--easing-calm)}
+.book .go:hover,.book .go:focus-visible{border-color:var(--accent-dark);outline:none}
+.book.soon{background:transparent;border-style:dashed}
+.book .when{margin-top:auto;font-size:.9rem;color:var(--text-muted)}
+@media (prefers-reduced-motion:reduce){.book{opacity:1;transform:none}.sky .halo{animation:none;opacity:.25}}
+</style>
+</head>
+<body>
+<a class="back-link" href="../index.html#trabalho" data-i18n="cs_back">← Voltar ao portfólio</a>
+<div class="lang-slot" data-language-host></div>
+<main class="wrap">
+  <header class="opening">
+    <span class="label" data-i18n="bib_eyebrow">Biblioteca</span>
+    <h1 data-i18n="bib_h1">Livros para ler como quem viaja</h1>
+    <p class="lead" data-i18n="bib_lead" data-i18n-html>Cada livro é um universo, um mapa que você percorre no seu ritmo. E <em>tudo está ligado</em>: os livros conversam entre si.</p>
+  </header>
+  <section class="sky" data-theme="noite" role="img" aria-label="Constelação dos livros: dois já abertos e dois a caminho, ligados por uma só linha." data-i18n="bib_sky_t" data-i18n-attr="aria-label"><svg class="wide" viewBox="0 0 1000 240" aria-hidden="true"><path class="rio" d="M140 140 C 250 40, 300 40, 390 80"/><path class="rio next" d="M390 80 C 480 120, 560 190, 640 155 C 730 120, 780 50, 880 85"/><a href="../sistema-da-consciencia/" tabindex="-1"><circle class="halo" cx="140" cy="140" r="20"/><circle class="star" cx="140" cy="140" r="7"/><text class="k" x="140" y="180" text-anchor="middle" data-i18n="bib_k_on">Disponível</text><text x="140" y="200" text-anchor="middle" data-i18n="bib_b1_h">Sistema da Consciência</text></a><a href="../universo-gnose/" tabindex="-1"><circle class="halo" cx="390" cy="80" r="20"/><circle class="star" cx="390" cy="80" r="7"/><text class="k" x="390" y="120" text-anchor="middle" data-i18n="bib_k_on">Disponível</text><text x="390" y="140" text-anchor="middle" data-i18n="bib_b2_h">Universo Gnose</text></a><a href="#delicadeza" tabindex="-1"><circle class="star soon" cx="640" cy="155" r="7"/><text class="k" x="640" y="195" text-anchor="middle" data-i18n="bib_k_paper">Em papel</text><text x="640" y="215" text-anchor="middle" data-i18n="bib_b3_h">Revolução da Delicadeza</text></a><a href="#chakras" tabindex="-1"><circle class="star soon" cx="880" cy="85" r="7"/><text class="k" x="880" y="125" text-anchor="middle" data-i18n="bib_k_soon">Em breve</text><text x="880" y="145" text-anchor="middle" data-i18n="bib_b4_h">Planeta dos Chakras</text></a></svg><svg class="tall" viewBox="0 0 360 480" aria-hidden="true"><path class="rio" d="M70 60 C 140 90, 150 120, 150 180"/><path class="rio next" d="M150 180 C 150 240, 70 240, 70 300 C 70 360, 150 360, 150 420"/><a href="../sistema-da-consciencia/" tabindex="-1"><circle class="halo" cx="70" cy="60" r="20"/><circle class="star" cx="70" cy="60" r="7"/><text class="k" x="98" y="56" text-anchor="start" data-i18n="bib_k_on">Disponível</text><text x="98" y="76" text-anchor="start" data-i18n="bib_b1_h">Sistema da Consciência</text></a><a href="../universo-gnose/" tabindex="-1"><circle class="halo" cx="150" cy="180" r="20"/><circle class="star" cx="150" cy="180" r="7"/><text class="k" x="178" y="176" text-anchor="start" data-i18n="bib_k_on">Disponível</text><text x="178" y="196" text-anchor="start" data-i18n="bib_b2_h">Universo Gnose</text></a><a href="#delicadeza" tabindex="-1"><circle class="star soon" cx="70" cy="300" r="7"/><text class="k" x="98" y="296" text-anchor="start" data-i18n="bib_k_paper">Em papel</text><text x="98" y="316" text-anchor="start" data-i18n="bib_b3_h">Revolução da Delicadeza</text></a><a href="#chakras" tabindex="-1"><circle class="star soon" cx="150" cy="420" r="7"/><text class="k" x="178" y="416" text-anchor="start" data-i18n="bib_k_soon">Em breve</text><text x="178" y="436" text-anchor="start" data-i18n="bib_b4_h">Planeta dos Chakras</text></a></svg></section>
+  <section class="books" aria-label="Livros">
+    <article class="book" id="sistema"><span class="label" data-i18n="bib_k_on">Disponível</span><h2 data-i18n="bib_b1_h">Sistema da Consciência</h2><p data-i18n="bib_b1_p">Neurociência e metacognição em forma de sistema solar: oito planetas, cada um com três luas para ler pelo design, pelo corpo ou pelo dia a dia.</p><a class="go" href="../sistema-da-consciencia/" data-i18n="bib_b1_go">Abrir o e-book</a></article>
+    <article class="book" id="gnose"><span class="label" data-i18n="bib_k_on">Disponível</span><h2 data-i18n="bib_b2_h">Universo Gnose</h2><p data-i18n="bib_b2_p">O Planeta Gnose e as suas oito luas, da cosmologia aos chakras. A doutrina, de onde ela vem e o que a história e a ciência dizem, sempre separados.</p><a class="go" href="../universo-gnose/" data-i18n="bib_b2_go">Entrar no universo</a></article>
+    <article class="book soon" id="delicadeza"><span class="label" data-i18n="bib_k_paper">Em papel</span><h2 data-i18n="bib_b3_h">Revolução da Delicadeza</h2><p data-i18n="bib_b3_p">Memória, neurociência e filosofia em três vozes. O livro já existe em papel; a versão para ler aqui, como um mapa, está a caminho.</p><span class="when" data-i18n="bib_soon_web">Versão interativa em breve</span></article>
+    <article class="book soon" id="chakras"><span class="label" data-i18n="bib_k_soon">Em breve</span><h2 data-i18n="bib_b4_h">Planeta dos Chakras</h2><p data-i18n="bib_b4_p">Um planeta e uma lua por cultura: o que o Egito, a Índia, o budismo e a Mesopotâmia disseram sobre os centros do corpo, e o que a ciência diz hoje.</p><span class="when" data-i18n="bib_soon">Em construção</span></article>
+  </section>
+</main>
+<script src="../i18n-portfolio.js?v=2026112101"></script>
+<script>
+(function(){
+  var cards=document.querySelectorAll('.book');
+  if(!('IntersectionObserver' in window)){cards.forEach(function(c){c.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+  cards.forEach(function(c){io.observe(c)});
+})();
+</script>
+</body>
+</html>
