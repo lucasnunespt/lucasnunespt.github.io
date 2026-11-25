@@ -277,6 +277,11 @@ details.study .more{ display:grid; gap:.7rem; padding-top:.4rem; border-top:1px 
 details.study .more p b{ color:var(--text); font-weight:600; }
 @media (max-width:760px){ .studies{ grid-template-columns:1fr; } }
 
+/* dentro do NeuroMedit: os casos de nov 2026, com imagem */
+.modulos{ margin-top:clamp(1.5rem,3vw,2.2rem); display:flex; flex-direction:column; gap:.9rem; }
+.modulo-img{ display:block; aspect-ratio:16/9; border-radius:var(--radius-sm); overflow:hidden; background:var(--bg-soft); border:1px solid var(--line); margin-bottom:.4rem; }
+.modulo-img img{ width:100%; height:100%; object-fit:cover; }
+
 /* sobre */
 .about{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,4.5rem); align-items:start; }
 .about h2{ font-size:clamp(1.8rem,3vw,2.6rem); line-height:1.1; font-weight:600; margin:.8rem 0 1.2rem; }
@@ -339,7 +344,7 @@ footer p{ font-size:.86rem; }
       <div>
         <span class="status rv" data-build="2"><i aria-hidden="true"></i><span data-i18n="h2_status">Aberto a vagas de UX/UI júnior em Lisboa</span></span>
         <h1 class="rv" data-build="2" data-decision="d1" data-i18n="h2_h1" data-i18n-html>Desenho produtos que <em>acalmam</em> a mente.</h1>
-        <p class="lead rv" data-build="3" data-decision="dlead" data-i18n="h2_lead">Sou o Lucas Nunes, designer de experiência do usuário que dirige IA, em Lisboa. Junto design de interface, neurociência e front-end. Criei o NeuroMedit, uma plataforma de meditação que está no ar, e o Sistema da Consciência, um e-book interativo em quatro línguas.</p>
+        <p class="lead rv" data-build="3" data-decision="dlead" data-i18n="h2_lead">Sou o Lucas Nunes, designer de experiência do usuário que dirige IA, em Lisboa. Junto design de interface, neurociência e front-end. Criei o NeuroMedit, uma plataforma de meditação que está no ar, com reserva de sessões ao vivo e uma comunidade por cidades, e o Sistema da Consciência, um e-book interativo em quatro línguas.</p>
         <p class="ligado rv" data-build="3" data-i18n="idx_ligado">Tudo está ligado.</p>
         <div class="hero-actions rv" data-build="4" data-decision="dact">
           <a class="button primary" href="#trabalho" data-i18n="h2_cta_work">Ver trabalho</a>
@@ -393,6 +398,26 @@ footer p{ font-size:.86rem; }
         </div>
       </div>
     </article>
+
+    <div class="modulos" aria-labelledby="modulos-label">
+      <p class="label" id="modulos-label" data-i18n="hx_label">Dentro do NeuroMedit · novembro de 2026</p>
+      <div class="studies">
+      <a class="study modulo rv" href="case-study-reserva-presencial.html">
+        <span class="modulo-img"><img src="assets/neuromedit-reserva/cartao.jpg" width="960" height="540" alt="Perfil público com os próximos horários e o botão Agendar uma sessão." data-i18n="hx_rs_alt" data-i18n-attr="alt" loading="lazy"></span>
+        <div class="meta"><b>NeuroMedit</b><span data-i18n="hx_rs_tag">Produto no ar</span></div>
+        <h3 data-i18n="hx_rs_h">Reserva presencial e painel</h3>
+        <p data-i18n="hx_rs_p">Marcar uma meditação ao vivo em quatro passos, e um painel que mostra só o que precisa de resposta. Depois, aberto a outros profissionais.</p>
+        <span class="go" data-i18n="hx_go">Ler o caso →</span>
+      </a>
+      <a class="study modulo rv" href="case-study-comunidade.html">
+        <span class="modulo-img"><img src="assets/neuromedit-comunidade/cartao.jpg" width="960" height="540" alt="Página da cidade de Lisboa com encontros, anfitriões e pedidos para entrar." data-i18n="hx_cm_alt" data-i18n-attr="alt" loading="lazy"></span>
+        <div class="meta"><b>NeuroMedit</b><span data-i18n="hx_cm_tag">Produto no ar</span></div>
+        <h3 data-i18n="hx_cm_h">Uma comunidade sem curtidas</h3>
+        <p data-i18n="hx_cm_p">Círculos online e cidades com encontros ao vivo, com anfitriões. Números só onde ajudam as pessoas a aparecer.</p>
+        <span class="go" data-i18n="hx_go">Ler o caso →</span>
+      </a>
+      </div>
+    </div>
   </div>
 </section>
 
