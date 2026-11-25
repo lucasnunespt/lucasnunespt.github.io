@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="rs_title">Reserva presencial e painel — Estudo de caso · Lucas Nunes</title>
+<meta name="description" content="Como desenhei a reserva de meditações ao vivo do NeuroMedit, em quatro passos, e o painel onde cada profissional gere a agenda, os pedidos e o dinheiro." data-i18n="rs_meta" data-i18n-attr="content">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reserva presencial e painel — Estudo de caso · Lucas Nunes">
+<meta property="og:description" content="Como desenhei a reserva de meditações ao vivo do NeuroMedit, em quatro passos, e o painel onde cada profissional gere a agenda, os pedidos e o dinheiro.">
+<meta property="og:image" content="https://lucasnunespt.github.io/assets/neuromedit-reserva/perfil.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="lucasnunes-ds.css?v=2026112501">
+<link rel="stylesheet" href="caso.css?v=2026112501">
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="common_skip">Pular para o conteúdo</a>
+<header class="site-header">
+  <div class="container">
+    <nav class="nav" aria-label="Principal">
+      <a class="brand" href="index.html"><picture><source srcset="assets/marca/sigilo-noite.svg" media="(prefers-color-scheme: dark)"><img src="assets/marca/sigilo.svg" alt="" width="34" height="34"></picture>Lucas Nunes</a>
+      <div class="nav-links">
+        <a href="index.html#trabalho" data-i18n="cx_nav_work">Trabalho</a>
+        <a href="index.html#sobre" data-i18n="cx_nav_about">Sobre</a>
+        <a class="button secondary" href="index.html#contato" data-i18n="cx_nav_contact">Falar comigo</a>
+        <div class="header-language-slot" data-language-host></div>
+      </div>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<section class="cs-hero">
+  <div class="container">
+    <a class="cs-back" href="index.html#trabalho" data-i18n="cx_back">← Voltar ao trabalho</a>
+    <p class="label" data-i18n="rs_eyebrow">NeuroMedit · no ar · novembro de 2026</p>
+    <h1 data-i18n="rs_h1">Reserva presencial e painel do profissional</h1>
+    <p class="subtitle" data-i18n="rs_sub">Marcar uma meditação ao vivo sem cansar quem já chega cansado.</p>
+    <div class="cs-tags"><span data-i18n="rs_tag1">Produto no ar</span><span data-i18n="rs_tag2">Fluxo de reserva</span><span data-i18n="rs_tag3">Painel</span><span data-i18n="rs_tag4">Mobile primeiro</span></div>
+    <p class="lead" data-i18n="rs_lead">Guio meditações ao vivo em Lisboa, num parque ou num espaço tranquilo. Desenhei o caminho inteiro: o perfil público, a reserva em quatro passos, o painel onde eu giro a agenda e os pedidos, e depois a abertura do mesmo sistema a outros profissionais.</p>
+    <div class="note"><p data-i18n="rs_note" data-i18n-html><strong>Nota de método.</strong> Está no ar em neuromedit.com. As imagens usam <strong>dados de teste, com nomes inventados</strong>, para não mostrar clientes reais. Eu defini o fluxo, as regras e cada decisão de design; a IA (Claude) escreveu o código sob a minha direção, e eu testei e corrigi cada versão.</p></div>
+    <div class="actions">
+      <a class="button primary" href="https://neuromedit.com/reservar.html" target="_blank" rel="noopener" data-i18n="rs_cta_live">Ver a reserva no ar ↗</a>
+      <a class="button secondary" href="#decisoes" data-i18n="rs_cta_dec">Ver as decisões</a>
+    </div>
+    <div class="facts">
+      <div class="fact"><b data-i18n="rs_f1b">4 passos</b><span data-i18n="rs_f1">do convite ao pedido feito</span></div>
+      <div class="fact"><b data-i18n="rs_f2b">1 painel</b><span data-i18n="rs_f2">agenda, pedidos e dinheiro</span></div>
+      <div class="fact"><b data-i18n="rs_f3b">11 áreas</b><span data-i18n="rs_f3">de yoga a fisioterapia, cada uma com a sua palavra</span></div>
+    </div>
+    <figure class="shot rv"><img src="assets/neuromedit-reserva/perfil.jpg" width="1440" height="900" alt="Perfil público de Lucas Nunes no NeuroMedit: foto, cidade, selo de verificado, sobre, preços das sessões, lugares e os próximos horários com o botão Agendar uma sessão." data-i18n="rs_alt_perfil" data-i18n-attr="alt"><figcaption data-i18n="rs_cap_perfil">O perfil público: quem guia, onde, quanto custa e os próximos horários, com um só botão para agendar.</figcaption></figure>
+  </div>
+</section>
+
+<section class="cs-section" id="problema">
+  <div class="container">
+    <p class="label" data-i18n="cx_label_problem">O problema</p>
+    <h2 class="rv" data-i18n="rs_prob_h">Cada marcação eram dez mensagens.</h2>
+    <div class="body rv"><p data-i18n="rs_prob_p1">Os pedidos chegavam pelo WhatsApp e pelo Instagram: que dia, que hora, onde, quanto, como pagar. Eu perdia pedidos no meio das conversas e não tinha uma visão do mês.</p><p data-i18n="rs_prob_p2">Do outro lado, quem procura uma meditação costuma chegar cansado ou ansioso. Um formulário longo é mais uma exigência, e um erro no login, dentro do navegador do Instagram, basta para a pessoa desistir.</p></div>
+    <blockquote class="quote rv" data-i18n="rs_quote">Marcar uma pausa não pode cansar.</blockquote>
+  </div>
+</section>
+<section class="cs-section" id="decisoes">
+  <div class="container">
+    <p class="label" data-i18n="cx_label_decisions">Decisões de design</p>
+    <h2 class="rv" data-i18n="rs_dec_h">Uma conversa, não um formulário.</h2>
+    <div class="cards"><article class="card rv"><p class="n">01</p><h3 data-i18n="rs_d1h">Uma pergunta de cada vez</h3><p data-i18n="rs_d1p">As mensagens chegam uma a uma, como numa conversa. Quatro passos: conhecer, dia e hora, detalhes, feito. Um indicador diz sempre em que passo a pessoa está.</p></article><article class="card rv"><p class="n">02</p><h3 data-i18n="rs_d2h">Os botões onde o polegar chega</h3><p data-i18n="rs_d2p">No celular, Voltar e a ação principal ficam em baixo. A partir de 720 px a reserva abre em duas colunas, para o calendário e a conversa caberem lado a lado.</p></article><article class="card rv"><p class="n">03</p><h3 data-i18n="rs_d3h">Só os dias que existem</h3><p data-i18n="rs_d3p">O calendário mostra apenas os dias em que posso receber. Ao tocar num dia, a conversa responde com as horas livres, já com folga para a deslocação entre lugares diferentes.</p></article><article class="card rv"><p class="n">04</p><h3 data-i18n="rs_d4h">A conta só no fim, com o motivo</h3><p data-i18n="rs_d4p">Dá para conhecer e escolher sem conta. O botão do Google aparece quando faz falta, com o porquê, e um aviso ajuda quem abriu o link dentro do Instagram, onde o login falha.</p></article><article class="card rv"><p class="n">05</p><h3 data-i18n="rs_d5h">Duas pessoas, a mesma hora</h3><p data-i18n="rs_d5p">Cada horário é um registo único na base de dados. Se duas pessoas pedirem a mesma hora ao mesmo tempo, a segunda recebe uma mensagem clara e escolhe outra.</p></article><article class="card rv"><p class="n">06</p><h3 data-i18n="rs_d6h">Um sinal pequeno confirma</h3><p data-i18n="rs_d6p">Um sinal de 4 € por MB Way confirma o horário; o resto paga-se no dia. Quem cancela a tempo pede o reembolso, e o painel lembra-me de o fazer.</p></article></div>
+    <div class="shots-phone">
+      <figure class="shot phone rv"><img src="assets/neuromedit-reserva/celular-horas.jpg" width="780" height="1688" alt="No celular, o passo Dia e hora: o calendário de novembro com os dias livres em destaque, o dia 27 escolhido e as horas 19:00, 20:00 e 21:00 como botões." data-i18n="rs_alt_cel" data-i18n-attr="alt" loading="lazy"><figcaption data-i18n="rs_cap_cel">Passo 2: tocar num dia faz a conversa responder com as horas.</figcaption></figure>
+      <figure class="shot rv"><img src="assets/neuromedit-reserva/conversa.jpg" width="560" height="900" alt="O primeiro passo da reserva no tema escuro: três mensagens curtas apresentam a sessão, os lugares e o preço de lançamento, e um botão Ver dias e horários em baixo." data-i18n="rs_alt_conv" data-i18n-attr="alt" loading="lazy"><figcaption data-i18n="rs_cap_conv">Passo 1: três mensagens curtas e uma só ação.</figcaption></figure>
+    </div>
+  </div>
+</section>
+<section class="cs-section" id="painel">
+  <div class="container">
+    <p class="label" data-i18n="rs_pn_label">O painel</p>
+    <h2 class="rv" data-i18n="rs_pn_h">O painel mostra o que precisa de mim.</h2>
+    <div class="body rv"><p data-i18n="rs_pn_p1">Em vez de uma lista de tudo, o início junta o que está à minha espera: um sinal por confirmar, um reembolso por fazer, uma sessão que já passou e precisa de fecho (feita ou faltou). Atualiza-se em tempo real, sem recarregar a página.</p><p data-i18n="rs_pn_p2">Na Agenda, toco num dia para dizer se estou livre, livre a partir de certa hora ou indisponível, e posso preencher o mês com a minha semana padrão.</p></div>
+    <div class="shots-phone">
+      <figure class="shot rv"><img src="assets/neuromedit-reserva/painel-pedidos.jpg" width="760" height="720" alt="A secção À espera de você no painel escuro: um reembolso a fazer, uma sessão passada com os botões Sessão feita e Faltou, e um pedido novo com Recebi o sinal e confirmar." data-i18n="rs_alt_ped" data-i18n-attr="alt" loading="lazy"><figcaption data-i18n="rs_cap_ped">“À espera de você”: cada cartão tem uma ação principal.</figcaption></figure>
+      <figure class="shot rv"><img src="assets/neuromedit-reserva/painel-agenda.jpg" width="1440" height="900" alt="A Agenda do painel: calendário de novembro com os dias livres, a partir das 19h ou indisponíveis, e ao lado as três opções para o dia escolhido e o botão Preencher com a semana padrão." data-i18n="rs_alt_ag" data-i18n-attr="alt" loading="lazy"><figcaption data-i18n="rs_cap_ag">A Agenda: um toque por dia, três estados.</figcaption></figure>
+    </div>
+  </div>
+</section>
+<section class="cs-section" id="profissionais">
+  <div class="container">
+    <p class="label" data-i18n="rs_pro_label">De um para muitos</p>
+    <h2 class="rv" data-i18n="rs_pro_h">O mesmo sistema para outros profissionais.</h2>
+    <div class="body rv"><p data-i18n="rs_pro_p">Depois veio a pergunta: e se uma professora de yoga ou um massagista quiserem usar isto? Cada profissional passou a ter a sua página, a sua agenda e os seus pedidos, separados dos meus.</p></div>
+    <ul class="list rv"><li data-i18n="rs_pro_l1">Uma página nasce em rascunho, passa a pendente quando a pessoa pede revisão e só fica pública quando eu aprovo. Ninguém se aprova sozinho.</li><li data-i18n="rs_pro_l2">Também posso convidar alguém pelo e-mail: a página fica reservada e passa a ser da pessoa quando ela entra com essa conta.</li><li data-i18n="rs_pro_l3">O painel fala a língua de cada profissão: sessão para meditação, aula para yoga, consulta para fisioterapia, treino para educação física.</li><li data-i18n="rs_pro_l4">Cada profissional só vê os seus pedidos, e a morada de quem pede uma sessão em casa apaga-se sozinha dois dias depois. A regra mora na base de dados, não só no ecrã.</li></ul>
+    <figure class="shot rv"><img src="assets/neuromedit-reserva/colaboradores.jpg" width="1440" height="860" alt="A página Colaboradores: cartões de três profissionais com cidade, selo de verificado, lugares e Ver o perfil, filtros Todos, Num espaço e Ao ar livre, e o convite Também oferece sessões?" data-i18n="rs_alt_col" data-i18n-attr="alt" loading="lazy"><figcaption data-i18n="rs_cap_col">Colaboradores: só aparece quem foi aprovado.</figcaption></figure>
+  </div>
+</section>
+
+<section class="cs-section" id="direcao">
+  <div class="container">
+    <p class="label" data-i18n="cx_label_direction">Diário de direção</p>
+    <h2 class="rv" data-i18n="cx_dir_h">O que eu vi e o que decidi.</h2>
+    <div class="body rv"><p data-i18n="cx_dir_lead">Eu defini o que fazer, testei cada versão no celular e no computador e devolvi o que não estava certo. Alguns momentos em que a direção mudou o produto:</p></div>
+    <div class="cards quatro"><article class="card rv"><p class="n">01</p><p class="de" data-i18n="cx_saw">Vi</p><h3 data-i18n="rs_dir1s">A reserva ficava presa a carregar para quem não tinha conta.</h3><p><strong data-i18n="cx_decided">Decidi</strong>: <span data-i18n="rs_dir1d">nunca prender ninguém: mostrar logo o convite e explicar a conta no passo em que ela entra.</span></p></article><article class="card rv"><p class="n">02</p><p class="de" data-i18n="cx_saw">Vi</p><h3 data-i18n="rs_dir2s">A porta para outros profissionais só existia no rodapé.</h3><p><strong data-i18n="cx_decided">Decidi</strong>: <span data-i18n="rs_dir2d">um convite visível, e uma página que convence antes de pedir dados.</span></p></article><article class="card rv"><p class="n">03</p><p class="de" data-i18n="cx_saw">Vi</p><h3 data-i18n="rs_dir3s">Quem acabava uma meditação não sabia que havia sessões ao vivo.</h3><p><strong data-i18n="cx_decided">Decidi</strong>: <span data-i18n="rs_dir3d">um convite no fim, só depois do feedback e só para quem tem conta; “Agora não” esconde-o 14 dias.</span></p></article><article class="card rv"><p class="n">04</p><p class="de" data-i18n="cx_saw">Vi</p><h3 data-i18n="rs_dir4s">No perfil, os botões tinham pouco contraste no tema escuro.</h3><p><strong data-i18n="cx_decided">Decidi</strong>: <span data-i18n="rs_dir4d">voltar aos tokens do design system até passar 4,5:1.</span></p></article></div>
+  </div>
+</section>
+
+<section class="cs-final">
+  <div class="container narrow">
+    <h2 class="rv" data-i18n="rs_final_h">Marcar uma pausa em quatro toques.</h2>
+    <div class="actions rv">
+      <a class="button primary" href="https://neuromedit.com/reservar.html" target="_blank" rel="noopener" data-i18n="rs_cta_live">Ver a reserva no ar ↗</a>
+      <a class="button secondary" href="index.html#trabalho" data-i18n="cx_back_final">← Voltar aos casos</a>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="container"><p data-i18n="cx_footer">© 2026 Lucas Nunes · Lisboa, Portugal.</p></div></footer>
+<script src="i18n-portfolio.js?v=2026112501"></script>
+<script>
+(function(){
+  "use strict";
+  var els = document.querySelectorAll(".rv");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px -8% 0px" });
+    els.forEach(function(el){ io.observe(el); });
+  } else { els.forEach(function(el){ el.classList.add("in"); }); }
+})();
+</script>
+</body>
+</html>
