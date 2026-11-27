@@ -13,7 +13,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="lucasnunes-ds.css?v=2026112501">
 <link rel="stylesheet" href="caso.css?v=2026112501">
-<link rel="stylesheet" href="neuromedit-terra/terra-caso.css?v=2026112703">
+<link rel="stylesheet" href="neuromedit-terra/terra-caso.css?v=2026112704">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -112,7 +112,7 @@
       <div class="terra-aeroportos" role="group" aria-label="Aeroportos" data-terra-aeroportos hidden></div>
       </div>
       </div>
-      <div class="actions"><a class="button secondary" href="https://github.com/lucasnunespt/NeuroMedit/blob/main/terra.js" target="_blank" rel="noopener" data-i18n="cm_terra_codigo">Ver o código no GitHub ↗</a></div>
+      <div class="actions terra-acoes"><button type="button" class="button primary" data-terra-partilhar data-i18n="cm_terra_partilhar">Compartilhar o mapa</button><a class="button secondary" href="https://github.com/lucasnunespt/NeuroMedit/blob/main/terra.js" target="_blank" rel="noopener" data-i18n="cm_terra_codigo">Ver o código no GitHub ↗</a><span class="terra-aviso" role="status" data-terra-aviso></span></div>
     </div>
   </div>
 </section>
@@ -159,7 +159,7 @@
 </section>
 </main>
 <footer><div class="container"><p data-i18n="cx_footer">© 2026 Lucas Nunes · Lisboa, Portugal.</p></div></footer>
-<script src="i18n-portfolio.js?v=2026112703"></script>
+<script src="i18n-portfolio.js?v=2026112704"></script>
 <script type="module">
   // O planeta do NeuroMedit (o mesmo terra.js do produto), para quem lê o caso poder mexer.
   import { criarTerra } from "./neuromedit-terra/terra.js?v=2026112703";
@@ -174,11 +174,13 @@
   const dizer = (html) => { estado.removeAttribute("data-i18n"); estado.innerHTML = html; };
   const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   let globo = null;
-  const contarPais = (p) => { marcar(p); dizer(`<b>${esc(nomePais(p))}</b>. ${esc(T("cm_terra_depois_pais", "Na comunidade, abre-se agora a lista das cidades deste país."))}`); };
+  let escolha = ""; // o país ou a cidade em foco, para o link de compartilhar
+  const contarPais = (p) => { escolha = p; marcar(p); dizer(`<b>${esc(nomePais(p))}</b>. ${esc(T("cm_terra_depois_pais", "Na comunidade, abre-se agora a lista das cidades deste país."))}`); };
   let modo = "com";
   const paisesBox = document.querySelector(".terra-paises"), aeroBox = document.querySelector("[data-terra-aeroportos]"), notaVy = document.querySelector("[data-terra-nota-vy]");
   const contarAeroporto = (id) => {
     const a = AEROPORTOS_VUELING.find((x) => x.id === id); if (!a) return;
+    escolha = id;
     aeroBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.iata === id ? "true" : "false"));
     // Abre a zona do aeroporto e mostra o botão dele, só dentro da coluna (sem mexer na página).
     const zona = aeroBox.querySelector(`details[data-zona="${a.grupo}"]`); if (zona) zona.open = true;
@@ -206,16 +208,16 @@
       vista: vy ? { lon: -9, lat: 35, zoom: 1.9 } : { lon: -20, lat: 25, zoom: 1.05 },
       rotulos: { aria: T("cm_terra_aria", "Planeta interativo com as cidades da comunidade"), dica: T("cm_terra_dica", "Arraste para girar · toque num país"), mais: T("cm_terra_mais", "Aproximar"), menos: T("cm_terra_menos", "Afastar"), inicio: T("cm_terra_inicio", "Ver o mundo inteiro") },
       aoEscolherPais: (p) => (vy ? dizer(esc(T("cm_terra_vy_estado", "Toque num aeroporto, no planeta ou na lista."))) : contarPais(p)),
-      aoEscolherCidade: (id) => {
-        if (vy) return contarAeroporto(id);
-        const c = CIDADES_INICIAIS.find((x) => x.id === id); if (!c) return; marcar(c.pais); dizer(`<b>${esc(c.nome)}</b>. ${esc(id === "lisboa" ? T("cm_terra_depois_aberta", "Esta cidade já tem comunidade aberta: o passo seguinte é entrar com o Google e pedir o seu lugar.") : T("cm_terra_depois_breve", "Esta cidade ainda não abriu: quem pede conta para a abrir."))}`);
-      },
-      aoLimpar: () => { marcar(""); dizer(esc(vy ? T("cm_terra_vy_estado", "Toque num aeroporto, no planeta ou na lista.") : T("cm_terra_estado", "Toque num país, no planeta ou aqui em cima."))); }
+      aoEscolherCidade: (id) => (vy ? contarAeroporto(id) : contarCidade(id)),
+      aoLimpar: () => { escolha = ""; marcar(""); dizer(esc(vy ? T("cm_terra_vy_estado", "Toque num aeroporto, no planeta ou na lista.") : T("cm_terra_estado", "Toque num país, no planeta ou aqui em cima."))); }
     });
     host.append(globo.el);
   }
+  function contarCidade(id) {
+        const c = CIDADES_INICIAIS.find((x) => x.id === id); if (!c) return; escolha = id; marcar(c.pais); dizer(`<b>${esc(c.nome)}</b>. ${esc(id === "lisboa" ? T("cm_terra_depois_aberta", "Esta cidade já tem comunidade aberta: o passo seguinte é entrar com o Google e pedir o seu lugar.") : T("cm_terra_depois_breve", "Esta cidade ainda não abriu: quem pede conta para a abrir."))}`);
+  }
   function mudarModo(m) {
-    modo = m;
+    modo = m; escolha = "";
     document.querySelectorAll("[data-modo]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.modo === m ? "true" : "false"));
     paisesBox.hidden = m === "vy"; aeroBox.hidden = m !== "vy"; notaVy.hidden = m !== "vy";
     marcar(""); aeroBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", "false"));
@@ -225,7 +227,34 @@
   document.querySelectorAll("[data-modo]").forEach((b) => b.addEventListener("click", () => mudarModo(b.dataset.modo)));
   montar();
   botoes.forEach((b) => b.addEventListener("click", () => { globo.escolherPais(b.dataset.pais); contarPais(b.dataset.pais); }));
-  window.addEventListener("portfolio:languagechange", () => { pintarLista(); montar(); marcar(""); });
+  window.addEventListener("portfolio:languagechange", () => { pintarLista(); montar(); marcar(""); escolha = ""; });
+
+  // Compartilhar só o mapa: o link abre o caso nesta secção, no mesmo modo e no mesmo lugar.
+  const aviso = document.querySelector("[data-terra-aviso]");
+  const linkDoMapa = () => {
+    const u = new URL(location.pathname, location.origin);
+    if (modo === "vy") u.searchParams.set("planeta", "vueling");
+    if (escolha) u.searchParams.set("lugar", escolha);
+    u.hash = "planeta"; return u.toString();
+  };
+  const avisar = (t) => { aviso.textContent = t; clearTimeout(avisar.t); avisar.t = setTimeout(() => (aviso.textContent = ""), 4000); };
+  document.querySelector("[data-terra-partilhar]").addEventListener("click", async () => {
+    const url = linkDoMapa();
+    const titulo = modo === "vy" ? T("cm_terra_partilhar_vy", "Os aeroportos da Vueling em Espanha, num planeta interativo") : T("cm_terra_partilhar_com", "O planeta da comunidade NeuroMedit, para girar e explorar");
+    if (navigator.share) { try { await navigator.share({ title: titulo, text: titulo, url }); return; } catch (e) { if (e.name === "AbortError") return; } }
+    try { await navigator.clipboard.writeText(url); avisar(T("cm_terra_copiado", "Link copiado. É só colar onde quiser.")); }
+    catch { window.prompt(T("cm_terra_copiar", "Copie o link do mapa:"), url); }
+  });
+  // Quem chega por um link compartilhado vê o mapa no modo e no lugar certos.
+  {
+    const q = new URLSearchParams(location.search), lugar = q.get("lugar");
+    if (q.get("planeta") === "vueling") mudarModo("vy");
+    if (lugar) setTimeout(() => {
+      if (modo === "vy" && AEROPORTOS_VUELING.some((a) => a.id === lugar)) { globo.escolherCidade(lugar); contarAeroporto(lugar); }
+      else if (modo === "com" && PAISES_GLOBO.some((p) => p.id === lugar) && botoes.some((b) => b.dataset.pais === lugar)) { globo.escolherPais(lugar); contarPais(lugar); }
+      else if (modo === "com" && CIDADES_INICIAIS.some((c) => c.id === lugar)) { globo.escolherCidade(lugar); contarCidade(lugar); }
+    }, 2200);
+  }
 </script>
 <script>
 (function(){

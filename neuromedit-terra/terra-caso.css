@@ -65,3 +65,8 @@
   .terra-lado { contain: size; overflow: hidden; }
   .terra-aeroportos { flex: 1; min-height: 0; overflow-y: auto; padding-right: 0.25rem; }
 }
+/* Compartilhar o mapa: o aviso "Link copiado" ao lado dos botões. */
+.terra-acoes { align-items: center; }
+.terra-acoes button.button { border: 0; font: inherit; font-weight: 600; cursor: pointer; }
+.terra-acoes button.button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+.terra-aviso { color: var(--text-soft); font-size: 0.9rem; }
