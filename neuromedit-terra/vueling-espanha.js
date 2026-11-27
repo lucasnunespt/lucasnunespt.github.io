@@ -3,7 +3,9 @@
    consultada a 27 de novembro de 2026: 35 cidades (Tenerife tem dois aeroportos). A rede muda
    com as temporadas; confirmar sempre em vueling.com. Coordenadas aproximadas dos aeroportos.
    Formato igual ao das cidades da Terra: { id, nome, pais, regiao, lat, lon } + iata e aeroporto. */
-const A = (iata, nome, regiao, aeroporto, lat, lon) => ({ id: iata, iata, nome, pais: "ES", regiao, aeroporto, lat, lon });
+const GRUPO = {}; // zona de estudo de cada aeroporto (para a lista em secções)
+Object.entries({ norte: "LCG SCQ VGO OVD SDR BIO EAS PNA RJL", centro: "LEN VLL ZAZ MAD BJZ", catalunha: "BCN REU LEU", valencia: "VLC ALC CDT", sul: "SVQ AGP GRX ODB XRY LEI MLN", baleares: "PMI IBZ MAH", canarias: "LPA TFN TFS ACE FUE SPC" }).forEach(([g, l]) => l.split(" ").forEach((i) => (GRUPO[i] = g)));
+const A = (iata, nome, regiao, aeroporto, lat, lon) => ({ id: iata, iata, nome, pais: "ES", regiao, aeroporto, lat, lon, grupo: GRUPO[iata] });
 export const AEROPORTOS_VUELING = [
   // Galiza, Astúrias, Cantábria, País Basco, Navarra, La Rioja
   A("LCG", "A Coruña", "Galicia", "Aeropuerto de A Coruña", 43.30, -8.38),
@@ -48,6 +50,12 @@ export const AEROPORTOS_VUELING = [
   A("ACE", "Lanzarote", "Canarias", "César Manrique-Lanzarote", 28.95, -13.61),
   A("FUE", "Fuerteventura", "Canarias", "Aeropuerto de Fuerteventura", 28.45, -13.86),
   A("SPC", "La Palma", "Canarias", "Aeropuerto de La Palma", 28.63, -17.76)
+];
+/* As zonas, pela ordem da lista (nomes em pt; as traduções vivem em i18n-portfolio.js, cm_vy_g_<id>). */
+export const ZONAS_VUELING = [
+  { id: "norte", nome: "Norte" }, { id: "centro", nome: "Centro" }, { id: "catalunha", nome: "Catalunha" },
+  { id: "valencia", nome: "Comunidade Valenciana" }, { id: "sul", nome: "Andaluzia e Melilla" },
+  { id: "baleares", nome: "Ilhas Baleares" }, { id: "canarias", nome: "Ilhas Canárias" }
 ];
 /* A Espanha no globo, com zoom que deixa ver a península e as ilhas Baleares. */
 export const ESPANHA = [{ id: "ES", lat: 38.5, lon: -4.5, zoom: 2.6 }];

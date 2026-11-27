@@ -43,6 +43,7 @@ const carregarTerra = (url) => (terra ??= fetch(url).then((r) => r.json()).then(
  * @param {{lon,lat,zoom}} o.inicio        vista de partida
  * @param {{lon,lat,zoom}} [o.chegada]     se existir, ao abrir o globo voa uma vez até aqui
  * @param {{lon,lat,zoom}} [o.vista]       para onde volta o botão "início" (por omissão, a chegada)
+ * @param {function} [o.etiqueta]          (cidade) => texto da etiqueta; por omissão, o nome
  * @param {object} o.rotulos               { aria, dica, mais, menos, inicio }
  */
 export function criarTerra(o) {
@@ -142,8 +143,10 @@ export function criarTerra(o) {
       if (sel) { cx.globalAlpha = b; cx.strokeStyle = COR.ouro; cx.lineWidth = 1.2; cx.beginPath(); cx.arc(x, y, 9, 0, Math.PI * 2); cx.stroke(); }
     }
     cx.globalAlpha = 1;
-    const hc = hover?.cidade && o.cidades.find((c) => c.id === hover.cidade);
-    if (hc) { const [x, y, c] = projLL(hc.lat, hc.lon); if (c > 0) { etq.style.left = `${x}px`; etq.style.top = `${y}px`; etq.textContent = hc.nome; etq.classList.add("is-on"); } }
+    // Etiqueta com o nome: na cidade sob o rato e, no portfólio, também na cidade escolhida (toque ou lista).
+    const hc = (hover?.cidade && o.cidades.find((c) => c.id === hover.cidade)) || (cidSel && o.cidades.find((c) => c.id === cidSel));
+    const [ex, ey, ec] = hc ? projLL(hc.lat, hc.lon) : [0, 0, 0];
+    if (hc && ec > 0.02) { etq.style.left = `${ex}px`; etq.style.top = `${ey}px`; etq.textContent = o.etiqueta ? o.etiqueta(hc) : hc.nome; etq.classList.add("is-on"); }
     else etq.classList.remove("is-on");
   }
 

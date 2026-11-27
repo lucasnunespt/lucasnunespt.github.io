@@ -13,7 +13,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="lucasnunes-ds.css?v=2026112501">
 <link rel="stylesheet" href="caso.css?v=2026112501">
-<link rel="stylesheet" href="neuromedit-terra/terra-caso.css?v=2026112702">
+<link rel="stylesheet" href="neuromedit-terra/terra-caso.css?v=2026112703">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -104,10 +104,14 @@
         <button type="button" data-modo="vy" aria-pressed="false" data-i18n="cm_terra_modo_vy">Vueling em Espanha</button>
       </div>
       <p class="terra-nota" data-terra-nota-vy hidden data-i18n="cm_terra_vy_p">Os 36 aeroportos espanhóis da Vueling, segundo a lista de vueling.com (novembro de 2026). Toque num para ver a região e o nome do aeroporto. Barcelona brilha: é a base principal. Um estudo pessoal, para o meu trabalho no apoio ao cliente.</p>
+      <div class="terra-palco">
       <div data-terra-host></div>
+      <div class="terra-lado">
       <div class="terra-paises" role="group" aria-label="Países" data-i18n="cm_terra_grupo" data-i18n-attr="aria-label"><button type="button" data-pais="PT" aria-pressed="false" data-i18n="cm_terra_PT">Portugal</button><button type="button" data-pais="ES" aria-pressed="false" data-i18n="cm_terra_ES">Espanha</button><button type="button" data-pais="FR" aria-pressed="false" data-i18n="cm_terra_FR">França</button><button type="button" data-pais="IT" aria-pressed="false" data-i18n="cm_terra_IT">Itália</button><button type="button" data-pais="BR" aria-pressed="false" data-i18n="cm_terra_BR">Brasil</button></div>
-      <div class="terra-aeroportos" role="group" aria-label="Aeroportos" data-terra-aeroportos hidden></div>
       <p class="terra-estado" aria-live="polite" data-terra-estado data-i18n="cm_terra_estado">Toque num país, no planeta ou aqui em cima.</p>
+      <div class="terra-aeroportos" role="group" aria-label="Aeroportos" data-terra-aeroportos hidden></div>
+      </div>
+      </div>
       <div class="actions"><a class="button secondary" href="https://github.com/lucasnunespt/NeuroMedit/blob/main/terra.js" target="_blank" rel="noopener" data-i18n="cm_terra_codigo">Ver o código no GitHub ↗</a></div>
     </div>
   </div>
@@ -155,12 +159,12 @@
 </section>
 </main>
 <footer><div class="container"><p data-i18n="cx_footer">© 2026 Lucas Nunes · Lisboa, Portugal.</p></div></footer>
-<script src="i18n-portfolio.js?v=2026112702"></script>
+<script src="i18n-portfolio.js?v=2026112703"></script>
 <script type="module">
   // O planeta do NeuroMedit (o mesmo terra.js do produto), para quem lê o caso poder mexer.
-  import { criarTerra } from "./neuromedit-terra/terra.js?v=2026112701";
+  import { criarTerra } from "./neuromedit-terra/terra.js?v=2026112703";
   import { CIDADES_INICIAIS, PAISES_GLOBO } from "./neuromedit-terra/cidades-lista.js?v=2026112701";
-  import { AEROPORTOS_VUELING, ESPANHA } from "./neuromedit-terra/vueling-espanha.js?v=2026112702";
+  import { AEROPORTOS_VUELING, ZONAS_VUELING, ESPANHA } from "./neuromedit-terra/vueling-espanha.js?v=2026112703";
   const host = document.querySelector("[data-terra-host]"), estado = document.querySelector("[data-terra-estado]");
   const T = (k, f) => (window.PortfolioI18n && window.PortfolioI18n.t(k)) || f;
   const NOMES = { PT: "Portugal", ES: "Espanha", FR: "França", IT: "Itália", BR: "Brasil" };
@@ -176,10 +180,20 @@
   const contarAeroporto = (id) => {
     const a = AEROPORTOS_VUELING.find((x) => x.id === id); if (!a) return;
     aeroBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.iata === id ? "true" : "false"));
+    // Abre a zona do aeroporto e mostra o botão dele, só dentro da coluna (sem mexer na página).
+    const zona = aeroBox.querySelector(`details[data-zona="${a.grupo}"]`); if (zona) zona.open = true;
+    const bt = aeroBox.querySelector(`[data-iata="${id}"]`);
+    if (bt && aeroBox.scrollHeight > aeroBox.clientHeight) aeroBox.scrollTop = bt.offsetTop - aeroBox.offsetTop - aeroBox.clientHeight / 3;
     dizer(`<b>${esc(a.nome)} · ${esc(a.iata)}</b><br>${esc(a.regiao)} · ${esc(a.aeroporto)}`);
   };
-  aeroBox.innerHTML = AEROPORTOS_VUELING.map((a) => `<button type="button" data-iata="${a.iata}" aria-pressed="false"><b>${a.iata}</b> ${esc(a.nome)}</button>`).join("");
-  aeroBox.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { globo.escolherCidade(b.dataset.iata); contarAeroporto(b.dataset.iata); }));
+  const pintarLista = () => {
+    aeroBox.innerHTML = ZONAS_VUELING.map((z) => {
+      const l = AEROPORTOS_VUELING.filter((a) => a.grupo === z.id);
+      return `<details name="zonas-vy" data-zona="${z.id}"><summary><span>${esc(T("cm_vy_g_" + z.id, z.nome))}</span><span class="terra-conta">${l.length}</span></summary><div class="terra-zona">${l.map((a) => `<button type="button" data-iata="${a.iata}" aria-pressed="false"><b>${a.iata}</b> ${esc(a.nome)}</button>`).join("")}</div></details>`;
+    }).join("");
+  };
+  pintarLista();
+  aeroBox.addEventListener("click", (e) => { const b = e.target.closest("[data-iata]"); if (!b) return; globo.escolherCidade(b.dataset.iata); contarAeroporto(b.dataset.iata); });
   function montar() {
     globo?.destruir();
     const vy = modo === "vy";
@@ -187,6 +201,7 @@
       dados: "neuromedit-terra/terra.json",
       cidades: vy ? AEROPORTOS_VUELING : CIDADES_INICIAIS, paises: vy ? ESPANHA : PAISES_GLOBO,
       aberta: (id) => (vy ? id === "BCN" : id === "lisboa"),
+      etiqueta: vy ? (c) => `${c.nome} · ${c.iata}` : undefined,
       inicio: { lon: -75, lat: 5, zoom: 0.7 }, chegada: vy ? { lon: ESPANHA[0].lon, lat: ESPANHA[0].lat, zoom: ESPANHA[0].zoom } : { lon: -20, lat: 25, zoom: 1.05 },
       vista: vy ? { lon: -9, lat: 35, zoom: 1.9 } : { lon: -20, lat: 25, zoom: 1.05 },
       rotulos: { aria: T("cm_terra_aria", "Planeta interativo com as cidades da comunidade"), dica: T("cm_terra_dica", "Arraste para girar · toque num país"), mais: T("cm_terra_mais", "Aproximar"), menos: T("cm_terra_menos", "Afastar"), inicio: T("cm_terra_inicio", "Ver o mundo inteiro") },
@@ -210,7 +225,7 @@
   document.querySelectorAll("[data-modo]").forEach((b) => b.addEventListener("click", () => mudarModo(b.dataset.modo)));
   montar();
   botoes.forEach((b) => b.addEventListener("click", () => { globo.escolherPais(b.dataset.pais); contarPais(b.dataset.pais); }));
-  window.addEventListener("portfolio:languagechange", () => { montar(); marcar(""); });
+  window.addEventListener("portfolio:languagechange", () => { pintarLista(); montar(); marcar(""); });
 </script>
 <script>
 (function(){
