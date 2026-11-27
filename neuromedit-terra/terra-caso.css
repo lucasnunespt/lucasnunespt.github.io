@@ -36,10 +36,32 @@
 .terra-modos button[aria-pressed="true"] { background: var(--accent); color: var(--button-text); }
 .terra-modos button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
 .terra-nota { margin: 0; color: var(--text-soft); line-height: 1.6; }
-.terra-aeroportos { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.terra-aeroportos button { min-height: 40px; padding: 0 0.8rem; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--surface); color: var(--text); font: inherit; font-size: 0.9rem; cursor: pointer; transition: border-color var(--duration-quick) var(--easing-calm); }
+.terra-aeroportos { display: grid; gap: 0.4rem; align-content: start; }
+.terra-aeroportos details { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
+.terra-aeroportos details[open] { border-color: var(--accent-dark); }
+.terra-aeroportos summary { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; min-height: var(--control-height); padding: 0 1rem; color: var(--text); font-weight: 600; cursor: pointer; list-style: none; }
+.terra-aeroportos summary::-webkit-details-marker { display: none; }
+.terra-aeroportos summary::after { content: "+"; color: var(--accent-dark); font-weight: 400; font-size: 1.2rem; }
+.terra-aeroportos details[open] summary::after { content: "−"; }
+.terra-aeroportos summary:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; border-radius: var(--radius-md); }
+.terra-conta { margin-left: auto; padding: 0.1rem 0.55rem; border-radius: var(--radius-pill); background: var(--surface-strong); color: var(--text-soft); font-size: 0.8rem; font-weight: 500; }
+.terra-zona { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 0.75rem 0.75rem; }
+.terra-aeroportos button { min-height: 40px; padding: 0 0.8rem; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--surface-strong); color: var(--text); font: inherit; font-size: 0.9rem; cursor: pointer; transition: border-color var(--duration-quick) var(--easing-calm); }
 .terra-aeroportos button b { color: var(--accent-dark); font-weight: 700; letter-spacing: 0.04em; margin-right: 0.2rem; }
-.terra-aeroportos button:hover, .terra-aeroportos button[aria-pressed="true"] { border-color: var(--accent-dark); }
+.terra-aeroportos button:hover { border-color: var(--accent-dark); }
+.terra-aeroportos button[aria-pressed="true"] { border-color: var(--accent-dark); background: var(--accent); color: var(--button-text); }
+.terra-aeroportos button[aria-pressed="true"] b { color: var(--button-text); }
 .terra-aeroportos button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .terra-modos button, .terra-aeroportos button { transition: none; } }
 .terra-paises[hidden], .terra-aeroportos[hidden], .terra-nota[hidden] { display: none; }
+/* Mapa e coluna lado a lado (tablet e computador): a lista fica ao lado do planeta, com a altura dele. */
+.terra-palco { display: grid; gap: 0.9rem; }
+.terra-lado { display: flex; flex-direction: column; gap: 0.9rem; min-width: 0; }
+.terra-lado .terra-estado { min-height: 3.2em; }
+@media (min-width: 760px) {
+  .terra-demo { max-width: none; }
+  .terra-modos, .terra-nota { max-width: 40rem; }
+  .terra-palco { grid-template-columns: minmax(0, 1fr) minmax(15rem, 21rem); align-items: stretch; }
+  .terra-lado { contain: size; overflow: hidden; }
+  .terra-aeroportos { flex: 1; min-height: 0; overflow-y: auto; padding-right: 0.25rem; }
+}
