@@ -1,0 +1,32 @@
+/* terra-caso.css — o planeta do NeuroMedit dentro do estudo de caso (nov 2026).
+   O código (terra.js) é o mesmo que corre em neuromedit.com/comunidade.html; aqui só as cores
+   mudam: as variáveis --terra-* passam a usar os tokens do design system Lucas Nunes. */
+.terra-demo { display: grid; gap: 0.9rem; margin-top: 2rem; max-width: 40rem; }
+.terra {
+  --terra-mundo: var(--text);          /* pontos e fronteiras do resto do mundo (ténues) */
+  --terra-ativo: var(--accent-dark);   /* os países onde se pode tocar */
+  --terra-ouro: var(--accent-dark);    /* fronteiras ativas e cidade aberta */
+  --terra-halo: var(--accent);         /* atmosfera e halo */
+  --terra-meio: var(--accent);         /* cidades em breve */
+  --terra-mar: var(--agua);            /* o véu do oceano */
+  --terra-fundo: var(--surface-strong);
+  position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: var(--radius-lg); overflow: hidden; isolation: isolate;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.terra canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.terra.is-arrastar canvas { cursor: grabbing; }
+.terra-dica { position: absolute; left: 0.75rem; top: 0.75rem; margin: 0; padding: 0.35rem 0.8rem; border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--surface-strong); color: var(--text-soft); font-size: 0.82rem; pointer-events: none; }
+.terra-ctrl { position: absolute; right: 0.75rem; top: 0.75rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.terra-ctrl button { width: var(--control-height); height: var(--control-height); padding: 0; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--surface-strong); color: var(--text); cursor: pointer; display: grid; place-items: center; box-shadow: var(--glass-highlight); transition: border-color var(--duration-quick) var(--easing-calm); }
+.terra-ctrl button svg { width: 18px; height: 18px; }
+.terra-ctrl button:hover { border-color: var(--accent-dark); }
+.terra-ctrl button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+.terra-etiqueta { position: absolute; transform: translate(-50%, calc(-100% - 14px)); padding: 0.35rem 0.75rem; border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--surface-strong); color: var(--text); font-size: 0.82rem; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity var(--duration-quick) var(--easing-calm); }
+.terra-etiqueta.is-on { opacity: 1; }
+.terra-estado { margin: 0; min-height: 3em; color: var(--text-soft); line-height: 1.6; }
+.terra-estado b { color: var(--text); }
+.terra-paises { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.terra-paises button { min-height: var(--control-height); padding: 0 1rem; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--surface); color: var(--text); font: inherit; cursor: pointer; transition: border-color var(--duration-quick) var(--easing-calm); }
+.terra-paises button:hover, .terra-paises button[aria-pressed="true"] { border-color: var(--accent-dark); }
+.terra-paises button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .terra-ctrl button, .terra-etiqueta, .terra-paises button { transition: none; } }
