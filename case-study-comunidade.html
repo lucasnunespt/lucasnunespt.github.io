@@ -13,6 +13,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="lucasnunes-ds.css?v=2026112501">
 <link rel="stylesheet" href="caso.css?v=2026112501">
+<link rel="stylesheet" href="neuromedit-terra/terra-caso.css?v=2026112701">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -85,10 +86,23 @@
   <div class="container">
     <p class="label" data-i18n="cm_vis_label">Quem ainda não entrou</p>
     <h2 class="rv" data-i18n="cm_vis_h">Mostrar antes de pedir.</h2>
-    <div class="body rv"><p data-i18n="cm_vis_p">Quem chega sem conta vê uma prévia dos círculos e das cidades, e o porquê de a comunidade ser fechada, antes de qualquer pedido de login. No celular, a lateral vira uma fila de pílulas no topo.</p></div>
+    <div class="body rv"><p data-i18n="cm_vis_p">Quem chega sem conta é recebido por um planeta: gira o globo, toca no seu país e escolhe a cidade, antes de qualquer pedido de login. As cidades que brilham já têm comunidade aberta. Por baixo, uma prévia dos círculos e o porquê de a comunidade ser fechada.</p></div>
     <div class="shots-phone">
       <figure class="shot phone rv"><img src="assets/neuromedit-comunidade/celular-cidade.jpg" width="780" height="1688" alt="No celular, a página de Lisboa no tema claro: as cidades e os círculos como pílulas no topo, o título Lisboa, A minha cidade, os anfitriões e um pedido para entrar com Aprovar e Recusar." data-i18n="cm_alt_cel" data-i18n-attr="alt" loading="lazy"><figcaption data-i18n="cm_cap_cel">No celular, tudo numa coluna.</figcaption></figure>
-      <figure class="shot rv"><img src="assets/neuromedit-comunidade/porta.jpg" width="1440" height="900" alt="A porta da comunidade para visitantes, no tema claro: título Praticar junto, perto de casa ou do outro lado do mundo, o cartão Entre para pedir o seu lugar com Entrar com o Google e uma prévia dos círculos." data-i18n="cm_alt_porta" data-i18n-attr="alt" loading="lazy"><figcaption data-i18n="cm_cap_porta">A porta: explica a regra antes de pedir a conta.</figcaption></figure>
+      <figure class="shot rv"><img src="assets/neuromedit-comunidade/porta.jpg?v=2026112701" width="1440" height="900" alt="A porta da comunidade para visitantes, no tema claro: à esquerda, Medite com quem está perto de você, os passos País, Cidade e Entrar e os botões dos cinco países; à direita, o planeta de pontos dourados, com Portugal, Espanha, França, Itália e Brasil acesos." data-i18n="cm_alt_porta" data-i18n-attr="alt" loading="lazy"><figcaption data-i18n="cm_cap_porta">A porta: o planeta primeiro, a conta só no fim.</figcaption></figure>
+    </div>
+  </div>
+</section>
+<section class="cs-section" id="planeta">
+  <div class="container">
+    <p class="label" data-i18n="cm_terra_label">Experimente</p>
+    <h2 class="rv" data-i18n="cm_terra_h">Gire o planeta e escolha um país.</h2>
+    <div class="body rv"><p data-i18n="cm_terra_p">É o mesmo código que corre na porta da comunidade, aqui com as cores do meu portfólio. Arraste para girar, use os botões para aproximar e toque num dos países que já têm cidades.</p></div>
+    <div class="terra-demo rv">
+      <div data-terra-host></div>
+      <div class="terra-paises" role="group" aria-label="Países" data-i18n="cm_terra_grupo" data-i18n-attr="aria-label"><button type="button" data-pais="PT" aria-pressed="false" data-i18n="cm_terra_PT">Portugal</button><button type="button" data-pais="ES" aria-pressed="false" data-i18n="cm_terra_ES">Espanha</button><button type="button" data-pais="FR" aria-pressed="false" data-i18n="cm_terra_FR">França</button><button type="button" data-pais="IT" aria-pressed="false" data-i18n="cm_terra_IT">Itália</button><button type="button" data-pais="BR" aria-pressed="false" data-i18n="cm_terra_BR">Brasil</button></div>
+      <p class="terra-estado" aria-live="polite" data-terra-estado data-i18n="cm_terra_estado">Toque num país, no planeta ou aqui em cima.</p>
+      <div class="actions"><a class="button secondary" href="https://github.com/lucasnunespt/NeuroMedit/blob/main/terra.js" target="_blank" rel="noopener" data-i18n="cm_terra_codigo">Ver o código no GitHub ↗</a></div>
     </div>
   </div>
 </section>
@@ -136,6 +150,36 @@
 </main>
 <footer><div class="container"><p data-i18n="cx_footer">© 2026 Lucas Nunes · Lisboa, Portugal.</p></div></footer>
 <script src="i18n-portfolio.js?v=2026112701"></script>
+<script type="module">
+  // O planeta do NeuroMedit (o mesmo terra.js do produto), para quem lê o caso poder mexer.
+  import { criarTerra } from "./neuromedit-terra/terra.js?v=2026112701";
+  import { CIDADES_INICIAIS, PAISES_GLOBO } from "./neuromedit-terra/cidades-lista.js?v=2026112701";
+  const host = document.querySelector("[data-terra-host]"), estado = document.querySelector("[data-terra-estado]");
+  const T = (k, f) => (window.PortfolioI18n && window.PortfolioI18n.t(k)) || f;
+  const NOMES = { PT: "Portugal", ES: "Espanha", FR: "França", IT: "Itália", BR: "Brasil" };
+  const nomePais = (id) => T("cm_terra_" + id, NOMES[id] || id);
+  const botoes = [...document.querySelectorAll("[data-pais]")];
+  const marcar = (id) => botoes.forEach((b) => b.setAttribute("aria-pressed", b.dataset.pais === id ? "true" : "false"));
+  const dizer = (html) => { estado.removeAttribute("data-i18n"); estado.innerHTML = html; };
+  const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  let globo = null;
+  const contarPais = (p) => { marcar(p); dizer(`<b>${esc(nomePais(p))}</b>. ${esc(T("cm_terra_depois_pais", "Na comunidade, abre-se agora a lista das cidades deste país."))}`); };
+  function montar() {
+    globo?.destruir();
+    globo = criarTerra({
+      dados: "neuromedit-terra/terra.json", cidades: CIDADES_INICIAIS, paises: PAISES_GLOBO, aberta: (id) => id === "lisboa",
+      inicio: { lon: -75, lat: 5, zoom: 0.7 }, chegada: { lon: -20, lat: 25, zoom: 1.05 }, vista: { lon: -20, lat: 25, zoom: 1.05 },
+      rotulos: { aria: T("cm_terra_aria", "Planeta interativo com as cidades da comunidade"), dica: T("cm_terra_dica", "Arraste para girar · toque num país"), mais: T("cm_terra_mais", "Aproximar"), menos: T("cm_terra_menos", "Afastar"), inicio: T("cm_terra_inicio", "Ver o mundo inteiro") },
+      aoEscolherPais: (p) => contarPais(p),
+      aoEscolherCidade: (id) => { const c = CIDADES_INICIAIS.find((x) => x.id === id); if (!c) return; marcar(c.pais); dizer(`<b>${esc(c.nome)}</b>. ${esc(id === "lisboa" ? T("cm_terra_depois_aberta", "Esta cidade já tem comunidade aberta: o passo seguinte é entrar com o Google e pedir o seu lugar.") : T("cm_terra_depois_breve", "Esta cidade ainda não abriu: quem pede conta para a abrir."))}`); },
+      aoLimpar: () => { marcar(""); dizer(esc(T("cm_terra_estado", "Toque num país, no planeta ou aqui em cima."))); }
+    });
+    host.append(globo.el);
+  }
+  montar();
+  botoes.forEach((b) => b.addEventListener("click", () => { globo.escolherPais(b.dataset.pais); contarPais(b.dataset.pais); }));
+  window.addEventListener("portfolio:languagechange", () => { montar(); marcar(""); });
+</script>
 <script>
 (function(){
   "use strict";
