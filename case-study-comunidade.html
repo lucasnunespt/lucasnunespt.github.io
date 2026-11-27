@@ -13,7 +13,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="lucasnunes-ds.css?v=2026112501">
 <link rel="stylesheet" href="caso.css?v=2026112501">
-<link rel="stylesheet" href="neuromedit-terra/terra-caso.css?v=2026112701">
+<link rel="stylesheet" href="neuromedit-terra/terra-caso.css?v=2026112702">
 <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -99,8 +99,14 @@
     <h2 class="rv" data-i18n="cm_terra_h">Gire o planeta e escolha um país.</h2>
     <div class="body rv"><p data-i18n="cm_terra_p">É o mesmo código que corre na porta da comunidade, aqui com as cores do meu portfólio. Arraste para girar, use os botões para aproximar e toque num dos países que já têm cidades.</p></div>
     <div class="terra-demo rv">
+      <div class="terra-modos" role="group" aria-label="O que mostrar no planeta" data-i18n="cm_terra_modos" data-i18n-attr="aria-label">
+        <button type="button" data-modo="com" aria-pressed="true" data-i18n="cm_terra_modo_com">Comunidade</button>
+        <button type="button" data-modo="vy" aria-pressed="false" data-i18n="cm_terra_modo_vy">Vueling em Espanha</button>
+      </div>
+      <p class="terra-nota" data-terra-nota-vy hidden data-i18n="cm_terra_vy_p">Os 36 aeroportos espanhóis da Vueling, segundo a lista de vueling.com (novembro de 2026). Toque num para ver a região e o nome do aeroporto. Barcelona brilha: é a base principal. Um estudo pessoal, para o meu trabalho no apoio ao cliente.</p>
       <div data-terra-host></div>
       <div class="terra-paises" role="group" aria-label="Países" data-i18n="cm_terra_grupo" data-i18n-attr="aria-label"><button type="button" data-pais="PT" aria-pressed="false" data-i18n="cm_terra_PT">Portugal</button><button type="button" data-pais="ES" aria-pressed="false" data-i18n="cm_terra_ES">Espanha</button><button type="button" data-pais="FR" aria-pressed="false" data-i18n="cm_terra_FR">França</button><button type="button" data-pais="IT" aria-pressed="false" data-i18n="cm_terra_IT">Itália</button><button type="button" data-pais="BR" aria-pressed="false" data-i18n="cm_terra_BR">Brasil</button></div>
+      <div class="terra-aeroportos" role="group" aria-label="Aeroportos" data-terra-aeroportos hidden></div>
       <p class="terra-estado" aria-live="polite" data-terra-estado data-i18n="cm_terra_estado">Toque num país, no planeta ou aqui em cima.</p>
       <div class="actions"><a class="button secondary" href="https://github.com/lucasnunespt/NeuroMedit/blob/main/terra.js" target="_blank" rel="noopener" data-i18n="cm_terra_codigo">Ver o código no GitHub ↗</a></div>
     </div>
@@ -149,11 +155,12 @@
 </section>
 </main>
 <footer><div class="container"><p data-i18n="cx_footer">© 2026 Lucas Nunes · Lisboa, Portugal.</p></div></footer>
-<script src="i18n-portfolio.js?v=2026112701"></script>
+<script src="i18n-portfolio.js?v=2026112702"></script>
 <script type="module">
   // O planeta do NeuroMedit (o mesmo terra.js do produto), para quem lê o caso poder mexer.
   import { criarTerra } from "./neuromedit-terra/terra.js?v=2026112701";
   import { CIDADES_INICIAIS, PAISES_GLOBO } from "./neuromedit-terra/cidades-lista.js?v=2026112701";
+  import { AEROPORTOS_VUELING, ESPANHA } from "./neuromedit-terra/vueling-espanha.js?v=2026112702";
   const host = document.querySelector("[data-terra-host]"), estado = document.querySelector("[data-terra-estado]");
   const T = (k, f) => (window.PortfolioI18n && window.PortfolioI18n.t(k)) || f;
   const NOMES = { PT: "Portugal", ES: "Espanha", FR: "França", IT: "Itália", BR: "Brasil" };
@@ -164,18 +171,43 @@
   const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   let globo = null;
   const contarPais = (p) => { marcar(p); dizer(`<b>${esc(nomePais(p))}</b>. ${esc(T("cm_terra_depois_pais", "Na comunidade, abre-se agora a lista das cidades deste país."))}`); };
+  let modo = "com";
+  const paisesBox = document.querySelector(".terra-paises"), aeroBox = document.querySelector("[data-terra-aeroportos]"), notaVy = document.querySelector("[data-terra-nota-vy]");
+  const contarAeroporto = (id) => {
+    const a = AEROPORTOS_VUELING.find((x) => x.id === id); if (!a) return;
+    aeroBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.iata === id ? "true" : "false"));
+    dizer(`<b>${esc(a.nome)} · ${esc(a.iata)}</b><br>${esc(a.regiao)} · ${esc(a.aeroporto)}`);
+  };
+  aeroBox.innerHTML = AEROPORTOS_VUELING.map((a) => `<button type="button" data-iata="${a.iata}" aria-pressed="false"><b>${a.iata}</b> ${esc(a.nome)}</button>`).join("");
+  aeroBox.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { globo.escolherCidade(b.dataset.iata); contarAeroporto(b.dataset.iata); }));
   function montar() {
     globo?.destruir();
+    const vy = modo === "vy";
     globo = criarTerra({
-      dados: "neuromedit-terra/terra.json", cidades: CIDADES_INICIAIS, paises: PAISES_GLOBO, aberta: (id) => id === "lisboa",
-      inicio: { lon: -75, lat: 5, zoom: 0.7 }, chegada: { lon: -20, lat: 25, zoom: 1.05 }, vista: { lon: -20, lat: 25, zoom: 1.05 },
+      dados: "neuromedit-terra/terra.json",
+      cidades: vy ? AEROPORTOS_VUELING : CIDADES_INICIAIS, paises: vy ? ESPANHA : PAISES_GLOBO,
+      aberta: (id) => (vy ? id === "BCN" : id === "lisboa"),
+      inicio: { lon: -75, lat: 5, zoom: 0.7 }, chegada: vy ? { lon: ESPANHA[0].lon, lat: ESPANHA[0].lat, zoom: ESPANHA[0].zoom } : { lon: -20, lat: 25, zoom: 1.05 },
+      vista: vy ? { lon: -9, lat: 35, zoom: 1.9 } : { lon: -20, lat: 25, zoom: 1.05 },
       rotulos: { aria: T("cm_terra_aria", "Planeta interativo com as cidades da comunidade"), dica: T("cm_terra_dica", "Arraste para girar · toque num país"), mais: T("cm_terra_mais", "Aproximar"), menos: T("cm_terra_menos", "Afastar"), inicio: T("cm_terra_inicio", "Ver o mundo inteiro") },
-      aoEscolherPais: (p) => contarPais(p),
-      aoEscolherCidade: (id) => { const c = CIDADES_INICIAIS.find((x) => x.id === id); if (!c) return; marcar(c.pais); dizer(`<b>${esc(c.nome)}</b>. ${esc(id === "lisboa" ? T("cm_terra_depois_aberta", "Esta cidade já tem comunidade aberta: o passo seguinte é entrar com o Google e pedir o seu lugar.") : T("cm_terra_depois_breve", "Esta cidade ainda não abriu: quem pede conta para a abrir."))}`); },
-      aoLimpar: () => { marcar(""); dizer(esc(T("cm_terra_estado", "Toque num país, no planeta ou aqui em cima."))); }
+      aoEscolherPais: (p) => (vy ? dizer(esc(T("cm_terra_vy_estado", "Toque num aeroporto, no planeta ou na lista."))) : contarPais(p)),
+      aoEscolherCidade: (id) => {
+        if (vy) return contarAeroporto(id);
+        const c = CIDADES_INICIAIS.find((x) => x.id === id); if (!c) return; marcar(c.pais); dizer(`<b>${esc(c.nome)}</b>. ${esc(id === "lisboa" ? T("cm_terra_depois_aberta", "Esta cidade já tem comunidade aberta: o passo seguinte é entrar com o Google e pedir o seu lugar.") : T("cm_terra_depois_breve", "Esta cidade ainda não abriu: quem pede conta para a abrir."))}`);
+      },
+      aoLimpar: () => { marcar(""); dizer(esc(vy ? T("cm_terra_vy_estado", "Toque num aeroporto, no planeta ou na lista.") : T("cm_terra_estado", "Toque num país, no planeta ou aqui em cima."))); }
     });
     host.append(globo.el);
   }
+  function mudarModo(m) {
+    modo = m;
+    document.querySelectorAll("[data-modo]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.modo === m ? "true" : "false"));
+    paisesBox.hidden = m === "vy"; aeroBox.hidden = m !== "vy"; notaVy.hidden = m !== "vy";
+    marcar(""); aeroBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", "false"));
+    dizer(esc(m === "vy" ? T("cm_terra_vy_estado", "Toque num aeroporto, no planeta ou na lista.") : T("cm_terra_estado", "Toque num país, no planeta ou aqui em cima.")));
+    montar();
+  }
+  document.querySelectorAll("[data-modo]").forEach((b) => b.addEventListener("click", () => mudarModo(b.dataset.modo)));
   montar();
   botoes.forEach((b) => b.addEventListener("click", () => { globo.escolherPais(b.dataset.pais); contarPais(b.dataset.pais); }));
   window.addEventListener("portfolio:languagechange", () => { montar(); marcar(""); });

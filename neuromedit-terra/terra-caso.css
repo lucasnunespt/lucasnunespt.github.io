@@ -30,3 +30,16 @@
 .terra-paises button:hover, .terra-paises button[aria-pressed="true"] { border-color: var(--accent-dark); }
 .terra-paises button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .terra-ctrl button, .terra-etiqueta, .terra-paises button { transition: none; } }
+/* Modo "Vueling em Espanha" (estudo pessoal, nov 2026): o mesmo planeta com os aeroportos. */
+.terra-modos { display: inline-flex; justify-self: start; gap: 0.25rem; padding: 0.25rem; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--surface); }
+.terra-modos button { min-height: 40px; padding: 0 1rem; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-soft); font: inherit; cursor: pointer; transition: background-color var(--duration-quick) var(--easing-calm); }
+.terra-modos button[aria-pressed="true"] { background: var(--accent); color: var(--button-text); }
+.terra-modos button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+.terra-nota { margin: 0; color: var(--text-soft); line-height: 1.6; }
+.terra-aeroportos { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.terra-aeroportos button { min-height: 40px; padding: 0 0.8rem; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--surface); color: var(--text); font: inherit; font-size: 0.9rem; cursor: pointer; transition: border-color var(--duration-quick) var(--easing-calm); }
+.terra-aeroportos button b { color: var(--accent-dark); font-weight: 700; letter-spacing: 0.04em; margin-right: 0.2rem; }
+.terra-aeroportos button:hover, .terra-aeroportos button[aria-pressed="true"] { border-color: var(--accent-dark); }
+.terra-aeroportos button:focus-visible { outline: 2px solid var(--accent-dark); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .terra-modos button, .terra-aeroportos button { transition: none; } }
+.terra-paises[hidden], .terra-aeroportos[hidden], .terra-nota[hidden] { display: none; }
